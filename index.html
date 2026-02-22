@@ -430,6 +430,53 @@
                 position: relative;
             }
         }
+
+        /* ── CUSTOM CURSOR RASTRO ── */
+        @media (hover: hover) and (pointer: fine) {
+
+            html,
+            body,
+            a,
+            button {
+                cursor: none !important;
+            }
+
+            .custom-cursor {
+                position: fixed;
+                top: -4px;
+                left: -4px;
+                width: 8px;
+                height: 8px;
+                background-color: var(--white);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 9999;
+                mix-blend-mode: difference;
+                will-change: transform;
+            }
+
+            .cursor-trail {
+                position: absolute;
+                background-color: var(--text-primary);
+                /* Preta */
+                border-radius: 50%;
+                will-change: transform, opacity;
+                animation: asteroidDust 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            }
+
+            @keyframes asteroidDust {
+                0% {
+                    opacity: 1;
+                    /* Retornando para 100% para ter cor sólida perceptível */
+                    transform: scale(1);
+                }
+
+                100% {
+                    opacity: 0;
+                    transform: scale(0);
+                }
+            }
+        }
     </style>
 </head>
 
@@ -619,6 +666,94 @@
             }
 
             video.load();
+
+            // ── LÓGICA DO CURSOR DE BOLINHAS (RASTRO) ──
+            if (!prefersReducedMotion && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+                const cursor = document.createElement('div');
+                cursor.className = 'custom-cursor';
+                document.body.appendChild(cursor);
+
+                let mouseX = window.innerWidth / 2;
+                let mouseY = window.innerHeight / 2;
+                let cursorX = mouseX;
+                let cursorY = mouseY;
+
+                window.addEventListener('mousemove', (e) => {
+                    mouseX = e.clientX;
+                    mouseY = e.clientY;
+                });
+
+                let lastEmittedX = mouseX;
+                let lastEmittedY = mouseY;
+
+                function renderCursor() {
+                    // Suavização do movimento principal (LERP)
+                    cursorX += (mouseX - cursorX) * 0.3;
+                    cursorY += (mouseY - cursorY) * 0.3;
+
+                    cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
+
+                    // Cálculo da distância para soltar as partículas no caminho exato onde o mouse passou
+                    const dx = cursorX - lastEmittedX;
+                    const dy = cursorY - lastEmittedY;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    // Gera poeira constante com base na distância (denso = asteroide)
+                    if (dist > 1) {
+                        // Calcula quantidades proporcionais a velocidade da "viagem"
+                        const numParticles = Math.max(1, Math.floor(dist / 3));
+
+                        for (let i = 0; i < numParticles; i++) {
+                            const t = i / numParticles;
+
+                            // Adiciona um "jitter" (espalhamento) da poeira em torno do núcleo central
+                            // para que o rastro tenha volume orgânico e não pareça um traço de lápis
+                            const spread = 8; // Raio de espalhamento
+                            const jitterX = (Math.random() - 0.5) * spread;
+                            const jitterY = (Math.random() - 0.5) * spread;
+
+                            const spawnX = (lastEmittedX + dx * t) + jitterX;
+                            const spawnY = (lastEmittedY + dy * t) + jitterY;
+
+                            createTrail(spawnX, spawnY);
+                        }
+                        lastEmittedX = cursorX;
+                        lastEmittedY = cursorY;
+                    }
+
+                    requestAnimationFrame(renderCursor);
+                }
+
+                function createTrail(x, y) {
+                    const trailWrapper = document.createElement('div');
+                    trailWrapper.style.position = 'fixed';
+                    trailWrapper.style.pointerEvents = 'none';
+                    trailWrapper.style.zIndex = '9998'; // Logo abaixo do cursor principal
+                    trailWrapper.style.left = '0';
+                    trailWrapper.style.top = '0';
+                    trailWrapper.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+
+                    const trail = document.createElement('div');
+                    trail.className = 'cursor-trail';
+
+                    // Partícula constante de 1px preta (sem variação de escala)
+                    const size = 1;
+                    trail.style.width = `${size}px`;
+                    trail.style.height = `${size}px`;
+
+                    // Centraliza a micro-partícula exatamente no offset matemático do Wrapper
+                    trail.style.marginTop = `-${size / 2}px`;
+                    trail.style.marginLeft = `-${size / 2}px`;
+
+                    trailWrapper.appendChild(trail);
+                    document.body.appendChild(trailWrapper);
+
+                    // Deleta a div após o fim do @keyframes do CSS (0.7s + margem de segurança)
+                    setTimeout(() => trailWrapper.remove(), 750);
+                }
+
+                requestAnimationFrame(renderCursor);
+            }
         });
     </script>
 </body>
