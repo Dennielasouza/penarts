@@ -1,0 +1,3811 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-BR">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Design System — ARTools Color</title>
+  <script src="templates/digital-architect.aura.build/assets/resource_3fa48481346f.js"></script>
+  <script src="templates/digital-architect.aura.build/assets/iconify-icon_d39ffc6e4c56.js"></script>
+  <link href="templates/digital-architect.aura.build/assets/css2_19fd9cc6b396.css" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --bg-main: #FFFFFF;
+      --bg-off: #F5F5F3;
+      --bg-dark: #1C1C1C;
+      --text-primary: #1C1C1C;
+      --text-muted: #6B6B6B;
+      --border: rgba(0, 0, 0, 0.12);
+      --accent: #1C1C1C;
+      --white: #FFFFFF;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-main);
+      color: var(--text-primary);
+      overflow-x: hidden;
+    }
+
+    /* ── REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(2rem);
+      transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .delay-100 {
+      transition-delay: .1s;
+    }
+
+    .delay-200 {
+      transition-delay: .2s;
+    }
+
+    .delay-300 {
+      transition-delay: .3s;
+    }
+
+    .delay-500 {
+      transition-delay: .5s;
+    }
+
+    .delay-700 {
+      transition-delay: .7s;
+    }
+
+    /* ── TEXT REVEAL ── */
+    .text-reveal-wrapper {
+      overflow: hidden;
+      display: inline-block;
+      vertical-align: bottom;
+      padding-bottom: 0.18em;
+      margin-bottom: -0.18em;
+    }
+
+    .text-reveal-content {
+      transform: translateY(110%);
+      opacity: 0;
+      transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.2s ease;
+      display: block;
+    }
+
+    .reveal-active .text-reveal-content {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* ── NAV ── */
+    .nav-load {
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: all 0.8s ease-out;
+    }
+
+    .nav-load.loaded {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── MARQUEE ── */
+    .marquee-container {
+      display: flex;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    .marquee-content {
+      flex-shrink: 0;
+      display: flex;
+      justify-content: space-around;
+      min-width: 100%;
+      animation: scroll 40s linear infinite;
+    }
+
+    @keyframes scroll {
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(-100%);
+      }
+    }
+
+    /* ── CAROUSEL ── */
+    .carousel-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
+      overflow: hidden;
+    }
+
+    .carousel-slide.active {
+      opacity: 1;
+    }
+
+    .carousel-slide img {
+      transform: scale(1);
+      transition: transform 10s ease-out;
+    }
+
+    .carousel-slide.active img {
+      transform: scale(1.1);
+    }
+
+    /* ── PARALLAX ── */
+    .parallax-element {
+      will-change: transform;
+    }
+
+    iconify-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      vertical-align: middle;
+    }
+
+    /* ── HERO BG ANIMATED ── */
+    .hero-bg-anim {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .hero-bg-anim canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* ── GLOW ── */
+    @keyframes glow-pulse {
+
+      0%,
+      100% {
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.1), 0 0 60px rgba(255, 255, 255, 0.05);
+      }
+
+      50% {
+        box-shadow: 0 0 40px rgba(255, 255, 255, 0.3), 0 0 100px rgba(255, 255, 255, 0.1);
+      }
+    }
+
+    .glow-btn {
+      animation: glow-pulse 3s ease-in-out infinite;
+    }
+
+    /* ── SHIMMER BUTTON ── */
+    @keyframes shimmer {
+      from {
+        transform: translateX(-100%) skewX(-15deg);
+      }
+
+      to {
+        transform: translateX(200%) skewX(-15deg);
+      }
+    }
+
+    .shimmer-btn {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .shimmer-btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transform: translateX(-100%) skewX(-15deg);
+      transition: none;
+    }
+
+    .shimmer-btn:hover::after {
+      animation: shimmer 0.8s ease-out;
+    }
+
+    /* ── SPIN BEAM ── */
+    @keyframes spin-conic {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .beam-btn {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .beam-btn .beam-ring {
+      position: absolute;
+      inset: -1px;
+      border-radius: 9999px;
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .beam-btn .beam-ring::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 300%;
+      height: 300%;
+      background: conic-gradient(from 0deg, transparent 0 340deg, white 360deg);
+      transform: translate(-50%, -50%);
+      animation: spin-conic 2s linear infinite;
+    }
+
+    .beam-btn:hover .beam-ring {
+      opacity: 1;
+    }
+
+    /* ── FLASHLIGHT CARD ── */
+    .flashlight-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(600px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.08), transparent 40%);
+      opacity: 0;
+      transition: opacity 0.5s;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .flashlight-card:hover::before {
+      opacity: 1;
+    }
+
+    /* ── SECTION STYLES ── */
+    .section-label {
+      font-family: 'Space Mono', monospace;
+      font-size: .65rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .section-num {
+      font-family: 'Space Mono', monospace;
+      font-size: .65rem;
+      color: var(--text-muted);
+    }
+
+    /* ── GRID GUIDE ── */
+    .grid-guide {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      z-index: 0;
+    }
+
+    .grid-guide-col {
+      border-right: 1px solid rgba(0, 0, 0, 0.04);
+    }
+
+    /* ── BORDER ANIMATIONS ── */
+    @keyframes border-draw {
+      from {
+        opacity: 0;
+        transform: scaleX(0);
+      }
+
+      to {
+        opacity: 1;
+        transform: scaleX(1);
+      }
+    }
+
+    .border-line {
+      transform-origin: left;
+      animation: border-draw 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* ── ANIMATED BACKGROUND DOTS ── */
+    .bg-dots {
+      background-image: radial-gradient(circle, rgba(0, 0, 0, 0.06) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+
+    .bg-dots-white {
+      background-image: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+
+    /* ── FLOATING ORBS ── */
+    @keyframes float-orb {
+
+      0%,
+      100% {
+        transform: translate(0, 0) scale(1);
+      }
+
+      33% {
+        transform: translate(30px, -20px) scale(1.05);
+      }
+
+      66% {
+        transform: translate(-20px, 15px) scale(0.95);
+      }
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      animation: float-orb 12s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    /* ── ANIMATE ON SCROLL ── */
+    .anim-in {
+      animation-play-state: paused !important;
+    }
+
+    .anim-in.animate {
+      animation-play-state: running !important;
+    }
+
+    @keyframes animIn {
+      0% {
+        opacity: 0;
+        transform: translateY(24px);
+        filter: blur(8px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+      }
+    }
+
+    /* ── COMPONENTS ── */
+    .ds-card {
+      border: 1px solid var(--border);
+      background: #fff;
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .ds-card:hover {
+      background: #f9f9f9;
+      border-color: rgba(0, 0, 0, 0.2);
+    }
+
+    .swatch {
+      aspect-ratio: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.7rem;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .tooltip-wrap {
+      position: relative;
+      display: inline-block;
+    }
+
+    .tooltip-box {
+      position: absolute;
+      bottom: 130%;
+      left: 50%;
+      transform: translateX(-50%) translateY(8px) scale(0.95);
+      background: #1c1c1c;
+      color: #fff;
+      font-size: 0.7rem;
+      font-family: 'Space Mono', monospace;
+      padding: 0.4rem 0.8rem;
+      border-radius: 4px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .tooltip-wrap:hover .tooltip-box {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0) scale(1);
+    }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal-box {
+      background: #fff;
+      max-width: 560px;
+      width: 90%;
+      padding: 2.5rem;
+      transform: translateY(20px) scale(0.97);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .modal-overlay.open .modal-box {
+      transform: translateY(0) scale(1);
+    }
+
+    .input-field {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 0.75rem 1rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .input-field:focus {
+      border-color: #1C1C1C;
+    }
+
+    .input-field::placeholder {
+      color: #aaa;
+    }
+
+    /* ── TRANSPARENT LETTERING (KEY EFFECT) ── */
+    .text-transparent-stroke {
+      -webkit-text-stroke: 1px rgba(0, 0, 0, 0.15);
+      color: transparent;
+      font-weight: 700;
+    }
+
+    .text-transparent-stroke-white {
+      -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
+      color: transparent;
+      font-weight: 700;
+    }
+
+    .text-ghost {
+      color: transparent;
+      -webkit-text-stroke: 1.5px rgba(28, 28, 28, 0.12);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 0.9;
+    }
+
+    /* ── ICON UTILITY ── */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* ── DARK SECTION ── */
+    .dark-section {
+      background: #1C1C1C;
+      color: #fff;
+    }
+
+    .dark-section .section-label,
+    .dark-section .section-num {
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .dark-section .ds-card {
+      border-color: rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .dark-section .ds-card:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    /* ── WAVY DIVIDER ── */
+    @keyframes wave-move {
+      0% {
+        d: path('M0,20 Q250,0 500,20 Q750,40 1000,20 Q1250,0 1440,20 L1440,60 L0,60 Z');
+      }
+
+      50% {
+        d: path('M0,20 Q250,40 500,20 Q750,0 1000,20 Q1250,40 1440,20 L1440,60 L0,60 Z');
+      }
+
+      100% {
+        d: path('M0,20 Q250,0 500,20 Q750,40 1000,20 Q1250,0 1440,20 L1440,60 L0,60 Z');
+      }
+    }
+
+    /* ═══════════ ADVANCED COMPONENTS CSS ═══════════ */
+
+    /* Checkbox / Radio / Switch */
+    .ds-checkbox {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .ds-checkbox input {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .ds-checkbox .box {
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      transition: all .25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .ds-checkbox input:checked~.box {
+      background: #1C1C1C;
+      border-color: #1C1C1C;
+    }
+
+    .ds-checkbox .box svg {
+      opacity: 0;
+      transform: scale(0);
+      transition: all .2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .ds-checkbox input:checked~.box svg {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .ds-checkbox:hover .box {
+      border-color: #1C1C1C;
+    }
+
+    .ds-radio {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      cursor: pointer;
+    }
+
+    .ds-radio input {
+      position: absolute;
+      opacity: 0;
+    }
+
+    .ds-radio .dot {
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid #ccc;
+      border-radius: 50%;
+      background: #fff;
+      transition: all .25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .ds-radio .dot::after {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #1C1C1C;
+      transform: scale(0);
+      transition: transform .25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .ds-radio input:checked~.dot {
+      border-color: #1C1C1C;
+    }
+
+    .ds-radio input:checked~.dot::after {
+      transform: scale(1);
+    }
+
+    /* Switch / Toggle */
+    .ds-switch {
+      display: inline-flex;
+      align-items: center;
+      gap: .75rem;
+      cursor: pointer;
+    }
+
+    .ds-switch input {
+      position: absolute;
+      opacity: 0;
+    }
+
+    .ds-switch .track {
+      width: 44px;
+      height: 24px;
+      border-radius: 12px;
+      background: #ddd;
+      position: relative;
+      transition: background .3s ease;
+      flex-shrink: 0;
+    }
+
+    .ds-switch .thumb {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      transition: transform .3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .ds-switch input:checked~.track {
+      background: #1C1C1C;
+    }
+
+    .ds-switch input:checked~.track .thumb {
+      transform: translateX(20px);
+    }
+
+    /* Progress bar */
+    .ds-progress {
+      height: 4px;
+      background: #e5e5e5;
+      border-radius: 2px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .ds-progress-bar {
+      height: 100%;
+      border-radius: 2px;
+      background: #1C1C1C;
+      transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ds-progress-bar::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      animation: shimmer 2s linear infinite;
+    }
+
+    /* Spinner */
+    @keyframes spin-ring {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .ds-spinner {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2.5px solid #e5e5e5;
+      border-top-color: #1C1C1C;
+      animation: spin-ring .8s linear infinite;
+      display: inline-block;
+    }
+
+    .ds-spinner-sm {
+      width: 20px;
+      height: 20px;
+      border-width: 2px;
+    }
+
+    .ds-spinner-lg {
+      width: 48px;
+      height: 48px;
+      border-width: 3px;
+    }
+
+    /* Skeleton */
+    @keyframes skeleton-pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: .4;
+      }
+    }
+
+    .skeleton {
+      background: #e5e5e5;
+      border-radius: 3px;
+      animation: skeleton-pulse 1.5s ease-in-out infinite;
+    }
+
+    /* Alert */
+    .ds-alert {
+      display: flex;
+      align-items: flex-start;
+      gap: .75rem;
+      padding: 1rem 1.25rem;
+      border-radius: 4px;
+      border-left: 3px solid;
+      font-size: .875rem;
+      line-height: 1.5;
+    }
+
+    .ds-alert-icon {
+      flex-shrink: 0;
+      margin-top: .05rem;
+    }
+
+    .ds-alert.success {
+      background: #f0fdf4;
+      border-color: #16a34a;
+      color: #15803d;
+    }
+
+    .ds-alert.warning {
+      background: #fffbeb;
+      border-color: #d97706;
+      color: #b45309;
+    }
+
+    .ds-alert.error {
+      background: #fef2f2;
+      border-color: #dc2626;
+      color: #b91c1c;
+    }
+
+    .ds-alert.info {
+      background: #eff6ff;
+      border-color: #2563eb;
+      color: #1d4ed8;
+    }
+
+    /* Toast */
+    .ds-toast-container {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+      pointer-events: none;
+    }
+
+    .ds-toast {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      background: #1C1C1C;
+      color: #fff;
+      padding: .75rem 1.25rem;
+      border-radius: 6px;
+      min-width: 280px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+      transform: translateX(120%);
+      opacity: 0;
+      transition: all .4s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: all;
+    }
+
+    .ds-toast.show {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    .ds-toast .toast-close {
+      margin-left: auto;
+      cursor: pointer;
+      opacity: .6;
+      transition: opacity .2s;
+    }
+
+    .ds-toast .toast-close:hover {
+      opacity: 1;
+    }
+
+    /* Breadcrumb */
+    .ds-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: .25rem;
+      flex-wrap: wrap;
+    }
+
+    .ds-breadcrumb a {
+      font-size: .8125rem;
+      color: #6b6b6b;
+      text-decoration: none;
+      transition: color .2s;
+    }
+
+    .ds-breadcrumb a:hover {
+      color: #1C1C1C;
+    }
+
+    .ds-breadcrumb .sep {
+      color: #ccc;
+      font-size: .75rem;
+    }
+
+    .ds-breadcrumb .current {
+      font-size: .8125rem;
+      color: #1C1C1C;
+      font-weight: 500;
+    }
+
+    /* Tabs */
+    .ds-tabs {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .ds-tab-list {
+      display: flex;
+      gap: 0;
+    }
+
+    .ds-tab {
+      padding: .75rem 1.25rem;
+      font-size: .875rem;
+      font-weight: 500;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      color: #6b6b6b;
+      transition: all .25s ease;
+      white-space: nowrap;
+    }
+
+    .ds-tab:hover {
+      color: #1C1C1C;
+    }
+
+    .ds-tab.active {
+      color: #1C1C1C;
+      border-bottom-color: #1C1C1C;
+    }
+
+    .ds-tab-panel {
+      padding: 1.5rem 0;
+      display: none;
+      animation: tab-fade-in .3s ease;
+    }
+
+    .ds-tab-panel.active {
+      display: block;
+    }
+
+    @keyframes tab-fade-in {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Accordion */
+    .ds-accordion-item {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .ds-accordion-trigger {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.1rem 0;
+      font-size: .9375rem;
+      font-weight: 500;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      color: #1C1C1C;
+      transition: color .2s;
+    }
+
+    .ds-accordion-trigger:hover {
+      color: #6b6b6b;
+    }
+
+    .ds-accordion-icon {
+      transition: transform .4s cubic-bezier(0.16, 1, 0.3, 1);
+      flex-shrink: 0;
+    }
+
+    .ds-accordion-item.open .ds-accordion-icon {
+      transform: rotate(45deg);
+    }
+
+    .ds-accordion-body {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height .5s cubic-bezier(0.16, 1, 0.3, 1), opacity .4s ease, padding .4s ease;
+      opacity: 0;
+      padding-bottom: 0;
+    }
+
+    .ds-accordion-item.open .ds-accordion-body {
+      max-height: 500px;
+      opacity: 1;
+      padding-bottom: 1.25rem;
+    }
+
+    /* Drawer */
+    .ds-drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      z-index: 200;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .35s ease;
+    }
+
+    .ds-drawer-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .ds-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 100vh;
+      width: min(420px, 90vw);
+      background: #fff;
+      z-index: 201;
+      padding: 2rem;
+      transform: translateX(100%);
+      transition: transform .45s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow-y: auto;
+      box-shadow: -20px 0 60px rgba(0, 0, 0, 0.1);
+    }
+
+    .ds-drawer.open {
+      transform: translateX(0);
+    }
+
+    /* Popover */
+    .ds-popover-wrap {
+      position: relative;
+      display: inline-block;
+    }
+
+    .ds-popover {
+      position: absolute;
+      bottom: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%) scale(0.9);
+      background: #fff;
+      border: 1px solid var(--border);
+      padding: 1rem;
+      border-radius: 6px;
+      min-width: 220px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+      opacity: 0;
+      pointer-events: none;
+      transition: all .3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      z-index: 50;
+    }
+
+    .ds-popover.open {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateX(-50%) scale(1);
+    }
+
+    .ds-popover::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 6px solid transparent;
+      border-top-color: #fff;
+    }
+
+    /* Sidebar */
+    .ds-sidebar {
+      width: 240px;
+      height: 100%;
+      border-right: 1px solid var(--border);
+      background: #fff;
+      padding: 1.5rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: .25rem;
+    }
+
+    .ds-sidebar-item {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      padding: .625rem 1.25rem;
+      font-size: .875rem;
+      color: #6b6b6b;
+      border-radius: 6px;
+      margin: 0 .5rem;
+      transition: all .2s;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .ds-sidebar-item:hover {
+      background: #f5f5f3;
+      color: #1C1C1C;
+    }
+
+    .ds-sidebar-item.active {
+      background: #1C1C1C;
+      color: #fff;
+    }
+
+    .ds-sidebar-label {
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: #aaa;
+      padding: .5rem 1.25rem .25rem;
+      margin-top: .75rem;
+    }
+
+    /* Pagination */
+    .ds-pagination {
+      display: flex;
+      align-items: center;
+      gap: .25rem;
+    }
+
+    .ds-page-btn {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: .875rem;
+      cursor: pointer;
+      background: #fff;
+      color: #6b6b6b;
+      transition: all .2s;
+      user-select: none;
+    }
+
+    .ds-page-btn:hover {
+      background: #f5f5f3;
+      color: #1C1C1C;
+      border-color: #aaa;
+    }
+
+    .ds-page-btn.active {
+      background: #1C1C1C;
+      color: #fff;
+      border-color: #1C1C1C;
+    }
+
+    .ds-page-btn:disabled {
+      opacity: .4;
+      cursor: not-allowed;
+    }
+
+    /* Stepper */
+    .ds-stepper {
+      display: flex;
+      align-items: flex-start;
+      gap: 0;
+    }
+
+    .ds-step {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    .ds-step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 16px;
+      left: calc(50% + 16px);
+      width: calc(100% - 32px);
+      height: 1px;
+      background: #e5e5e5;
+    }
+
+    .ds-step.done:not(:last-child)::after {
+      background: #1C1C1C;
+    }
+
+    .ds-step-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid #e5e5e5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      font-size: .75rem;
+      font-weight: 600;
+      color: #aaa;
+      position: relative;
+      z-index: 1;
+      transition: all .4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .ds-step.done .ds-step-circle {
+      background: #1C1C1C;
+      border-color: #1C1C1C;
+      color: #fff;
+    }
+
+    .ds-step.active .ds-step-circle {
+      border-color: #1C1C1C;
+      color: #1C1C1C;
+      box-shadow: 0 0 0 4px rgba(28, 28, 28, 0.08);
+    }
+
+    .ds-step-label {
+      font-size: .7rem;
+      color: #aaa;
+      margin-top: .5rem;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    .ds-step.active .ds-step-label,
+    .ds-step.done .ds-step-label {
+      color: #1C1C1C;
+    }
+
+    /* Table */
+    .ds-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .875rem;
+    }
+
+    .ds-table th {
+      text-align: left;
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #aaa;
+      padding: .75rem 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .ds-table td {
+      padding: .875rem 1rem;
+      border-bottom: 1px solid #f5f5f3;
+      color: #3d3d3d;
+      vertical-align: middle;
+    }
+
+    .ds-table tbody tr {
+      transition: background .2s;
+    }
+
+    .ds-table tbody tr:hover {
+      background: #f9f9f7;
+    }
+
+    .ds-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Chips / Tags */
+    .ds-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      padding: .3rem .75rem;
+      border-radius: 9999px;
+      font-size: .75rem;
+      font-weight: 500;
+      border: 1px solid var(--border);
+      background: #f5f5f3;
+      color: #6b6b6b;
+      cursor: pointer;
+      transition: all .2s;
+      user-select: none;
+    }
+
+    .ds-chip:hover {
+      background: #e5e5e5;
+      color: #1C1C1C;
+    }
+
+    .ds-chip.active {
+      background: #1C1C1C;
+      color: #fff;
+      border-color: #1C1C1C;
+    }
+
+    .ds-chip .chip-remove {
+      opacity: .6;
+      transition: opacity .2s;
+      font-size: 1rem;
+      line-height: 1;
+    }
+
+    .ds-chip .chip-remove:hover {
+      opacity: 1;
+    }
+
+    /* Avatar */
+    .ds-avatar {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-weight: 600;
+      font-size: .75rem;
+      flex-shrink: 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .ds-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .ds-avatar-sm {
+      width: 28px;
+      height: 28px;
+      font-size: .625rem;
+    }
+
+    .ds-avatar-md {
+      width: 40px;
+      height: 40px;
+    }
+
+    .ds-avatar-lg {
+      width: 56px;
+      height: 56px;
+      font-size: .875rem;
+    }
+
+    .ds-avatar-xl {
+      width: 72px;
+      height: 72px;
+      font-size: 1rem;
+    }
+
+    .ds-avatar-stack {
+      display: flex;
+    }
+
+    .ds-avatar-stack .ds-avatar {
+      border: 2px solid #fff;
+      margin-left: -8px;
+    }
+
+    .ds-avatar-stack .ds-avatar:first-child {
+      margin-left: 0;
+    }
+
+    /* Badge on avatar */
+    .ds-badge-dot {
+      position: absolute;
+      bottom: 1px;
+      right: 1px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #16a34a;
+      border: 2px solid #fff;
+    }
+
+    /* Floating Action Button */
+    .ds-fab {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: #1C1C1C;
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      border: none;
+      transition: all .3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ds-fab:hover {
+      transform: scale(1.08);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    .ds-fab:active {
+      transform: scale(0.96);
+    }
+
+    .ds-fab::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle at center, rgba(255, 255, 255, 0.15), transparent 70%);
+      opacity: 0;
+      transition: opacity .3s;
+    }
+
+    .ds-fab:hover::before {
+      opacity: 1;
+    }
+
+    /* Icon Button */
+    .ds-icon-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #6b6b6b;
+      transition: all .2s;
+      flex-shrink: 0;
+    }
+
+    .ds-icon-btn:hover {
+      background: #f5f5f3;
+      color: #1C1C1C;
+      border-color: #aaa;
+    }
+
+    .ds-icon-btn.rounded {
+      border-radius: 50%;
+    }
+
+    /* Date Picker specimen */
+    .ds-datepicker {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem;
+      width: 280px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .ds-datepicker-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .ds-datepicker-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 2px;
+    }
+
+    .ds-datepicker-cell {
+      width: 100%;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .75rem;
+      border-radius: 4px;
+      cursor: pointer;
+      color: #6b6b6b;
+      transition: all .2s;
+    }
+
+    .ds-datepicker-cell:hover {
+      background: #f5f5f3;
+      color: #1C1C1C;
+    }
+
+    .ds-datepicker-cell.today {
+      font-weight: 700;
+      color: #1C1C1C;
+    }
+
+    .ds-datepicker-cell.selected {
+      background: #1C1C1C;
+      color: #fff;
+    }
+
+    .ds-datepicker-cell.other-month {
+      opacity: .3;
+    }
+
+    .ds-datepicker-day-label {
+      font-size: .65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #aaa;
+      text-align: center;
+      padding: .25rem 0;
+    }
+
+    /* List items */
+    .ds-list {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .ds-list-item {
+      display: flex;
+      align-items: center;
+      gap: .875rem;
+      padding: .875rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      transition: background .2s;
+      cursor: pointer;
+    }
+
+    .ds-list-item:last-child {
+      border-bottom: none;
+    }
+
+    .ds-list-item:hover {
+      background: #f9f9f7;
+    }
+
+    /* Kbd */
+    kbd {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: .1em .45em;
+      border: 1px solid #ccc;
+      border-bottom-width: 2px;
+      border-radius: 4px;
+      font-family: 'Space Mono', monospace;
+      font-size: .7rem;
+      background: #f5f5f3;
+      color: #3d3d3d;
+    }
+  </style>
+</head>
+
+<body class="antialiased min-h-screen selection:bg-stone-800 selection:text-white">
+
+  <!-- ═══════════════════════════════════════════════
+  NAVIGATION
+═══════════════════════════════════════════════ -->
+  <header id="main-nav" class="fixed top-0 left-0 right-0 z-[100] nav-load"
+    style="background:rgba(255,255,255,0.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,0,0,0.08);">
+    <div class="max-w-[1400px] mx-auto flex justify-between items-center px-6 py-4">
+      <div class="flex items-center gap-8">
+        <a href="#typography"
+          class="text-xs font-medium tracking-widest uppercase hover:opacity-50 transition-opacity">Tipografia</a>
+        <a href="#colors"
+          class="text-xs font-medium tracking-widest uppercase hover:opacity-50 transition-opacity hidden md:block">Cores</a>
+        <a href="#components"
+          class="text-xs font-medium tracking-widest uppercase hover:opacity-50 transition-opacity hidden md:block">Componentes</a>
+      </div>
+      <div class="absolute left-1/2 -translate-x-1/2 flex items-center gap-2 group cursor-pointer">
+        <iconify-icon icon="solar:atom-linear"
+          class="text-xl group-hover:rotate-180 transition-transform duration-700"></iconify-icon>
+        <span class="font-bold tracking-tighter text-base">DESIGN SYSTEM</span>
+      </div>
+      <div class="flex items-center gap-8">
+        <a href="#icons"
+          class="text-xs font-medium tracking-widest uppercase hover:opacity-50 transition-opacity hidden md:block">Ícones</a>
+        <a href="#motion"
+          class="text-xs font-medium tracking-widest uppercase hover:opacity-50 transition-opacity hidden md:block">Motion</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════
+  HERO — FIRST FOLD
+═══════════════════════════════════════════════ -->
+  <section class="relative min-h-screen flex flex-col overflow-hidden" style="background:#1C1C1C;">
+
+    <!-- Orbs / Glow -->
+    <div class="orb w-[600px] h-[600px] bg-white/5" style="top:-200px;left:-150px;animation-delay:0s;"></div>
+    <div class="orb w-[400px] h-[400px] bg-white/5" style="bottom:-100px;right:-100px;animation-delay:-4s;"></div>
+
+    <!-- Interactive dot canvas -->
+    <canvas id="hero-dots-canvas" class="absolute inset-0 w-full h-full"
+      style="z-index:1;pointer-events:none;"></canvas>
+
+    <!-- Nav bar spacer -->
+    <div class="h-16"></div>
+
+    <!-- HERO CONTENT -->
+    <div
+      class="flex-1 max-w-[1400px] mx-auto w-full px-6 md:px-12 grid grid-cols-1 md:grid-cols-12 gap-0 relative z-10">
+
+      <!-- LEFT: Big title -->
+      <div class="md:col-span-8 flex flex-col justify-center py-16 md:py-24">
+        <div class="mb-6 reveal hero-el">
+          <span class="badge" style="border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.6);">
+            <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse inline-block"></span>
+            v2.0 — 2025
+          </span>
+        </div>
+
+        <!-- Main headline w/ masked reveal -->
+        <h1 class="leading-none tracking-tighter font-semibold text-white" id="hero-title"
+          style="font-size:clamp(3.5rem,9vw,8rem);">
+          <span class="text-reveal-wrapper block"><span class="text-reveal-content delay-100">Design</span></span>
+          <span class="text-reveal-wrapper block"><span class="text-reveal-content delay-200">System</span></span>
+          <span class="text-reveal-wrapper block"
+            style="-webkit-text-stroke:2px rgba(255,255,255,0.2);color:transparent;"><span
+              class="text-reveal-content delay-300">Color</span></span>
+        </h1>
+
+        <p class="mt-8 text-white/50 text-lg leading-relaxed max-w-lg reveal delay-500 hero-el"
+          style="font-weight:300;">
+          Um sistema de design completo — tipografia, cores, componentes, ícones e animações em harmonia perfeita.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="mt-10 flex flex-wrap items-center gap-4 reveal delay-700 hero-el">
+          <!-- Beam button -->
+          <a href="#typography"
+            class="beam-btn inline-flex items-center gap-2 bg-white text-black px-8 py-3.5 rounded-full text-sm font-semibold transition-all duration-300 hover:bg-white/90 relative overflow-hidden shimmer-btn group">
+            <div class="beam-ring"></div>
+            <span class="relative z-10">Explorar Sistema</span>
+            <iconify-icon icon="solar:arrow-right-linear"
+              class="relative z-10 group-hover:translate-x-1 transition-transform"></iconify-icon>
+          </a>
+          <!-- Outline button -->
+          <a href="#colors"
+            class="inline-flex items-center gap-2 border border-white/20 text-white px-8 py-3.5 rounded-full text-sm font-medium hover:bg-white/5 transition-all duration-300">
+            Ver Paleta
+            <iconify-icon icon="solar:palette-linear"></iconify-icon>
+          </a>
+        </div>
+      </div>
+
+      <!-- RIGHT: Stats panel -->
+      <div
+        class="md:col-span-4 flex flex-col justify-center py-16 border-l border-white/5 pl-12 gap-0 reveal delay-300 hero-el">
+        <!-- Stat 1 -->
+        <div class="border-b border-white/10 pb-10 mb-10 group hover:border-white/30 transition-colors">
+          <iconify-icon icon="solar:layers-minimalistic-linear"
+            class="text-3xl text-white/30 group-hover:text-white transition-colors mb-4 block"></iconify-icon>
+          <div class="text-6xl font-semibold tracking-tighter text-white">24</div>
+          <div class="text-xs font-mono uppercase tracking-widest text-white/30 mt-1">Componentes</div>
+        </div>
+        <!-- Stat 2 -->
+        <div class="border-b border-white/10 pb-10 mb-10 group hover:border-white/30 transition-colors">
+          <iconify-icon icon="solar:palette-linear"
+            class="text-3xl text-white/30 group-hover:text-white transition-colors mb-4 block"></iconify-icon>
+          <div class="text-6xl font-semibold tracking-tighter text-white">08</div>
+          <div class="text-xs font-mono uppercase tracking-widest text-white/30 mt-1">Escalas de Cor</div>
+        </div>
+        <!-- Stat 3 -->
+        <div class="group">
+          <iconify-icon icon="solar:bolt-linear"
+            class="text-3xl text-white/30 group-hover:text-white transition-colors mb-4 block"></iconify-icon>
+          <div class="text-6xl font-semibold tracking-tighter text-white">12</div>
+          <div class="text-xs font-mono uppercase tracking-widest text-white/30 mt-1">Animações</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Marquee divider at bottom -->
+    <div class="border-t border-white/10 overflow-hidden py-4">
+      <div class="marquee-container">
+        <div class="marquee-content">
+          <span class="text-xs font-mono uppercase tracking-widest text-white/20 mx-8">Design System</span>
+          <span class="text-white/10 mx-8">×</span>
+          <span class="text-xs font-mono uppercase tracking-widest text-white/20 mx-8">Tipografia</span>
+          <span class="text-white/10 mx-8">×</span>
+          <span class="text-xs font-mono uppercase tracking-widest text-white/20 mx-8">Cores</span>
+          <span class="text-white/10 mx-8">×</span>
+          <span class="text-xs font-mono uppercase tracking-widest text-white/20 mx-8">Componentes</span>
+          <span class="text-white/10 mx-8">×</span>
+          <span class="text-xs font-mono uppercase tracking-widest text-white/20 mx-8">Ícones</span>
+          <span class="text-white/10 mx-8">×</span>
+          <span class="text-xs font-mono uppercase tracking-widest text-white/20 mx-8">Animações</span>
+          <span class="text-white/10 mx-8">×</span>
+        </div>
+        <div class="marquee-content" aria-hidden="true">
+          <span class="text-xs font-mono uppercase tracking-widest text-white/20 mx-8">Design System</span>
+          <span class="text-white/10 mx-8">×</span>
+          <span class="text-xs font-mono uppercase tracking-widest text-white/20 mx-8">Tipografia</span>
+          <span class="text-white/10 mx-8">×</span>
+          <span class="text-xs font-mono uppercase tracking-widest text-white/20 mx-8">Cores</span>
+          <span class="text-white/10 mx-8">×</span>
+          <span class="text-xs font-mono uppercase tracking-widest text-white/20 mx-8">Componentes</span>
+          <span class="text-white/10 mx-8">×</span>
+          <span class="text-xs font-mono uppercase tracking-widest text-white/20 mx-8">Ícones</span>
+          <span class="text-white/10 mx-8">×</span>
+          <span class="text-xs font-mono uppercase tracking-widest text-white/20 mx-8">Animações</span>
+          <span class="text-white/10 mx-8">×</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+  01 TYPOGRAPHY
+═══════════════════════════════════════ -->
+  <section id="typography" class="relative border-b" style="border-color:var(--border);">
+    <div class="max-w-[1400px] mx-auto">
+      <!-- Header -->
+      <div class="p-8 md:p-12 border-b" style="border-color:var(--border);background:#f9f9f7;">
+        <span class="section-label block mb-2">01 / Fundamentos</span>
+        <h2 class="text-4xl font-medium tracking-tight reveal">Tipografia</h2>
+      </div>
+      <!-- Font meta -->
+      <div class="grid grid-cols-1 md:grid-cols-3 border-b" style="border-color:var(--border);">
+        <div class="p-8 border-b md:border-b-0 md:border-r reveal" style="border-color:var(--border);">
+          <div class="section-label mb-3">Primary</div>
+          <div class="text-2xl font-semibold tracking-tight">Inter</div>
+          <div class="text-sm text-stone-500 mt-1 font-mono">Variable — 100..900</div>
+          <div class="mt-4 text-sm text-stone-400">Google Fonts CDN</div>
+        </div>
+        <div class="p-8 border-b md:border-b-0 md:border-r reveal delay-100" style="border-color:var(--border);">
+          <div class="section-label mb-3">Monospace</div>
+          <div class="text-2xl font-bold tracking-tight" style="font-family:'Space Mono',monospace;">Space Mono</div>
+          <div class="text-sm text-stone-500 mt-1 font-mono">400, 700</div>
+          <div class="mt-4 text-sm text-stone-400">Labels, código, captions</div>
+        </div>
+        <div class="p-8 reveal delay-200">
+          <div class="section-label mb-3">Fallback Stack</div>
+          <div class="text-base leading-relaxed text-stone-500 font-mono text-sm">Inter → system-ui → -apple-system →
+            sans-serif</div>
+        </div>
+      </div>
+      <!-- Type scale -->
+      <style>
+        .type-row {
+          border-bottom: 1px solid var(--border);
+        }
+
+        .type-row:last-child {
+          border-bottom: none;
+        }
+
+        .type-css-block {
+          background: #f9f9f7;
+          border: 1px solid var(--border);
+          border-radius: 4px;
+          padding: 1rem 1.25rem;
+          font-family: 'Space Mono', monospace;
+          font-size: .68rem;
+          line-height: 1.8;
+          color: #6b6b6b;
+          white-space: pre;
+          overflow-x: auto;
+          flex-shrink: 0;
+        }
+
+        .type-css-block .prop {
+          color: #aaa;
+        }
+
+        .type-css-block .val {
+          color: #1C1C1C;
+        }
+
+        .type-css-block .comment {
+          color: #c5c5c5;
+        }
+      </style>
+      <div class="divide-y" style="border-color:var(--border);">
+
+        <!-- H1 Display -->
+        <div class="p-8 md:p-12 reveal type-row">
+          <div class="flex flex-col md:flex-row md:items-start gap-8">
+            <div class="md:w-32 flex-shrink-0">
+              <div class="section-label">Display H1</div>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h1 class="font-semibold tracking-tighter leading-none text-stone-900 mb-6"
+                style="font-size:clamp(2.5rem,6vw,5rem);">
+                <span class="text-reveal-wrapper"><span class="text-reveal-content">Digital Architect</span></span>
+              </h1>
+              <div class="type-css-block"><span class="comment">/* .text-display — h1 */</span>
+                <span class="prop">font-family: </span><span class="val">'Inter', system-ui, sans-serif;</span>
+                <span class="prop">font-weight: </span><span class="val">600;</span>
+                <span class="prop">font-size: </span><span class="val">clamp(3rem, 7vw, 6rem); /* 96px @ 1400px
+                  */</span>
+                <span class="prop">line-height: </span><span class="val">0.95;</span>
+                <span class="prop">letter-spacing: </span><span class="val">-0.04em;</span>
+                <span class="prop">text-transform: </span><span class="val">none;</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- H2 -->
+        <div class="p-8 md:p-12 reveal type-row">
+          <div class="flex flex-col md:flex-row md:items-start gap-8">
+            <div class="md:w-32 flex-shrink-0">
+              <div class="section-label">Heading H2</div>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h2 class="text-5xl font-medium tracking-tight text-stone-900 mb-6">Design &amp; Strategy</h2>
+              <div class="type-css-block"><span class="comment">/* .text-h2 — h2 */</span>
+                <span class="prop">font-family: </span><span class="val">'Inter', system-ui, sans-serif;</span>
+                <span class="prop">font-weight: </span><span class="val">500;</span>
+                <span class="prop">font-size: </span><span class="val">3rem; /* 48px */</span>
+                <span class="prop">line-height: </span><span class="val">1.1;</span>
+                <span class="prop">letter-spacing: </span><span class="val">-0.02em;</span>
+                <span class="prop">text-transform: </span><span class="val">none;</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- H3 -->
+        <div class="p-8 md:p-12 reveal type-row">
+          <div class="flex flex-col md:flex-row md:items-start gap-8">
+            <div class="md:w-32 flex-shrink-0">
+              <div class="section-label">Heading H3</div>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-4xl font-medium tracking-tight text-stone-900 mb-6">Case Studies</h3>
+              <div class="type-css-block"><span class="comment">/* .text-h3 — h3 */</span>
+                <span class="prop">font-family: </span><span class="val">'Inter', system-ui, sans-serif;</span>
+                <span class="prop">font-weight: </span><span class="val">500;</span>
+                <span class="prop">font-size: </span><span class="val">2.25rem; /* 36px */</span>
+                <span class="prop">line-height: </span><span class="val">1.2;</span>
+                <span class="prop">letter-spacing: </span><span class="val">-0.01em;</span>
+                <span class="prop">text-transform: </span><span class="val">none;</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- H4 -->
+        <div class="p-8 md:p-12 reveal type-row">
+          <div class="flex flex-col md:flex-row md:items-start gap-8">
+            <div class="md:w-32 flex-shrink-0">
+              <div class="section-label">Heading H4</div>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h4 class="text-3xl font-medium text-stone-900 mb-6">Brand Identity</h4>
+              <div class="type-css-block"><span class="comment">/* .text-h4 — h4 */</span>
+                <span class="prop">font-family: </span><span class="val">'Inter', system-ui, sans-serif;</span>
+                <span class="prop">font-weight: </span><span class="val">500;</span>
+                <span class="prop">font-size: </span><span class="val">1.875rem; /* 30px */</span>
+                <span class="prop">line-height: </span><span class="val">1.3;</span>
+                <span class="prop">letter-spacing: </span><span class="val">-0.005em;</span>
+                <span class="prop">text-transform: </span><span class="val">none;</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- H5 -->
+        <div class="p-8 md:p-12 reveal type-row">
+          <div class="flex flex-col md:flex-row md:items-start gap-8">
+            <div class="md:w-32 flex-shrink-0">
+              <div class="section-label">Heading H5</div>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h5 class="text-2xl font-medium text-stone-900 mb-6">Visual Direction</h5>
+              <div class="type-css-block"><span class="comment">/* .text-h5 — h5 */</span>
+                <span class="prop">font-family: </span><span class="val">'Inter', system-ui, sans-serif;</span>
+                <span class="prop">font-weight: </span><span class="val">500;</span>
+                <span class="prop">font-size: </span><span class="val">1.5rem; /* 24px */</span>
+                <span class="prop">line-height: </span><span class="val">1.35;</span>
+                <span class="prop">letter-spacing: </span><span class="val">0em;</span>
+                <span class="prop">text-transform: </span><span class="val">none;</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- H6 -->
+        <div class="p-8 md:p-12 reveal type-row">
+          <div class="flex flex-col md:flex-row md:items-start gap-8">
+            <div class="md:w-32 flex-shrink-0">
+              <div class="section-label">Heading H6</div>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h6 class="text-xl font-semibold text-stone-900 mb-6">Section Title</h6>
+              <div class="type-css-block"><span class="comment">/* .text-h6 — h6 */</span>
+                <span class="prop">font-family: </span><span class="val">'Inter', system-ui, sans-serif;</span>
+                <span class="prop">font-weight: </span><span class="val">600;</span>
+                <span class="prop">font-size: </span><span class="val">1.25rem; /* 20px */</span>
+                <span class="prop">line-height: </span><span class="val">1.4;</span>
+                <span class="prop">letter-spacing: </span><span class="val">0em;</span>
+                <span class="prop">text-transform: </span><span class="val">none;</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Body LG -->
+        <div class="p-8 md:p-12 reveal type-row">
+          <div class="flex flex-col md:flex-row md:items-start gap-8">
+            <div class="md:w-32 flex-shrink-0">
+              <div class="section-label">Body Large</div>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="text-lg leading-relaxed text-stone-700 mb-6">Thoughts on the intersection of design, technology,
+                and human psychology. Exploring how we can build better tools for thought.</p>
+              <div class="type-css-block"><span class="comment">/* .body-lg */</span>
+                <span class="prop">font-family: </span><span class="val">'Inter', system-ui, sans-serif;</span>
+                <span class="prop">font-weight: </span><span class="val">400;</span>
+                <span class="prop">font-size: </span><span class="val">1.125rem; /* 18px */</span>
+                <span class="prop">line-height: </span><span class="val">1.75;</span>
+                <span class="prop">letter-spacing: </span><span class="val">0em;</span>
+                <span class="prop">text-transform: </span><span class="val">none;</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Body -->
+        <div class="p-8 md:p-12 reveal type-row">
+          <div class="flex flex-col md:flex-row md:items-start gap-8">
+            <div class="md:w-32 flex-shrink-0">
+              <div class="section-label">Body</div>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="text-base leading-relaxed text-stone-600 mb-6">Standard body copy used across paragraphs,
+                descriptions and interface text. Maintains readability at a comfortable measure across all viewports.
+              </p>
+              <div class="type-css-block"><span class="comment">/* .body — default */</span>
+                <span class="prop">font-family: </span><span class="val">'Inter', system-ui, sans-serif;</span>
+                <span class="prop">font-weight: </span><span class="val">400;</span>
+                <span class="prop">font-size: </span><span class="val">1rem; /* 16px */</span>
+                <span class="prop">line-height: </span><span class="val">1.625;</span>
+                <span class="prop">letter-spacing: </span><span class="val">0em;</span>
+                <span class="prop">text-transform: </span><span class="val">none;</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Body SM -->
+        <div class="p-8 md:p-12 reveal type-row">
+          <div class="flex flex-col md:flex-row md:items-start gap-8">
+            <div class="md:w-32 flex-shrink-0">
+              <div class="section-label">Body Small</div>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="text-sm leading-relaxed text-stone-500 mb-6">Helper text, captions, and secondary descriptors.
+                Used sparingly to support primary content without competing for visual hierarchy.</p>
+              <div class="type-css-block"><span class="comment">/* .body-sm */</span>
+                <span class="prop">font-family: </span><span class="val">'Inter', system-ui, sans-serif;</span>
+                <span class="prop">font-weight: </span><span class="val">400;</span>
+                <span class="prop">font-size: </span><span class="val">0.875rem; /* 14px */</span>
+                <span class="prop">line-height: </span><span class="val">1.5;</span>
+                <span class="prop">letter-spacing: </span><span class="val">0em;</span>
+                <span class="prop">text-transform: </span><span class="val">none;</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Caption -->
+        <div class="p-8 md:p-12 reveal type-row">
+          <div class="flex flex-col md:flex-row md:items-start gap-8">
+            <div class="md:w-32 flex-shrink-0">
+              <div class="section-label">Caption</div>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="text-xs text-stone-400 leading-normal mb-6">Usado em datas, rodapés de cards, notas de rodapé e
+                timestamps de interfaces.</p>
+              <div class="type-css-block"><span class="comment">/* .caption */</span>
+                <span class="prop">font-family: </span><span class="val">'Inter', system-ui, sans-serif;</span>
+                <span class="prop">font-weight: </span><span class="val">400;</span>
+                <span class="prop">font-size: </span><span class="val">0.75rem; /* 12px */</span>
+                <span class="prop">line-height: </span><span class="val">1.4;</span>
+                <span class="prop">letter-spacing: </span><span class="val">0em;</span>
+                <span class="prop">text-transform: </span><span class="val">none;</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Label / Mono -->
+        <div class="p-8 md:p-12 reveal type-row">
+          <div class="flex flex-col md:flex-row md:items-start gap-8">
+            <div class="md:w-32 flex-shrink-0">
+              <div class="section-label">Label / Mono</div>
+            </div>
+            <div class="flex-1 min-w-0">
+              <span class="text-xs font-mono uppercase tracking-widest text-stone-400 mb-6 block">Currently available
+                for Q4 2025</span>
+              <div class="type-css-block"><span class="comment">/* .label — monospace labels, section tags */</span>
+                <span class="prop">font-family: </span><span class="val">'Space Mono', monospace;</span>
+                <span class="prop">font-weight: </span><span class="val">400;</span>
+                <span class="prop">font-size: </span><span class="val">0.6875rem; /* 11px */</span>
+                <span class="prop">line-height: </span><span class="val">1.4;</span>
+                <span class="prop">letter-spacing: </span><span class="val">0.15em;</span>
+                <span class="prop">text-transform: </span><span class="val">uppercase;</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- Transparent text hero -->
+      <div class="relative overflow-hidden py-20 border-t" style="border-color:var(--border);background:#1C1C1C;">
+        <div class="absolute inset-0 bg-dots-white opacity-30"></div>
+        <div class="relative z-10 text-center px-6">
+          <span class="section-label text-white/30 block mb-8">Lettering Transparente — Efeito Assinatura</span>
+          <div class="text-ghost"
+            style="font-size:clamp(4rem,12vw,10rem);color:transparent;-webkit-text-stroke:2px rgba(255,255,255,0.15);">
+            SYSTEM
+          </div>
+          <div class="text-ghost mt-2"
+            style="font-size:clamp(4rem,12vw,10rem);color:transparent;-webkit-text-stroke:1px rgba(255,255,255,0.06);">
+            DESIGN
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+  02 COLORS
+═══════════════════════════════════════ -->
+  <section id="colors" class="relative border-b" style="border-color:var(--border);">
+    <div class="max-w-[1400px] mx-auto">
+      <div class="p-8 md:p-12 border-b" style="border-color:var(--border);background:#f9f9f7;">
+        <span class="section-label block mb-2">02 / Fundamentos</span>
+        <h2 class="text-4xl font-medium tracking-tight reveal">Sistema de Cores</h2>
+      </div>
+      <!-- Primary palette -->
+      <div class="p-8 md:p-12 border-b" style="border-color:var(--border);">
+        <span class="section-label block mb-6 reveal">Primária — Neutros</span>
+        <div class="grid grid-cols-2 md:grid-cols-6 gap-3">
+          <div class="swatch reveal" style="background:#1C1C1C;"><span class="text-white text-xs font-bold">Stone
+              900</span><span class="text-white/50 font-mono text-xs">#1C1C1C</span></div>
+          <div class="swatch reveal delay-100" style="background:#3D3D3D;"><span
+              class="text-white text-xs font-bold">Stone 700</span><span
+              class="text-white/50 font-mono text-xs">#3D3D3D</span></div>
+          <div class="swatch reveal delay-100" style="background:#6B6B6B;"><span
+              class="text-white text-xs font-bold">Stone 500</span><span
+              class="text-white/50 font-mono text-xs">#6B6B6B</span></div>
+          <div class="swatch reveal delay-200" style="background:#A8A8A8;"><span
+              class="text-white text-xs font-bold">Stone 300</span><span
+              class="text-xs font-mono text-white/60">#A8A8A8</span></div>
+          <div class="swatch reveal delay-300" style="background:#EAEAE5;border:1px solid #ddd;"><span
+              class="text-stone-800 text-xs font-bold">Stone 100</span><span
+              class="text-stone-500 font-mono text-xs">#EAEAE5</span></div>
+          <div class="swatch reveal delay-500" style="background:#FFFFFF;border:1px solid #e5e5e5;"><span
+              class="text-stone-800 text-xs font-bold">White</span><span
+              class="text-stone-400 font-mono text-xs">#FFFFFF</span></div>
+        </div>
+      </div>
+      <!-- Semantic roles -->
+      <div class="p-8 md:p-12 border-b" style="border-color:var(--border);">
+        <span class="section-label block mb-6 reveal">Papéis Semânticos</span>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Text roles -->
+          <div class="ds-card p-6 reveal">
+            <div class="section-label mb-4">Texto</div>
+            <div class="space-y-3">
+              <div class="flex items-center justify-between"><span class="text-sm">Primary</span><span
+                  class="w-5 h-5 rounded-full border" style="background:#1C1C1C;"></span></div>
+              <div class="flex items-center justify-between"><span class="text-sm">Secondary</span><span
+                  class="w-5 h-5 rounded-full border" style="background:#6B6B6B;"></span></div>
+              <div class="flex items-center justify-between"><span class="text-sm">Disabled</span><span
+                  class="w-5 h-5 rounded-full border" style="background:#A8A8A8;"></span></div>
+            </div>
+          </div>
+          <!-- BG roles -->
+          <div class="ds-card p-6 reveal delay-100">
+            <div class="section-label mb-4">Background</div>
+            <div class="space-y-3">
+              <div class="flex items-center justify-between"><span class="text-sm">Surface</span><span
+                  class="w-5 h-5 rounded-full border" style="background:#FFFFFF;"></span></div>
+              <div class="flex items-center justify-between"><span class="text-sm">Off-White</span><span
+                  class="w-5 h-5 rounded-full border" style="background:#F5F5F3;"></span></div>
+              <div class="flex items-center justify-between"><span class="text-sm">Dark</span><span
+                  class="w-5 h-5 rounded-full border" style="background:#1C1C1C;"></span></div>
+            </div>
+          </div>
+          <!-- Feedback -->
+          <div class="ds-card p-6 reveal delay-200">
+            <div class="section-label mb-4">Feedback</div>
+            <div class="space-y-3">
+              <div class="flex items-center justify-between"><span class="text-sm">Success</span><span class="badge"
+                  style="background:#e6f4ea;color:#1e7e34;font-size:10px;">AA Pass</span></div>
+              <div class="flex items-center justify-between"><span class="text-sm">Warning</span><span class="badge"
+                  style="background:#fff8e1;color:#b45309;font-size:10px;">AA Pass</span></div>
+              <div class="flex items-center justify-between"><span class="text-sm">Error</span><span class="badge"
+                  style="background:#fee2e2;color:#b91c1c;font-size:10px;">AAA</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Gradient & Opacity -->
+      <div class="p-8 md:p-12" style="">
+        <span class="section-label block mb-6 reveal">Gradientes &amp; Opacidades</span>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="reveal h-32 rounded" style="background:linear-gradient(135deg,#1C1C1C 0%,#3D3D3D 100%);"></div>
+          <div class="reveal delay-100 h-32 rounded"
+            style="background:linear-gradient(135deg,#FFFFFF 0%,#EAEAE5 100%);border:1px solid #e5e5e5;"></div>
+          <div class="reveal delay-200 h-32 rounded flex items-center justify-center"
+            style="background:linear-gradient(135deg,#1C1C1C 0%,#000 100%);">
+            <span class="text-ghost"
+              style="font-size:3rem;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,0.3);">GHOST</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+  03 UI COMPONENTS
+═══════════════════════════════════════ -->
+  <section id="components" class="relative border-b" style="border-color:var(--border);">
+    <div class="max-w-[1400px] mx-auto">
+      <div class="p-8 md:p-12 border-b" style="border-color:var(--border);background:#f9f9f7;">
+        <span class="section-label block mb-2">03 / Interface</span>
+        <h2 class="text-4xl font-medium tracking-tight reveal">Componentes UI</h2>
+      </div>
+
+      <!-- BUTTONS -->
+      <div class="p-8 md:p-12 border-b" style="border-color:var(--border);">
+        <h3 class="text-sm font-bold uppercase tracking-widest mb-8 reveal">Botões &amp; Ações</h3>
+        <div class="flex flex-wrap gap-6 items-center">
+          <!-- Primary -->
+          <div class="flex flex-col gap-2 items-start reveal">
+            <button
+              class="shimmer-btn px-6 py-3 bg-stone-900 text-white rounded-md text-sm font-medium hover:bg-stone-700 transition-all flex items-center gap-2 group">
+              Primary Action
+              <iconify-icon icon="solar:file-download-linear"
+                class="text-lg group-hover:translate-y-1 transition-transform"></iconify-icon>
+            </button>
+            <span class="section-label">Primary</span>
+          </div>
+          <!-- Outline pill -->
+          <div class="flex flex-col gap-2 items-start reveal delay-100">
+            <a href="#"
+              class="beam-btn inline-flex items-center gap-2 text-sm font-medium uppercase tracking-widest border border-stone-900 rounded-full px-8 py-3 hover:bg-stone-900 hover:text-white transition-all relative overflow-hidden">
+              <div class="beam-ring"></div>
+              Secondary
+              <iconify-icon icon="solar:arrow-right-linear"></iconify-icon>
+            </a>
+            <span class="section-label">Outline + Beam</span>
+          </div>
+          <!-- Ghost -->
+          <div class="flex flex-col gap-2 items-start reveal delay-200">
+            <button
+              class="px-6 py-3 text-sm font-medium text-stone-600 hover:text-stone-900 border-b border-stone-400 hover:border-stone-900 pb-1 transition-colors">
+              Ghost Link
+            </button>
+            <span class="section-label">Ghost / Text</span>
+          </div>
+          <!-- Glow -->
+          <div class="flex flex-col gap-2 items-start reveal delay-300">
+            <button
+              class="glow-btn shimmer-btn px-6 py-3 bg-stone-900 text-white rounded-full text-sm font-semibold hover:bg-stone-700 transition-all"
+              style="">
+              Glow Effect
+            </button>
+            <span class="section-label">Glow Pulse</span>
+          </div>
+          <!-- Dark Inverted -->
+          <div class="flex flex-col gap-2 items-start reveal delay-500"
+            style="background:#1C1C1C;padding:1rem;border-radius:4px;">
+            <button
+              class="shimmer-btn inline-flex items-center gap-3 bg-white text-black px-6 py-3 rounded-full text-sm font-semibold hover:bg-white/90 transition-all group overflow-hidden relative">
+              <span class="absolute inset-0 overflow-hidden rounded-full"><span
+                  class="absolute top-0 left-0 h-full w-full -skew-x-12 bg-gradient-to-r from-transparent via-black/10 to-transparent opacity-0 group-hover:animate-[shimmer_1.5s_infinite] group-hover:opacity-100"></span></span>
+              <span class="relative z-10 flex items-center gap-2">
+                Get Access
+                <iconify-icon icon="solar:arrow-right-bold-duotone"
+                  class="group-hover:translate-x-1 transition-transform"></iconify-icon>
+              </span>
+            </button>
+            <span class="section-label" style="color:rgba(255,255,255,0.3);">Inverted + Shimmer</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- INPUTS -->
+      <div class="p-8 md:p-12 border-b" style="border-color:var(--border);">
+        <h3 class="text-sm font-bold uppercase tracking-widest mb-8 reveal">Inputs &amp; Forms</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl">
+          <div class="reveal">
+            <label class="section-label block mb-2">Text Input</label>
+            <input type="text" class="input-field" placeholder="Digite algo..." />
+          </div>
+          <div class="reveal delay-100">
+            <label class="section-label block mb-2">Search</label>
+            <div class="relative">
+              <input type="text" class="input-field" placeholder="Buscar..." style="padding-left:2.5rem;" />
+              <iconify-icon icon="solar:magnifer-linear"
+                class="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400"></iconify-icon>
+            </div>
+          </div>
+          <div class="reveal delay-200">
+            <label class="section-label block mb-2">Textarea</label>
+            <textarea class="input-field" rows="3" placeholder="Escreva aqui..."></textarea>
+          </div>
+          <div class="reveal delay-300">
+            <label class="section-label block mb-2">Select</label>
+            <div class="relative">
+              <select class="input-field appearance-none" style="cursor:pointer;">
+                <option>Opção 1</option>
+                <option>Opção 2</option>
+              </select>
+              <iconify-icon icon="solar:alt-arrow-down-linear"
+                class="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none"></iconify-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARDS -->
+      <div class="p-8 md:p-12 border-b" style="border-color:var(--border);">
+        <h3 class="text-sm font-bold uppercase tracking-widest mb-8 reveal">Cards</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Basic card -->
+          <div class="ds-card p-6 reveal flashlight-card relative overflow-hidden" style="cursor:default;"
+            onmousemove="this.style.setProperty('--mx',event.offsetX+'px');this.style.setProperty('--my',event.offsetY+'px');">
+            <iconify-icon icon="solar:layers-minimalistic-linear"
+              class="text-2xl text-stone-400 mb-4 block"></iconify-icon>
+            <h4 class="text-xl font-medium mb-2">Card Básico</h4>
+            <p class="text-sm text-stone-500 leading-relaxed">Efeito flashlight ao mover o cursor sobre o card.</p>
+          </div>
+          <!-- Project card -->
+          <div class="group ds-card overflow-hidden reveal delay-100 cursor-pointer">
+            <div class="p-6">
+              <div class="flex items-center gap-3 mb-4">
+                <span class="section-label">01</span>
+                <div class="h-px flex-1 bg-stone-200"></div>
+                <span class="badge" style="border:1px solid #e5e5e5;color:#6b6b6b;">UI/UX</span>
+              </div>
+              <h4
+                class="text-2xl font-medium tracking-tight group-hover:translate-x-1 transition-transform duration-500">
+                Project Card</h4>
+              <p class="text-sm text-stone-500 mt-2 leading-relaxed">Com hover state no título e bordes animadas.</p>
+            </div>
+            <div
+              class="h-32 bg-stone-100 group-hover:bg-stone-200 transition-colors duration-500 flex items-center justify-center">
+              <iconify-icon icon="solar:gallery-minimalistic-linear"
+                class="text-3xl text-stone-300 group-hover:scale-110 transition-transform duration-500"></iconify-icon>
+            </div>
+          </div>
+          <!-- Stats card -->
+          <div class="ds-card p-6 group reveal delay-200">
+            <div class="flex justify-between items-start mb-6">
+              <iconify-icon icon="solar:chart-linear"
+                class="text-2xl text-stone-400 group-hover:text-stone-800 transition-colors"></iconify-icon>
+              <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                <iconify-icon icon="solar:star-fall-linear" class="text-stone-200 text-4xl"></iconify-icon>
+              </div>
+            </div>
+            <div class="text-5xl font-semibold tracking-tighter">98%</div>
+            <div class="section-label mt-1">SATISFACTION</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BADGES & TOOLTIPS -->
+      <div class="p-8 md:p-12 border-b" style="border-color:var(--border);">
+        <h3 class="text-sm font-bold uppercase tracking-widest mb-8 reveal">Badges, Pills &amp; Tooltips</h3>
+        <div class="flex flex-wrap gap-4 items-center mb-8">
+          <span class="badge reveal" style="background:#1C1C1C;color:#fff;">Primary</span>
+          <span class="badge reveal delay-100" style="border:1px solid #1C1C1C;color:#1C1C1C;">Outline</span>
+          <span class="badge reveal delay-200" style="background:#EAEAE5;color:#6b6b6b;">Neutral</span>
+          <span class="badge reveal delay-300" style="background:#e6f4ea;color:#1e7e34;"><span
+              class="w-1.5 h-1.5 rounded-full bg-green-500 inline-block mr-1"></span>Success</span>
+          <span class="badge reveal delay-500" style="background:#fee2e2;color:#b91c1c;">Error</span>
+          <span class="badge reveal delay-700 border border-white/40 backdrop-blur-md"
+            style="background:rgba(28,28,28,0.8);color:#fff;">Glass Badge</span>
+        </div>
+        <!-- Tooltips -->
+        <div class="flex flex-wrap gap-6 items-center">
+          <div class="tooltip-wrap reveal">
+            <button class="px-4 py-2 border border-stone-300 rounded text-sm">Hover me</button>
+            <div class="tooltip-box">Dica de ferramenta</div>
+          </div>
+          <div class="tooltip-wrap reveal delay-100">
+            <iconify-icon icon="solar:info-circle-linear" class="text-2xl text-stone-400 cursor-pointer"></iconify-icon>
+            <div class="tooltip-box">Informação adicional aqui</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- NAVBAR SPECIMEN -->
+      <div class="p-8 md:p-12 border-b" style="border-color:var(--border);">
+        <h3 class="text-sm font-bold uppercase tracking-widest mb-8 reveal">Navbar — Specimen</h3>
+        <div class="reveal" style="border:1px solid var(--border);border-radius:4px;overflow:hidden;">
+          <div class="flex justify-between items-center px-6 py-4 border-b"
+            style="background:rgba(255,255,255,0.9);backdrop-filter:blur(20px);border-color:var(--border);">
+            <div class="flex items-center gap-8">
+              <a href="#"
+                class="text-xs font-medium tracking-widest uppercase hover:opacity-50 transition-opacity">Work</a>
+              <a href="#"
+                class="text-xs font-medium tracking-widest uppercase hover:opacity-50 transition-opacity">About</a>
+            </div>
+            <div class="flex items-center gap-2">
+              <iconify-icon icon="solar:atom-linear" class="text-xl"></iconify-icon>
+              <span class="font-bold tracking-tighter">BRAND</span>
+            </div>
+            <div class="flex items-center gap-8">
+              <a href="#"
+                class="text-xs font-medium tracking-widest uppercase hover:opacity-50 transition-opacity">Writing</a>
+              <button
+                class="px-4 py-1.5 bg-stone-900 text-white rounded-full text-xs font-medium hover:bg-stone-700 transition-all">Contact</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL -->
+      <div class="p-8 md:p-12" style="">
+        <h3 class="text-sm font-bold uppercase tracking-widest mb-8 reveal">Modal</h3>
+        <button id="open-modal"
+          class="shimmer-btn px-6 py-3 bg-stone-900 text-white rounded-md text-sm font-medium hover:bg-stone-700 transition-all inline-flex items-center gap-2 reveal group overflow-hidden relative">
+          <iconify-icon icon="solar:widget-5-linear" class="group-hover:rotate-90 transition-transform"></iconify-icon>
+          Abrir Modal
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODAL OVERLAY -->
+  <div id="modal-overlay" class="modal-overlay">
+    <div class="modal-box">
+      <div class="flex justify-between items-start mb-6">
+        <div>
+          <div class="section-label mb-1">Componente</div>
+          <h3 class="text-2xl font-semibold tracking-tight">Modal Dialog</h3>
+        </div>
+        <button id="close-modal"
+          class="w-8 h-8 flex items-center justify-center hover:bg-stone-100 rounded transition-colors">
+          <iconify-icon icon="solar:close-circle-linear"></iconify-icon>
+        </button>
+      </div>
+      <p class="text-stone-500 text-sm leading-relaxed mb-6">Modal com backdrop blur, animação de entrada suave e
+        comportamento de fechamento ao clicar fora. Segue o sistema de design com bordas, tipografia e espaçamento
+        consistentes.</p>
+      <div class="flex gap-3">
+        <button id="close-modal-2"
+          class="px-5 py-2.5 bg-stone-900 text-white rounded text-sm font-medium hover:bg-stone-700 transition-all">Confirmar</button>
+        <button id="close-modal-3"
+          class="px-5 py-2.5 border border-stone-300 rounded text-sm font-medium hover:bg-stone-50 transition-all">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════
+  04 ICONS
+═══════════════════════════════════════ -->
+  <section id="icons" class="relative border-b dark-section">
+    <div class="max-w-[1400px] mx-auto">
+      <div class="p-8 md:p-12 border-b" style="border-color:rgba(255,255,255,0.08);background:rgba(255,255,255,0.02);">
+        <span class="section-label block mb-2" style="color:rgba(255,255,255,0.3);">04 / Assets</span>
+        <h2 class="text-4xl font-medium tracking-tight text-white reveal">Iconografia</h2>
+      </div>
+      <!-- Marquee icons -->
+      <div class="py-8 border-b overflow-hidden" style="border-color:rgba(255,255,255,0.08);">
+        <div class="marquee-container">
+          <div class="marquee-content">
+            <iconify-icon icon="solar:atom-linear" class="text-3xl text-white/20 mx-8"></iconify-icon>
+            <iconify-icon icon="solar:layers-minimalistic-linear" class="text-3xl text-white/20 mx-8"></iconify-icon>
+            <iconify-icon icon="solar:palette-linear" class="text-3xl text-white/20 mx-8"></iconify-icon>
+            <iconify-icon icon="solar:code-square-linear" class="text-3xl text-white/20 mx-8"></iconify-icon>
+            <iconify-icon icon="solar:star-fall-linear" class="text-3xl text-white/20 mx-8"></iconify-icon>
+            <iconify-icon icon="solar:bolt-linear" class="text-3xl text-white/20 mx-8"></iconify-icon>
+            <iconify-icon icon="solar:clock-circle-linear" class="text-3xl text-white/20 mx-8"></iconify-icon>
+            <iconify-icon icon="solar:cup-star-linear" class="text-3xl text-white/20 mx-8"></iconify-icon>
+            <iconify-icon icon="solar:arrow-right-up-linear" class="text-3xl text-white/20 mx-8"></iconify-icon>
+            <iconify-icon icon="solar:check-circle-linear" class="text-3xl text-white/20 mx-8"></iconify-icon>
+            <iconify-icon icon="solar:magnifer-linear" class="text-3xl text-white/20 mx-8"></iconify-icon>
+            <iconify-icon icon="solar:widget-5-linear" class="text-3xl text-white/20 mx-8"></iconify-icon>
+          </div>
+          <div class="marquee-content" aria-hidden="true">
+            <iconify-icon icon="solar:atom-linear" class="text-3xl text-white/20 mx-8"></iconify-icon>
+            <iconify-icon icon="solar:layers-minimalistic-linear" class="text-3xl text-white/20 mx-8"></iconify-icon>
+            <iconify-icon icon="solar:palette-linear" class="text-3xl text-white/20 mx-8"></iconify-icon>
+            <iconify-icon icon="solar:code-square-linear" class="text-3xl text-white/20 mx-8"></iconify-icon>
+            <iconify-icon icon="solar:star-fall-linear" class="text-3xl text-white/20 mx-8"></iconify-icon>
+            <iconify-icon icon="solar:bolt-linear" class="text-3xl text-white/20 mx-8"></iconify-icon>
+            <iconify-icon icon="solar:clock-circle-linear" class="text-3xl text-white/20 mx-8"></iconify-icon>
+            <iconify-icon icon="solar:cup-star-linear" class="text-3xl text-white/20 mx-8"></iconify-icon>
+            <iconify-icon icon="solar:arrow-right-up-linear" class="text-3xl text-white/20 mx-8"></iconify-icon>
+            <iconify-icon icon="solar:check-circle-linear" class="text-3xl text-white/20 mx-8"></iconify-icon>
+            <iconify-icon icon="solar:magnifer-linear" class="text-3xl text-white/20 mx-8"></iconify-icon>
+            <iconify-icon icon="solar:widget-5-linear" class="text-3xl text-white/20 mx-8"></iconify-icon>
+          </div>
+        </div>
+      </div>
+      <!-- Grid -->
+      <div class="p-8 md:p-12 grid grid-cols-3 md:grid-cols-6 gap-6">
+        <div class="flex flex-col items-center gap-3 reveal group">
+          <div
+            class="w-14 h-14 flex items-center justify-center border border-white/10 group-hover:border-white/30 transition-colors rounded">
+            <iconify-icon icon="solar:atom-linear"
+              class="text-2xl text-white/50 group-hover:text-white transition-colors"></iconify-icon>
+          </div>
+          <span class="section-label" style="color:rgba(255,255,255,0.25);font-size:.6rem;">atom</span>
+        </div>
+        <div class="flex flex-col items-center gap-3 reveal delay-100 group">
+          <div
+            class="w-14 h-14 flex items-center justify-center border border-white/10 group-hover:border-white/30 transition-colors rounded">
+            <iconify-icon icon="solar:layers-minimalistic-linear"
+              class="text-2xl text-white/50 group-hover:text-white transition-colors"></iconify-icon>
+          </div>
+          <span class="section-label" style="color:rgba(255,255,255,0.25);font-size:.6rem;">layers</span>
+        </div>
+        <div class="flex flex-col items-center gap-3 reveal delay-100 group">
+          <div
+            class="w-14 h-14 flex items-center justify-center border border-white/10 group-hover:border-white/30 transition-colors rounded">
+            <iconify-icon icon="solar:clock-circle-linear"
+              class="text-2xl text-white/50 group-hover:text-white transition-colors"></iconify-icon>
+          </div>
+          <span class="section-label" style="color:rgba(255,255,255,0.25);font-size:.6rem;">clock</span>
+        </div>
+        <div class="flex flex-col items-center gap-3 reveal delay-200 group">
+          <div
+            class="w-14 h-14 flex items-center justify-center border border-white/10 group-hover:border-white/30 transition-colors rounded">
+            <iconify-icon icon="solar:cup-star-linear"
+              class="text-2xl text-white/50 group-hover:text-white transition-colors"></iconify-icon>
+          </div>
+          <span class="section-label" style="color:rgba(255,255,255,0.25);font-size:.6rem;">star</span>
+        </div>
+        <div class="flex flex-col items-center gap-3 reveal delay-300 group">
+          <div
+            class="w-14 h-14 flex items-center justify-center border border-white/10 group-hover:border-white/30 transition-colors rounded">
+            <iconify-icon icon="solar:arrow-right-up-linear"
+              class="text-2xl text-white/50 group-hover:text-white transition-colors"></iconify-icon>
+          </div>
+          <span class="section-label" style="color:rgba(255,255,255,0.25);font-size:.6rem;">arrow-up</span>
+        </div>
+        <div class="flex flex-col items-center gap-3 reveal delay-500 group">
+          <div
+            class="w-14 h-14 flex items-center justify-center border border-white/10 group-hover:border-white/30 transition-colors rounded">
+            <iconify-icon icon="solar:check-circle-linear"
+              class="text-2xl text-white/50 group-hover:text-white transition-colors"></iconify-icon>
+          </div>
+          <span class="section-label" style="color:rgba(255,255,255,0.25);font-size:.6rem;">check</span>
+        </div>
+        <div class="flex flex-col items-center gap-3 reveal group">
+          <div
+            class="w-14 h-14 flex items-center justify-center border border-white/10 group-hover:border-white/30 transition-colors rounded">
+            <iconify-icon icon="solar:code-square-linear"
+              class="text-2xl text-white/50 group-hover:text-white transition-colors"></iconify-icon>
+          </div>
+          <span class="section-label" style="color:rgba(255,255,255,0.25);font-size:.6rem;">code</span>
+        </div>
+        <div class="flex flex-col items-center gap-3 reveal delay-100 group">
+          <div
+            class="w-14 h-14 flex items-center justify-center border border-white/10 group-hover:border-white/30 transition-colors rounded">
+            <iconify-icon icon="solar:magnifer-linear"
+              class="text-2xl text-white/50 group-hover:text-white transition-colors"></iconify-icon>
+          </div>
+          <span class="section-label" style="color:rgba(255,255,255,0.25);font-size:.6rem;">search</span>
+        </div>
+        <div class="flex flex-col items-center gap-3 reveal delay-200 group">
+          <div
+            class="w-14 h-14 flex items-center justify-center border border-white/10 group-hover:border-white/30 transition-colors rounded">
+            <iconify-icon icon="solar:bolt-linear"
+              class="text-2xl text-white/50 group-hover:text-white transition-colors"></iconify-icon>
+          </div>
+          <span class="section-label" style="color:rgba(255,255,255,0.25);font-size:.6rem;">bolt</span>
+        </div>
+        <div class="flex flex-col items-center gap-3 reveal delay-300 group">
+          <div
+            class="w-14 h-14 flex items-center justify-center border border-white/10 group-hover:border-white/30 transition-colors rounded">
+            <iconify-icon icon="solar:scanner-linear"
+              class="text-2xl text-white/50 group-hover:text-white transition-colors"></iconify-icon>
+          </div>
+          <span class="section-label" style="color:rgba(255,255,255,0.25);font-size:.6rem;">scanner</span>
+        </div>
+        <div class="flex flex-col items-center gap-3 reveal delay-500 group">
+          <div
+            class="w-14 h-14 flex items-center justify-center border border-white/10 group-hover:border-white/30 transition-colors rounded">
+            <iconify-icon icon="solar:palette-linear"
+              class="text-2xl text-white/50 group-hover:text-white transition-colors"></iconify-icon>
+          </div>
+          <span class="section-label" style="color:rgba(255,255,255,0.25);font-size:.6rem;">palette</span>
+        </div>
+        <div class="flex flex-col items-center gap-3 reveal delay-700 group">
+          <div
+            class="w-14 h-14 flex items-center justify-center border border-white/10 group-hover:border-white/30 transition-colors rounded">
+            <iconify-icon icon="solar:star-fall-linear"
+              class="text-2xl text-white/50 group-hover:text-white transition-colors"></iconify-icon>
+          </div>
+          <span class="section-label" style="color:rgba(255,255,255,0.25);font-size:.6rem;">star-fall</span>
+        </div>
+      </div>
+      <!-- Provider note -->
+      <div class="px-8 pb-8 md:px-12">
+        <div class="border border-white/10 p-4 rounded font-mono text-xs text-white/30 reveal">
+          Provider: <span class="text-white/60">Iconify + Solar Icons</span> — via <span
+            class="text-white/60">iconify-icon web component</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+  05 MOTION & ANIMATION
+═══════════════════════════════════════ -->
+  <section id="motion" class="relative border-b overflow-hidden" style="border-color:var(--border);">
+    <div class="max-w-[1400px] mx-auto">
+      <div class="p-8 md:p-12 border-b" style="border-color:var(--border);background:#f9f9f7;">
+        <span class="section-label block mb-2">05 / Interação</span>
+        <h2 class="text-4xl font-medium tracking-tight reveal">Motion &amp; Animaçoes</h2>
+      </div>
+      <!-- Marquee demo -->
+      <div class="py-8 border-b overflow-hidden" style="border-color:var(--border);background:#EAEAE5;">
+        <div class="section-label text-center mb-4">Marquee Infinito</div>
+        <div class="marquee-container">
+          <div class="marquee-content">
+            <span class="text-sm font-mono uppercase tracking-widest text-stone-400 mx-8">Motion System</span>
+            <span class="text-stone-300 mx-8">•</span>
+            <span class="text-sm font-mono uppercase tracking-widest text-stone-400 mx-8">cubic-bezier(0.16, 1, 0.3,
+              1)</span>
+            <span class="text-stone-300 mx-8">•</span>
+            <span class="text-sm font-mono uppercase tracking-widest text-stone-400 mx-8">Duration: 1.2s</span>
+            <span class="text-stone-300 mx-8">•</span>
+            <span class="text-sm font-mono uppercase tracking-widest text-stone-400 mx-8">Delay: 0–0.7s</span>
+            <span class="text-stone-300 mx-8">•</span>
+          </div>
+          <div class="marquee-content" aria-hidden="true">
+            <span class="text-sm font-mono uppercase tracking-widest text-stone-400 mx-8">Motion System</span>
+            <span class="text-stone-300 mx-8">•</span>
+            <span class="text-sm font-mono uppercase tracking-widest text-stone-400 mx-8">cubic-bezier(0.16, 1, 0.3,
+              1)</span>
+            <span class="text-stone-300 mx-8">•</span>
+            <span class="text-sm font-mono uppercase tracking-widest text-stone-400 mx-8">Duration: 1.2s</span>
+            <span class="text-stone-300 mx-8">•</span>
+          </div>
+        </div>
+      </div>
+      <!-- Reveal cards -->
+      <div class="p-8 md:p-12 grid grid-cols-1 md:grid-cols-3 gap-6 border-b" style="border-color:var(--border);">
+        <div class="reveal p-6 border rounded" style="border-color:var(--border);">
+          <span class="section-label block mb-2">.reveal</span>
+          <h4 class="text-xl font-medium">Scroll Reveal</h4>
+          <p class="text-sm text-stone-500 mt-2">opacity 0→1, translateY 2rem→0</p>
+        </div>
+        <div class="reveal delay-200 p-6 border rounded" style="border-color:var(--border);">
+          <span class="section-label block mb-2">.reveal .delay-200</span>
+          <h4 class="text-xl font-medium">Staggered</h4>
+          <p class="text-sm text-stone-500 mt-2">Encadeamento com delay de 200ms</p>
+        </div>
+        <div class="reveal delay-500 p-6 border rounded" style="border-color:var(--border);">
+          <span class="section-label block mb-2">.reveal .delay-500</span>
+          <h4 class="text-xl font-medium">Long Delay</h4>
+          <p class="text-sm text-stone-500 mt-2">Delay de 500ms para efeito cascata</p>
+        </div>
+      </div>
+      <!-- Masked text reveal -->
+      <div class="p-8 md:p-12 text-center border-b" style="border-color:var(--border);">
+        <span class="section-label block mb-8">Masked Text Reveal — .text-reveal-wrapper</span>
+        <h2 class="font-semibold tracking-tighter leading-none text-stone-900" style="font-size:clamp(3rem,8vw,6rem);"
+          id="motion-reveal-title">
+          <span class="text-reveal-wrapper"><span class="text-reveal-content">Animation</span></span>
+        </h2>
+      </div>
+      <!-- Animation catalog -->
+      <div class="p-8 md:p-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="border p-6 rounded reveal" style="border-color:var(--border);">
+          <span class="section-label block mb-4">Easing Tokens</span>
+          <div class="space-y-3 font-mono text-sm">
+            <div class="flex justify-between items-center">
+              <span class="text-stone-600">--ease-spring</span>
+              <span class="text-stone-400 text-xs">cubic-bezier(0.16, 1, 0.3, 1)</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-stone-600">--ease-elastic</span>
+              <span class="text-stone-400 text-xs">cubic-bezier(0.34, 1.56, 0.64, 1)</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-stone-600">--ease-out</span>
+              <span class="text-stone-400 text-xs">cubic-bezier(0, 0, 0.2, 1)</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-stone-600">--ease-in-out</span>
+              <span class="text-stone-400 text-xs">cubic-bezier(0.4, 0, 0.2, 1)</span>
+            </div>
+          </div>
+        </div>
+        <div class="border p-6 rounded reveal delay-100" style="border-color:var(--border);">
+          <span class="section-label block mb-4">Duration Tokens</span>
+          <div class="space-y-3 font-mono text-sm">
+            <div class="flex justify-between items-center">
+              <span class="text-stone-600">--dur-fast</span>
+              <span class="text-stone-400">200ms</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-stone-600">--dur-normal</span>
+              <span class="text-stone-400">500ms</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-stone-600">--dur-slow</span>
+              <span class="text-stone-400">1000ms</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-stone-600">--dur-hero</span>
+              <span class="text-stone-400">1200ms</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+  06 UI COMPONENTS AVANÇADOS — Inputs & Forms
+═══════════════════════════════════════════════════════ -->
+  <section id="ui-advanced" class="relative border-b" style="border-color:var(--border);">
+    <div class="max-w-[1400px] mx-auto">
+      <div class="p-8 md:p-12 border-b" style="border-color:var(--border);background:#f9f9f7;">
+        <span class="section-label block mb-2">06 / Interface Avançada</span>
+        <h2 class="text-4xl font-medium tracking-tight reveal">Componentes Completos</h2>
+        <p class="text-stone-500 text-sm mt-2 reveal delay-100">Todos os componentes com animações, estados e variantes.
+        </p>
+      </div>
+
+      <!-- ── A) INPUTS & FORMS ── -->
+      <div class="p-8 md:p-12 border-b" style="border-color:var(--border);">
+        <h3 class="text-sm font-bold uppercase tracking-widest mb-10 reveal">A — Inputs &amp; Formulários</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+
+          <!-- Text Field com floating label -->
+          <div class="reveal">
+            <div class="section-label mb-4">Text Field — Floating Label</div>
+            <div class="relative group" style="margin-top:.5rem;">
+              <input id="tf1" type="text" placeholder=" "
+                class="peer w-full border border-stone-300 rounded-md px-4 pt-5 pb-2 text-sm outline-none transition-all duration-200 focus:border-stone-900 bg-white" />
+              <label for="tf1"
+                class="absolute left-4 top-3.5 text-xs text-stone-400 pointer-events-none transition-all duration-200 peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-focus:top-1.5 peer-focus:text-xs peer-focus:text-stone-700 peer-not-placeholder-shown:top-1.5 peer-not-placeholder-shown:text-xs">Nome
+                completo</label>
+            </div>
+            <p class="text-xs text-stone-400 mt-1.5">Label flutua ao focar</p>
+          </div>
+
+          <!-- Text Field com ícone e estado de erro -->
+          <div class="reveal delay-100">
+            <div class="section-label mb-4">Text Field — Estados</div>
+            <div class="space-y-3">
+              <div class="relative">
+                <input type="email" placeholder="email@exemplo.com" class="input-field"
+                  style="padding-left:2.5rem;border-color:#dc2626;background:#fef2f2;" />
+                <iconify-icon icon="solar:letter-linear"
+                  class="absolute left-3 top-1/2 -translate-y-1/2 text-red-400"></iconify-icon>
+                <p class="text-xs text-red-500 mt-1">E-mail inválido</p>
+              </div>
+              <div class="relative">
+                <input type="text" value="João Silva" class="input-field"
+                  style="padding-left:2.5rem;border-color:#16a34a;background:#f0fdf4;" />
+                <iconify-icon icon="solar:check-circle-linear"
+                  class="absolute left-3 top-1/2 -translate-y-1/2 text-green-500"></iconify-icon>
+              </div>
+            </div>
+          </div>
+
+          <!-- Password field -->
+          <div class="reveal delay-200">
+            <div class="section-label mb-4">Password Field</div>
+            <div class="relative">
+              <input id="pwd-field" type="password" placeholder="Sua senha" class="input-field"
+                style="padding-right:2.5rem;" />
+              <button onclick="var f=document.getElementById('pwd-field');f.type=f.type==='password'?'text':'password'"
+                class="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-700 transition-colors">
+                <iconify-icon icon="solar:eye-linear"></iconify-icon>
+              </button>
+            </div>
+          </div>
+
+          <!-- Textarea com contador -->
+          <div class="reveal">
+            <div class="section-label mb-4">Textarea — com contador</div>
+            <div class="relative">
+              <textarea id="ta-count" maxlength="200"
+                oninput="document.getElementById('char-count').textContent=this.value.length" rows="4"
+                placeholder="Escreva sua mensagem..." class="input-field resize-none"></textarea>
+              <span class="absolute bottom-2 right-3 text-xs text-stone-400 font-mono"><span
+                  id="char-count">0</span>/200</span>
+            </div>
+          </div>
+
+          <!-- Select customizado -->
+          <div class="reveal delay-100">
+            <div class="section-label mb-4">Select / Dropdown</div>
+            <div class="space-y-3">
+              <div class="relative">
+                <select class="input-field appearance-none pr-10 cursor-pointer">
+                  <option value="">Selecione uma opção</option>
+                  <option>Design System</option>
+                  <option>Componentes UI</option>
+                  <option>Motion &amp; Animação</option>
+                </select>
+                <iconify-icon icon="solar:alt-arrow-down-linear"
+                  class="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none"></iconify-icon>
+              </div>
+            </div>
+          </div>
+
+          <!-- Date Picker -->
+          <div class="reveal delay-200">
+            <div class="section-label mb-4">Date Picker</div>
+            <div class="ds-datepicker">
+              <div class="ds-datepicker-header">
+                <button class="ds-icon-btn rounded text-xs"><iconify-icon
+                    icon="solar:alt-arrow-left-linear"></iconify-icon></button>
+                <span class="text-sm font-semibold">Fevereiro 2025</span>
+                <button class="ds-icon-btn rounded text-xs"><iconify-icon
+                    icon="solar:alt-arrow-right-linear"></iconify-icon></button>
+              </div>
+              <div class="ds-datepicker-grid mb-1">
+                <div class="ds-datepicker-day-label">D</div>
+                <div class="ds-datepicker-day-label">S</div>
+                <div class="ds-datepicker-day-label">T</div>
+                <div class="ds-datepicker-day-label">Q</div>
+                <div class="ds-datepicker-day-label">Q</div>
+                <div class="ds-datepicker-day-label">S</div>
+                <div class="ds-datepicker-day-label">S</div>
+              </div>
+              <div class="ds-datepicker-grid">
+                <div class="ds-datepicker-cell other-month">26</div>
+                <div class="ds-datepicker-cell other-month">27</div>
+                <div class="ds-datepicker-cell other-month">28</div>
+                <div class="ds-datepicker-cell other-month">29</div>
+                <div class="ds-datepicker-cell other-month">30</div>
+                <div class="ds-datepicker-cell other-month">31</div>
+                <div class="ds-datepicker-cell">1</div>
+                <div class="ds-datepicker-cell">2</div>
+                <div class="ds-datepicker-cell">3</div>
+                <div class="ds-datepicker-cell">4</div>
+                <div class="ds-datepicker-cell">5</div>
+                <div class="ds-datepicker-cell">6</div>
+                <div class="ds-datepicker-cell">7</div>
+                <div class="ds-datepicker-cell">8</div>
+                <div class="ds-datepicker-cell">9</div>
+                <div class="ds-datepicker-cell">10</div>
+                <div class="ds-datepicker-cell">11</div>
+                <div class="ds-datepicker-cell">12</div>
+                <div class="ds-datepicker-cell">13</div>
+                <div class="ds-datepicker-cell">14</div>
+                <div class="ds-datepicker-cell">15</div>
+                <div class="ds-datepicker-cell">16</div>
+                <div class="ds-datepicker-cell">17</div>
+                <div class="ds-datepicker-cell">18</div>
+                <div class="ds-datepicker-cell">19</div>
+                <div class="ds-datepicker-cell">20</div>
+                <div class="ds-datepicker-cell">21</div>
+                <div class="ds-datepicker-cell today"
+                  onclick="this.parentElement.querySelectorAll('.selected').forEach(x=>x.classList.remove('selected'));this.classList.toggle('selected')">
+                  22</div>
+                <div class="ds-datepicker-cell"
+                  onclick="this.parentElement.querySelectorAll('.selected').forEach(x=>x.classList.remove('selected'));this.classList.toggle('selected')">
+                  23</div>
+                <div class="ds-datepicker-cell selected">24</div>
+                <div class="ds-datepicker-cell">25</div>
+                <div class="ds-datepicker-cell">26</div>
+                <div class="ds-datepicker-cell">27</div>
+                <div class="ds-datepicker-cell">28</div>
+                <div class="ds-datepicker-cell other-month">1</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Checkbox / Radio / Switch -->
+        <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-10">
+          <div class="reveal">
+            <div class="section-label mb-5">Checkbox</div>
+            <div class="space-y-4">
+              <label class="ds-checkbox">
+                <input type="checkbox" checked />
+                <span class="box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                    <path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </svg></span>
+                <span class="text-sm">Opção selecionada</span>
+              </label>
+              <label class="ds-checkbox">
+                <input type="checkbox" />
+                <span class="box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                    <path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </svg></span>
+                <span class="text-sm">Opção padrão</span>
+              </label>
+              <label class="ds-checkbox" style="opacity:.4;pointer-events:none;">
+                <input type="checkbox" disabled />
+                <span class="box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                    <path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </svg></span>
+                <span class="text-sm">Desabilitado</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="reveal delay-100">
+            <div class="section-label mb-5">Radio Button</div>
+            <div class="space-y-4">
+              <label class="ds-radio">
+                <input type="radio" name="r1" checked />
+                <span class="dot"></span>
+                <span class="text-sm">Opção A</span>
+              </label>
+              <label class="ds-radio">
+                <input type="radio" name="r1" />
+                <span class="dot"></span>
+                <span class="text-sm">Opção B</span>
+              </label>
+              <label class="ds-radio">
+                <input type="radio" name="r1" />
+                <span class="dot"></span>
+                <span class="text-sm">Opção C</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="reveal delay-200">
+            <div class="section-label mb-5">Switch / Toggle</div>
+            <div class="space-y-4">
+              <label class="ds-switch">
+                <input type="checkbox" checked />
+                <div class="track">
+                  <div class="thumb"></div>
+                </div>
+                <span class="text-sm">Ativo</span>
+              </label>
+              <label class="ds-switch">
+                <input type="checkbox" />
+                <div class="track">
+                  <div class="thumb"></div>
+                </div>
+                <span class="text-sm">Inativo</span>
+              </label>
+              <label class="ds-switch" style="opacity:.4;pointer-events:none;">
+                <input type="checkbox" disabled />
+                <div class="track">
+                  <div class="thumb"></div>
+                </div>
+                <span class="text-sm">Desabilitado</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── B) AÇÕES ── -->
+      <div class="p-8 md:p-12 border-b" style="border-color:var(--border);">
+        <h3 class="text-sm font-bold uppercase tracking-widest mb-10 reveal">B — Ações</h3>
+        <div class="space-y-10">
+          <!-- Botões completos -->
+          <div>
+            <div class="section-label mb-5 reveal">Buttons — variantes completas</div>
+            <div class="flex flex-wrap gap-4 items-center reveal delay-100">
+              <button
+                class="shimmer-btn px-6 py-2.5 bg-stone-900 text-white rounded text-sm font-medium hover:bg-stone-700 transition-all flex items-center gap-2 group">
+                <iconify-icon icon="solar:bolt-linear"
+                  class="group-hover:rotate-12 transition-transform"></iconify-icon>Primary
+              </button>
+              <button
+                class="px-6 py-2.5 border-2 border-stone-900 text-stone-900 rounded text-sm font-medium hover:bg-stone-900 hover:text-white transition-all flex items-center gap-2">Secondary</button>
+              <button
+                class="px-6 py-2.5 text-stone-600 rounded text-sm font-medium hover:bg-stone-100 transition-all">Ghost</button>
+              <button
+                class="px-6 py-2.5 bg-red-600 text-white rounded text-sm font-medium hover:bg-red-700 transition-all flex items-center gap-2">
+                <iconify-icon icon="solar:trash-bin-trash-linear"></iconify-icon>Danger
+              </button>
+              <button disabled
+                class="px-6 py-2.5 bg-stone-200 text-stone-400 rounded text-sm font-medium cursor-not-allowed">Disabled</button>
+              <!-- Loading button -->
+              <button onclick="this.classList.toggle('loading-state')"
+                class="px-6 py-2.5 bg-stone-900 text-white rounded text-sm font-medium hover:bg-stone-700 transition-all flex items-center gap-2 group"
+                id="loading-btn">
+                <span class="ds-spinner ds-spinner-sm border-white/30"
+                  style="border-top-color:#fff;width:16px;height:16px;border-width:2px;display:none;"
+                  id="loading-spinner"></span>
+                <span id="loading-text">Clique para Loading</span>
+              </button>
+            </div>
+            <!-- Tamanhos -->
+            <div class="flex flex-wrap gap-4 items-center mt-4 reveal delay-200">
+              <button class="px-3 py-1.5 bg-stone-900 text-white rounded text-xs font-medium">XS Button</button>
+              <button class="px-5 py-2 bg-stone-900 text-white rounded text-sm font-medium">SM Button</button>
+              <button class="px-7 py-3 bg-stone-900 text-white rounded font-medium">MD Button</button>
+              <button class="px-10 py-4 bg-stone-900 text-white rounded text-lg font-medium">LG Button</button>
+            </div>
+          </div>
+
+          <!-- Icon Buttons -->
+          <div>
+            <div class="section-label mb-5 reveal">Icon Button</div>
+            <div class="flex flex-wrap gap-3 items-center reveal delay-100">
+              <button class="ds-icon-btn"><iconify-icon icon="solar:heart-linear"></iconify-icon></button>
+              <button class="ds-icon-btn"><iconify-icon icon="solar:share-linear"></iconify-icon></button>
+              <button class="ds-icon-btn"><iconify-icon icon="solar:bookmark-linear"></iconify-icon></button>
+              <button class="ds-icon-btn"><iconify-icon icon="solar:pen-linear"></iconify-icon></button>
+              <button class="ds-icon-btn" style="background:#1C1C1C;color:#fff;border-color:#1C1C1C;"><iconify-icon
+                  icon="solar:add-linear"></iconify-icon></button>
+              <button class="ds-icon-btn rounded"><iconify-icon
+                  icon="solar:close-circle-linear"></iconify-icon></button>
+              <button class="ds-icon-btn rounded"
+                style="background:#1C1C1C;color:#fff;border-color:#1C1C1C;"><iconify-icon
+                  icon="solar:arrow-right-linear"></iconify-icon></button>
+            </div>
+          </div>
+
+          <!-- FAB -->
+          <div>
+            <div class="section-label mb-5 reveal">Floating Action Button</div>
+            <div class="flex flex-wrap gap-6 items-end reveal delay-100">
+              <div class="flex flex-col items-center gap-2">
+                <button class="ds-fab"><iconify-icon icon="solar:add-linear" class="text-2xl"></iconify-icon></button>
+                <span class="section-label">Default</span>
+              </div>
+              <div class="flex flex-col items-center gap-2">
+                <button class="ds-fab glow-btn"><iconify-icon icon="solar:pen-linear"
+                    class="text-xl"></iconify-icon></button>
+                <span class="section-label">Glow</span>
+              </div>
+              <div class="flex flex-col items-center gap-2">
+                <button class="ds-fab" style="width:44px;height:44px;font-size:.875rem;"><iconify-icon
+                    icon="solar:heart-linear"></iconify-icon></button>
+                <span class="section-label">SM</span>
+              </div>
+              <div class="flex flex-col items-center gap-2">
+                <button class="ds-fab"
+                  style="background:#fff;color:#1C1C1C;box-shadow:0 4px 20px rgba(0,0,0,0.15);"><iconify-icon
+                    icon="solar:chat-round-dots-linear" class="text-2xl"></iconify-icon></button>
+                <span class="section-label">Light</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ── C) FEEDBACK ── -->
+      <div class="p-8 md:p-12 border-b" style="border-color:var(--border);">
+        <h3 class="text-sm font-bold uppercase tracking-widest mb-10 reveal">C — Feedback</h3>
+
+        <!-- Alerts -->
+        <div class="section-label mb-5 reveal">Alerts</div>
+        <div class="space-y-3 max-w-2xl mb-10">
+          <div class="ds-alert success reveal">
+            <iconify-icon icon="solar:check-circle-linear" class="ds-alert-icon text-xl"></iconify-icon>
+            <div><strong class="font-semibold">Sucesso!</strong> Suas alterações foram salvas com sucesso.</div>
+          </div>
+          <div class="ds-alert warning reveal delay-100">
+            <iconify-icon icon="solar:danger-triangle-linear" class="ds-alert-icon text-xl"></iconify-icon>
+            <div><strong class="font-semibold">Atenção!</strong> Esta ação não pode ser desfeita.</div>
+          </div>
+          <div class="ds-alert error reveal delay-200">
+            <iconify-icon icon="solar:close-circle-linear" class="ds-alert-icon text-xl"></iconify-icon>
+            <div><strong class="font-semibold">Erro!</strong> Não foi possível processar a solicitação.</div>
+          </div>
+          <div class="ds-alert info reveal delay-300">
+            <iconify-icon icon="solar:info-circle-linear" class="ds-alert-icon text-xl"></iconify-icon>
+            <div><strong class="font-semibold">Info:</strong> Seu plano renova em 7 dias.</div>
+          </div>
+        </div>
+
+        <!-- Toast -->
+        <div class="section-label mb-5 reveal">Toast / Snackbar</div>
+        <div class="flex flex-wrap gap-3 mb-10 reveal delay-100">
+          <button onclick="showToast('success','Salvo com sucesso!')"
+            class="px-4 py-2 bg-green-700 text-white rounded text-sm font-medium hover:bg-green-800 transition-all">Toast
+            Success</button>
+          <button onclick="showToast('error','Algo deu errado...')"
+            class="px-4 py-2 bg-red-600 text-white rounded text-sm font-medium hover:bg-red-700 transition-all">Toast
+            Error</button>
+          <button onclick="showToast('info','Nova versão disponível!')"
+            class="px-4 py-2 bg-stone-900 text-white rounded text-sm font-medium hover:bg-stone-700 transition-all">Toast
+            Info</button>
+        </div>
+
+        <!-- Progress bars -->
+        <div class="section-label mb-5 reveal">Progress Bar</div>
+        <div class="space-y-5 max-w-xl mb-10">
+          <div class="reveal">
+            <div class="flex justify-between mb-1.5"><span class="text-xs text-stone-500">Design</span><span
+                class="text-xs font-mono text-stone-400">78%</span></div>
+            <div class="ds-progress">
+              <div class="ds-progress-bar" style="width:78%;"></div>
+            </div>
+          </div>
+          <div class="reveal delay-100">
+            <div class="flex justify-between mb-1.5"><span class="text-xs text-stone-500">Development</span><span
+                class="text-xs font-mono text-stone-400">54%</span></div>
+            <div class="ds-progress" style="height:6px;">
+              <div class="ds-progress-bar" style="width:54%;border-radius:3px;"></div>
+            </div>
+          </div>
+          <div class="reveal delay-200">
+            <div class="flex justify-between mb-1.5"><span class="text-xs text-stone-500">Testing</span><span
+                class="text-xs font-mono text-stone-400">30%</span></div>
+            <div class="ds-progress" style="height:8px;">
+              <div class="ds-progress-bar" style="width:30%;background:#aaa;border-radius:4px;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Skeleton -->
+        <div class="section-label mb-5 reveal">Skeleton Loading</div>
+        <div class="space-y-3 max-w-md mb-10 reveal delay-100">
+          <div class="flex items-center gap-3">
+            <div class="skeleton rounded-full w-10 h-10 flex-shrink-0"></div>
+            <div class="flex-1 space-y-2">
+              <div class="skeleton h-3 rounded w-3/4"></div>
+              <div class="skeleton h-3 rounded w-1/2"></div>
+            </div>
+          </div>
+          <div class="skeleton h-32 rounded w-full"></div>
+          <div class="space-y-2">
+            <div class="skeleton h-3 rounded"></div>
+            <div class="skeleton h-3 rounded w-5/6"></div>
+            <div class="skeleton h-3 rounded w-4/6"></div>
+          </div>
+        </div>
+
+        <!-- Spinners -->
+        <div class="section-label mb-5 reveal">Spinner</div>
+        <div class="flex flex-wrap items-center gap-8 reveal delay-100">
+          <div class="flex flex-col items-center gap-2">
+            <div class="ds-spinner ds-spinner-sm"></div>
+            <span class="section-label">SM</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <div class="ds-spinner"></div>
+            <span class="section-label">MD</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <div class="ds-spinner ds-spinner-lg"></div>
+            <span class="section-label">LG</span>
+          </div>
+          <!-- Dotted spinner variant -->
+          <div class="flex flex-col items-center gap-2">
+            <div style="width:32px;height:32px;position:relative;">
+              <div
+                style="position:absolute;inset:0;border-radius:50%;border:3px solid transparent;border-top-color:#1C1C1C;border-right-color:#1C1C1C;animation:spin-ring .6s linear infinite;">
+              </div>
+            </div>
+            <span class="section-label">Double</span>
+          </div>
+          <!-- Pulsing -->
+          <div class="flex flex-col items-center gap-2">
+            <div
+              style="width:32px;height:32px;border-radius:50%;background:#1C1C1C;animation:skeleton-pulse 1s ease-in-out infinite;">
+            </div>
+            <span class="section-label">Pulse</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── D) NAVEGAÇÃO ── -->
+      <div class="p-8 md:p-12 border-b" style="border-color:var(--border);">
+        <h3 class="text-sm font-bold uppercase tracking-widest mb-10 reveal">D — Navegação</h3>
+
+        <!-- Sidebar specimen -->
+        <div class="section-label mb-5 reveal">Sidebar</div>
+        <div class="border rounded-lg overflow-hidden max-w-xs mb-12 reveal delay-100"
+          style="border-color:var(--border);">
+          <div class="ds-sidebar" style="height:auto;min-height:320px;">
+            <div style="padding:.75rem 1.25rem 1rem;border-bottom:1px solid var(--border);">
+              <div class="flex items-center gap-2">
+                <iconify-icon icon="solar:atom-linear" class="text-xl"></iconify-icon>
+                <span class="font-bold tracking-tight text-sm">BRAND</span>
+              </div>
+            </div>
+            <div class="pt-2">
+              <div class="ds-sidebar-label">Principal</div>
+              <a href="#" class="ds-sidebar-item active">
+                <iconify-icon icon="solar:widget-5-linear"></iconify-icon>Dashboard
+              </a>
+              <a href="#" class="ds-sidebar-item">
+                <iconify-icon icon="solar:layers-minimalistic-linear"></iconify-icon>Projetos
+              </a>
+              <a href="#" class="ds-sidebar-item">
+                <iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon>Equipe
+              </a>
+              <div class="ds-sidebar-label">Configurações</div>
+              <a href="#" class="ds-sidebar-item">
+                <iconify-icon icon="solar:settings-linear"></iconify-icon>Configurações
+              </a>
+              <a href="#" class="ds-sidebar-item">
+                <iconify-icon icon="solar:exit-linear"></iconify-icon>Sair
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Breadcrumb -->
+        <div class="section-label mb-5 reveal">Breadcrumb</div>
+        <div class="space-y-4 mb-12">
+          <div class="ds-breadcrumb reveal delay-100">
+            <a href="#">Home</a>
+            <iconify-icon icon="solar:alt-arrow-right-linear" class="sep text-xs"></iconify-icon>
+            <a href="#">Componentes</a>
+            <iconify-icon icon="solar:alt-arrow-right-linear" class="sep text-xs"></iconify-icon>
+            <span class="current">Breadcrumb</span>
+          </div>
+          <div class="ds-breadcrumb reveal delay-200">
+            <iconify-icon icon="solar:home-linear" class="text-stone-400 text-sm"></iconify-icon>
+            <iconify-icon icon="solar:alt-arrow-right-linear" class="sep text-xs"></iconify-icon>
+            <a href="#">Design System</a>
+            <iconify-icon icon="solar:alt-arrow-right-linear" class="sep text-xs"></iconify-icon>
+            <a href="#">Navegação</a>
+            <iconify-icon icon="solar:alt-arrow-right-linear" class="sep text-xs"></iconify-icon>
+            <span class="current">Breadcrumb</span>
+          </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="section-label mb-5 reveal">Tabs</div>
+        <div class="max-w-2xl mb-12 reveal delay-100">
+          <div class="ds-tabs">
+            <div class="ds-tab-list">
+              <button class="ds-tab active" onclick="setTab(this,'tab-panels','tab-1')">Visão Geral</button>
+              <button class="ds-tab" onclick="setTab(this,'tab-panels','tab-2')">Especificações</button>
+              <button class="ds-tab" onclick="setTab(this,'tab-panels','tab-3')">Código</button>
+              <button class="ds-tab" onclick="setTab(this,'tab-panels','tab-4')">Changelog</button>
+            </div>
+          </div>
+          <div id="tab-panels">
+            <div class="ds-tab-panel active" id="tab-1">
+              <p class="text-sm text-stone-600 leading-relaxed">As tabs permitem navegar entre diferentes vistas de
+                conteúdo relacionado. Suportam animação de entrada e estados active/hover com transição suave.</p>
+            </div>
+            <div class="ds-tab-panel" id="tab-2">
+              <div class="space-y-2 font-mono text-xs text-stone-500">
+                <p>Height: 44px</p>
+                <p>Font: 0.875rem / 500</p>
+                <p>Transition: color 0.25s, border 0.25s</p>
+              </div>
+            </div>
+            <div class="ds-tab-panel" id="tab-3">
+              <pre class="bg-stone-100 p-4 rounded text-xs font-mono text-stone-600 overflow-x-auto">&lt;div class="ds-tabs"&gt;
+  &lt;button class="ds-tab active"&gt;Tab 1&lt;/button&gt;
+&lt;/div&gt;</pre>
+            </div>
+            <div class="ds-tab-panel" id="tab-4">
+              <p class="text-sm text-stone-500">v1.0 — Lançamento inicial com 4 variantes.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="section-label mb-5 reveal">Pagination</div>
+        <div class="flex flex-wrap gap-3 mb-12">
+          <div class="ds-pagination reveal delay-100">
+            <button class="ds-page-btn" disabled><iconify-icon
+                icon="solar:alt-arrow-left-linear"></iconify-icon></button>
+            <button class="ds-page-btn active">1</button>
+            <button class="ds-page-btn"
+              onclick="this.parentElement.querySelectorAll('.active').forEach(x=>x.classList.remove('active'));this.classList.add('active')">2</button>
+            <button class="ds-page-btn"
+              onclick="this.parentElement.querySelectorAll('.active').forEach(x=>x.classList.remove('active'));this.classList.add('active')">3</button>
+            <button class="ds-page-btn">...</button>
+            <button class="ds-page-btn"
+              onclick="this.parentElement.querySelectorAll('.active').forEach(x=>x.classList.remove('active'));this.classList.add('active')">12</button>
+            <button class="ds-page-btn"><iconify-icon icon="solar:alt-arrow-right-linear"></iconify-icon></button>
+          </div>
+        </div>
+
+        <!-- Stepper -->
+        <div class="section-label mb-5 reveal">Stepper</div>
+        <div class="max-w-lg mb-4 reveal delay-100">
+          <div class="ds-stepper">
+            <div class="ds-step done">
+              <div class="ds-step-circle"><iconify-icon icon="solar:check-linear"></iconify-icon></div>
+              <div class="ds-step-label">Conta</div>
+            </div>
+            <div class="ds-step done">
+              <div class="ds-step-circle"><iconify-icon icon="solar:check-linear"></iconify-icon></div>
+              <div class="ds-step-label">Perfil</div>
+            </div>
+            <div class="ds-step active">
+              <div class="ds-step-circle">3</div>
+              <div class="ds-step-label">Plano</div>
+            </div>
+            <div class="ds-step">
+              <div class="ds-step-circle">4</div>
+              <div class="ds-step-label">Finalizar</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── E) CONTAINERS ── -->
+      <div class="p-8 md:p-12 border-b" style="border-color:var(--border);">
+        <h3 class="text-sm font-bold uppercase tracking-widest mb-10 reveal">E — Containers</h3>
+
+        <!-- Accordion -->
+        <div class="section-label mb-5 reveal">Accordion</div>
+        <div class="max-w-2xl mb-12 reveal delay-100">
+          <div id="accordion-root">
+            <div class="ds-accordion-item open">
+              <button class="ds-accordion-trigger" onclick="toggleAccordion(this.parentElement)">
+                <span>O que é um Design System?</span>
+                <iconify-icon icon="solar:add-linear" class="ds-accordion-icon text-xl"></iconify-icon>
+              </button>
+              <div class="ds-accordion-body">
+                <p class="text-sm text-stone-500 leading-relaxed">Um Design System é um conjunto de padrões
+                  reutilizáveis, componentes e diretrizes que ajudam equipes a construir produtos digitais com
+                  consistência e eficiência.</p>
+              </div>
+            </div>
+            <div class="ds-accordion-item">
+              <button class="ds-accordion-trigger" onclick="toggleAccordion(this.parentElement)">
+                <span>Quais tecnologias são usadas?</span>
+                <iconify-icon icon="solar:add-linear" class="ds-accordion-icon text-xl"></iconify-icon>
+              </button>
+              <div class="ds-accordion-body">
+                <p class="text-sm text-stone-500 leading-relaxed">Tailwind CSS, Inter + Space Mono, Iconify (Solar
+                  Icons), IntersectionObserver API e CSS personalizado para animações.</p>
+              </div>
+            </div>
+            <div class="ds-accordion-item">
+              <button class="ds-accordion-trigger" onclick="toggleAccordion(this.parentElement)">
+                <span>Como usar os componentes?</span>
+                <iconify-icon icon="solar:add-linear" class="ds-accordion-icon text-xl"></iconify-icon>
+              </button>
+              <div class="ds-accordion-body">
+                <p class="text-sm text-stone-500 leading-relaxed">Copie as classes CSS e a estrutura HTML dos exemplos.
+                  Cada componente é autocontido e pode ser customizado via variáveis CSS.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Popover -->
+        <div class="section-label mb-5 reveal">Popover</div>
+        <div class="flex flex-wrap gap-6 mb-12 reveal delay-100">
+          <div class="ds-popover-wrap">
+            <button onclick="this.nextElementSibling.classList.toggle('open')"
+              class="px-5 py-2.5 border border-stone-300 rounded text-sm font-medium hover:border-stone-600 transition-all flex items-center gap-2">
+              <iconify-icon icon="solar:info-circle-linear"></iconify-icon>Sobre o projeto
+            </button>
+            <div class="ds-popover" style="width:260px;">
+              <div class="flex items-center gap-2 mb-2">
+                <iconify-icon icon="solar:code-square-linear" class="text-stone-400"></iconify-icon>
+                <span class="font-semibold text-sm">Detalhes do Projeto</span>
+              </div>
+              <p class="text-xs text-stone-500 leading-relaxed">versão 2.0 — última atualização fev/2025. Compatível com
+                todos os navegadores modernos.</p>
+              <div class="mt-3 pt-3 border-t" style="border-color:var(--border);">
+                <button onclick="this.closest('.ds-popover').classList.remove('open')"
+                  class="text-xs text-stone-400 hover:text-stone-700 transition-colors">Fechar</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Drawer trigger -->
+          <button
+            onclick="document.getElementById('ds-drawer').classList.add('open'); document.getElementById('ds-drawer-overlay').classList.add('open')"
+            class="px-5 py-2.5 bg-stone-900 text-white rounded text-sm font-medium hover:bg-stone-700 transition-all flex items-center gap-2">
+            <iconify-icon icon="solar:sidebar-minimalistic-linear"></iconify-icon>Abrir Drawer
+          </button>
+        </div>
+      </div>
+
+      <!-- ── F) LISTAS & DADOS ── -->
+      <div class="p-8 md:p-12 border-b" style="border-color:var(--border);">
+        <h3 class="text-sm font-bold uppercase tracking-widest mb-10 reveal">F — Listas &amp; Dados</h3>
+
+        <!-- Table -->
+        <div class="section-label mb-5 reveal">Table</div>
+        <div class="overflow-x-auto mb-12 reveal delay-100" style="border:1px solid var(--border);border-radius:6px;">
+          <table class="ds-table">
+            <thead>
+              <tr>
+                <th style="width:40px;">
+                  <label class="ds-checkbox" style="margin:0;">
+                    <input type="checkbox" id="select-all"
+                      onchange="document.querySelectorAll('.row-check').forEach(c=>c.checked=this.checked)" />
+                    <span class="box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                        <path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                          stroke-linejoin="round" />
+                      </svg></span>
+                  </label>
+                </th>
+                <th>Nome</th>
+                <th>Função</th>
+                <th>Status</th>
+                <th>Data</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><label class="ds-checkbox" style="margin:0;"><input type="checkbox" class="row-check" /><span
+                      class="box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                        <path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                          stroke-linejoin="round" />
+                      </svg></span></label></td>
+                <td>
+                  <div class="flex items-center gap-2">
+                    <div class="ds-avatar ds-avatar-sm" style="background:#1C1C1C;color:#fff;">JD</div><span
+                      class="font-medium text-stone-800">João Dias</span>
+                  </div>
+                </td>
+                <td class="text-stone-500">Design Lead</td>
+                <td><span class="badge"
+                    style="background:#f0fdf4;color:#16a34a;border:none;font-size:.6rem;">Ativo</span></td>
+                <td class="font-mono text-stone-400 text-xs">Feb 22, 2025</td>
+                <td>
+                  <div class="flex gap-1"><button class="ds-icon-btn"
+                      style="width:30px;height:30px;border:none;"><iconify-icon icon="solar:pen-linear"
+                        class="text-xs"></iconify-icon></button><button class="ds-icon-btn"
+                      style="width:30px;height:30px;border:none;"><iconify-icon icon="solar:trash-bin-trash-linear"
+                        class="text-xs"></iconify-icon></button></div>
+                </td>
+              </tr>
+              <tr>
+                <td><label class="ds-checkbox" style="margin:0;"><input type="checkbox" class="row-check" /><span
+                      class="box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                        <path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                          stroke-linejoin="round" />
+                      </svg></span></label></td>
+                <td>
+                  <div class="flex items-center gap-2">
+                    <div class="ds-avatar ds-avatar-sm" style="background:#3D3D3D;color:#fff;">MS</div><span
+                      class="font-medium text-stone-800">Maria Silva</span>
+                  </div>
+                </td>
+                <td class="text-stone-500">Developer</td>
+                <td><span class="badge"
+                    style="background:#fffbeb;color:#b45309;border:none;font-size:.6rem;">Pendente</span></td>
+                <td class="font-mono text-stone-400 text-xs">Feb 20, 2025</td>
+                <td>
+                  <div class="flex gap-1"><button class="ds-icon-btn"
+                      style="width:30px;height:30px;border:none;"><iconify-icon icon="solar:pen-linear"
+                        class="text-xs"></iconify-icon></button><button class="ds-icon-btn"
+                      style="width:30px;height:30px;border:none;"><iconify-icon icon="solar:trash-bin-trash-linear"
+                        class="text-xs"></iconify-icon></button></div>
+                </td>
+              </tr>
+              <tr>
+                <td><label class="ds-checkbox" style="margin:0;"><input type="checkbox" class="row-check" /><span
+                      class="box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                        <path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                          stroke-linejoin="round" />
+                      </svg></span></label></td>
+                <td>
+                  <div class="flex items-center gap-2">
+                    <div class="ds-avatar ds-avatar-sm" style="background:#A8A8A8;color:#fff;">PL</div><span
+                      class="font-medium text-stone-800">Pedro Lima</span>
+                  </div>
+                </td>
+                <td class="text-stone-500">PM</td>
+                <td><span class="badge"
+                    style="background:#fef2f2;color:#b91c1c;border:none;font-size:.6rem;">Inativo</span></td>
+                <td class="font-mono text-stone-400 text-xs">Feb 18, 2025</td>
+                <td>
+                  <div class="flex gap-1"><button class="ds-icon-btn"
+                      style="width:30px;height:30px;border:none;"><iconify-icon icon="solar:pen-linear"
+                        class="text-xs"></iconify-icon></button><button class="ds-icon-btn"
+                      style="width:30px;height:30px;border:none;"><iconify-icon icon="solar:trash-bin-trash-linear"
+                        class="text-xs"></iconify-icon></button></div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- List -->
+        <div class="section-label mb-5 reveal">List</div>
+        <div class="max-w-md mb-12 reveal delay-100">
+          <div class="ds-list">
+            <div class="ds-list-item">
+              <div class="ds-avatar ds-avatar-sm" style="background:#1C1C1C;color:#fff; position:relative;">JD<div
+                  class="ds-badge-dot"></div>
+              </div>
+              <div class="flex-1">
+                <div class="text-sm font-medium">João Dias</div>
+                <div class="text-xs text-stone-400">Design Lead · Online agora</div>
+              </div>
+              <iconify-icon icon="solar:arrow-right-up-linear" class="text-stone-300 text-lg"></iconify-icon>
+            </div>
+            <div class="ds-list-item">
+              <div class="ds-avatar ds-avatar-sm" style="background:#6B6B6B;color:#fff; position:relative;">MS<div
+                  class="ds-badge-dot" style="background:#aaa;"></div>
+              </div>
+              <div class="flex-1">
+                <div class="text-sm font-medium">Maria Silva</div>
+                <div class="text-xs text-stone-400">Developer · Há 2 horas</div>
+              </div>
+              <iconify-icon icon="solar:arrow-right-up-linear" class="text-stone-300 text-lg"></iconify-icon>
+            </div>
+            <div class="ds-list-item">
+              <div class="ds-avatar ds-avatar-sm"
+                style="background:#EAEAE5;color:#6b6b6b; border:1px solid #ddd; position:relative;">PL</div>
+              <div class="flex-1">
+                <div class="text-sm font-medium">Pedro Lima</div>
+                <div class="text-xs text-stone-400">PM · Offline</div>
+              </div>
+              <iconify-icon icon="solar:arrow-right-up-linear" class="text-stone-300 text-lg"></iconify-icon>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chips / Tags -->
+        <div class="section-label mb-5 reveal">Chips / Tags</div>
+        <div class="flex flex-wrap gap-2 mb-12 reveal delay-100">
+          <div class="ds-chip active" onclick="this.classList.toggle('active')">Design</div>
+          <div class="ds-chip" onclick="this.classList.toggle('active')">Development</div>
+          <div class="ds-chip" onclick="this.classList.toggle('active')">Motion</div>
+          <div class="ds-chip" onclick="this.classList.toggle('active')">Typography</div>
+          <div class="ds-chip" onclick="this.classList.toggle('active')">
+            <iconify-icon icon="solar:palette-linear" class="text-sm"></iconify-icon>Colors
+          </div>
+          <div class="ds-chip active" onclick="this.classList.toggle('active')">
+            Components<span class="chip-remove"
+              onclick="event.stopPropagation();this.parentElement.style.display='none'">×</span>
+          </div>
+          <div class="ds-chip">
+            <iconify-icon icon="solar:tag-linear" class="text-sm"></iconify-icon>Tag<span class="chip-remove"
+              onclick="event.stopPropagation();this.parentElement.style.display='none'">×</span>
+          </div>
+        </div>
+
+        <!-- Avatar variants -->
+        <div class="section-label mb-5 reveal">Avatar</div>
+        <div class="flex flex-wrap items-end gap-8 mb-10 reveal delay-100">
+          <!-- Sizes -->
+          <div class="flex flex-col items-center gap-2">
+            <div class="ds-avatar ds-avatar-sm" style="background:#1C1C1C;color:#fff;">JD</div>
+            <span class="section-label">SM</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <div class="ds-avatar ds-avatar-md" style="background:#3D3D3D;color:#fff;">MS</div>
+            <span class="section-label">MD</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <div class="ds-avatar ds-avatar-lg" style="background:#6B6B6B;color:#fff;">PL</div>
+            <span class="section-label">LG</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <div class="ds-avatar ds-avatar-xl" style="background:#A8A8A8;color:#fff;">AR</div>
+            <span class="section-label">XL</span>
+          </div>
+          <!-- With badge dot -->
+          <div class="flex flex-col items-center gap-2">
+            <div class="ds-avatar ds-avatar-lg relative" style="background:#1C1C1C;color:#fff;">
+              JD<div class="ds-badge-dot" style="width:12px;height:12px;"></div>
+            </div>
+            <span class="section-label">Online</span>
+          </div>
+          <!-- Stack -->
+          <div class="flex flex-col items-center gap-2">
+            <div class="ds-avatar-stack">
+              <div class="ds-avatar ds-avatar-md" style="background:#1C1C1C;color:#fff;">JD</div>
+              <div class="ds-avatar ds-avatar-md" style="background:#3D3D3D;color:#fff;">MS</div>
+              <div class="ds-avatar ds-avatar-md" style="background:#6B6B6B;color:#fff;">PL</div>
+              <div class="ds-avatar ds-avatar-md"
+                style="background:#EAEAE5;color:#6b6b6b;border:2px solid #fff;font-size:.6rem;">+3</div>
+            </div>
+            <span class="section-label">Stack</span>
+          </div>
+        </div>
+
+        <!-- Badge variants -->
+        <div class="section-label mb-5 reveal">Badge — Variantes completas</div>
+        <div class="flex flex-wrap gap-3 items-center reveal delay-100">
+          <span class="badge" style="background:#1C1C1C;color:#fff;">Primary</span>
+          <span class="badge" style="border:1.5px solid #1C1C1C;color:#1C1C1C;">Outline</span>
+          <span class="badge" style="background:#EAEAE5;color:#6b6b6b;">Neutral</span>
+          <span class="badge" style="background:#f0fdf4;color:#16a34a;"><iconify-icon icon="solar:check-circle-linear"
+              class="text-sm"></iconify-icon>Success</span>
+          <span class="badge" style="background:#fffbeb;color:#b45309;"><iconify-icon
+              icon="solar:danger-triangle-linear" class="text-sm"></iconify-icon>Warning</span>
+          <span class="badge" style="background:#fef2f2;color:#b91c1c;"><iconify-icon icon="solar:close-circle-linear"
+              class="text-sm"></iconify-icon>Error</span>
+          <span class="badge" style="background:rgba(28,28,28,0.8);color:#fff;backdrop-filter:blur(8px);">Glass</span>
+          <!-- Numeric badges -->
+          <div class="relative inline-block">
+            <button class="ds-icon-btn"><iconify-icon icon="solar:bell-linear"></iconify-icon></button>
+            <span
+              style="position:absolute;top:-4px;right:-4px;background:#1C1C1C;color:#fff;border-radius:9999px;width:16px;height:16px;font-size:.55rem;font-weight:700;display:flex;align-items:center;justify-content:center;border:2px solid #fff;">3</span>
+          </div>
+          <div class="relative inline-block">
+            <button class="ds-icon-btn"><iconify-icon icon="solar:chat-round-dots-linear"></iconify-icon></button>
+            <span
+              style="position:absolute;top:-4px;right:-4px;background:#dc2626;color:#fff;border-radius:9999px;padding:0 4px;height:16px;font-size:.55rem;font-weight:700;display:flex;align-items:center;justify-content:center;border:2px solid #fff;min-width:16px;">12</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DRAWER OVERLAY -->
+  <div id="ds-drawer-overlay" class="ds-drawer-overlay"
+    onclick="document.getElementById('ds-drawer').classList.remove('open');this.classList.remove('open')"></div>
+  <div id="ds-drawer" class="ds-drawer">
+    <div class="flex justify-between items-start mb-6">
+      <div>
+        <div class="section-label mb-1">Navegação</div>
+        <h3 class="text-xl font-semibold tracking-tight">Drawer</h3>
+      </div>
+      <button
+        onclick="document.getElementById('ds-drawer').classList.remove('open');document.getElementById('ds-drawer-overlay').classList.remove('open')"
+        class="ds-icon-btn rounded">
+        <iconify-icon icon="solar:close-circle-linear"></iconify-icon>
+      </button>
+    </div>
+    <p class="text-sm text-stone-500 leading-relaxed mb-8">O drawer desliza a partir da lateral da tela, com overlay de
+      fundo com blur. Ideal para menus, filtros e detalhes de itens.</p>
+    <div class="space-y-3">
+      <div class="ds-list-item" style="padding:.75rem 0;border-bottom:1px solid var(--border);">
+        <iconify-icon icon="solar:widget-5-linear" class="text-stone-400 text-xl"></iconify-icon>
+        <span class="text-sm">Dashboard</span>
+      </div>
+      <div class="ds-list-item" style="padding:.75rem 0;border-bottom:1px solid var(--border);">
+        <iconify-icon icon="solar:layers-minimalistic-linear" class="text-stone-400 text-xl"></iconify-icon>
+        <span class="text-sm">Projetos</span>
+      </div>
+      <div class="ds-list-item" style="padding:.75rem 0;">
+        <iconify-icon icon="solar:settings-linear" class="text-stone-400 text-xl"></iconify-icon>
+        <span class="text-sm">Configurações</span>
+      </div>
+    </div>
+    <div class="mt-auto pt-8 border-t" style="border-color:var(--border);margin-top:2rem;">
+      <button
+        onclick="document.getElementById('ds-drawer').classList.remove('open');document.getElementById('ds-drawer-overlay').classList.remove('open')"
+        class="w-full px-5 py-3 bg-stone-900 text-white rounded text-sm font-medium hover:bg-stone-700 transition-all">Fechar
+        Drawer</button>
+    </div>
+  </div>
+
+  <!-- TOAST CONTAINER -->
+  <div class="ds-toast-container" id="toast-container"></div>
+
+  <!-- ═══════════════════════════════════════
+  FOOTER
+═══════════════════════════════════════ -->
+  <footer class="relative bg-stone-900 text-stone-200 overflow-hidden">
+    <div class="absolute inset-0 bg-dots-white opacity-20 pointer-events-none"></div>
+    <div class="orb w-96 h-96 bg-white/5" style="top:-100px;left:-100px;animation-delay:-2s;"></div>
+    <div class="orb w-64 h-64 bg-white/5" style="bottom:-50px;right:-50px;animation-delay:-6s;"></div>
+    <div class="max-w-[1400px] mx-auto relative z-10 pt-24 pb-12 px-6 md:px-12">
+      <div class="text-center mb-20 reveal">
+        <h2 class="font-semibold tracking-tighter text-white leading-none" style="font-size:clamp(2.5rem,6vw,4rem);">
+          <span class="text-reveal-wrapper"><span class="text-reveal-content">Sistema pronto.</span></span><br>
+          <span class="text-reveal-wrapper"><span class="text-reveal-content delay-100"
+              style="-webkit-text-stroke:1px rgba(255,255,255,0.2);color:transparent;">Comece a construir.</span></span>
+        </h2>
+        <div class="mt-10 flex justify-center gap-4 flex-wrap reveal delay-300">
+          <a href="#typography"
+            class="beam-btn inline-flex items-center gap-2 bg-white text-black px-8 py-3.5 rounded-full text-sm font-semibold hover:bg-white/90 transition-all relative overflow-hidden">
+            <div class="beam-ring"></div>
+            <span class="relative z-10">Voltar ao Início</span>
+            <iconify-icon icon="solar:arrow-up-linear" class="relative z-10"></iconify-icon>
+          </a>
+        </div>
+      </div>
+      <div class="border-t border-stone-800 pt-12 grid grid-cols-1 md:grid-cols-3 gap-8 text-sm">
+        <div>
+          <div class="flex items-center gap-2 mb-4">
+            <iconify-icon icon="solar:atom-linear" class="text-xl"></iconify-icon>
+            <span class="font-bold tracking-tighter text-base">DESIGN SYSTEM</span>
+          </div>
+          <p class="text-stone-500 leading-relaxed">Sistema de design completo para projetos modernos e escaláveis.</p>
+        </div>
+        <div>
+          <h4 class="section-label mb-4" style="color:rgba(255,255,255,0.3);">Seções</h4>
+          <ul class="space-y-2 text-stone-400">
+            <li><a href="#typography" class="hover:text-white transition-colors">01 — Tipografia</a></li>
+            <li><a href="#colors" class="hover:text-white transition-colors">02 — Cores</a></li>
+            <li><a href="#components" class="hover:text-white transition-colors">03 — Componentes</a></li>
+            <li><a href="#icons" class="hover:text-white transition-colors">04 — Ícones</a></li>
+            <li><a href="#motion" class="hover:text-white transition-colors">05 — Motion</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="section-label mb-4" style="color:rgba(255,255,255,0.3);">Tecnologias</h4>
+          <ul class="space-y-2 text-stone-400">
+            <li class="font-mono text-xs">Tailwind CSS via CDN</li>
+            <li class="font-mono text-xs">Iconify + Solar Icons</li>
+            <li class="font-mono text-xs">Inter + Space Mono</li>
+            <li class="font-mono text-xs">Intersection Observer API</li>
+          </ul>
+        </div>
+      </div>
+      <!-- Giant ghost text -->
+      <div class="mt-16 opacity-5 pointer-events-none select-none overflow-hidden text-center">
+        <span class="font-bold leading-none tracking-tighter whitespace-nowrap text-white"
+          style="font-size:clamp(5rem,18vw,14rem);">ARTools</span>
+      </div>
+      <div class="text-center mt-4">
+        <span class="section-label" style="color:rgba(255,255,255,0.2);">© 2025 — Design System ARTools</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════════════════
+  SCRIPTS
+═══════════════════════════════════════ -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+      // ── Hero dots canvas animation ──
+      (function () {
+        const canvas = document.getElementById('hero-dots-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+
+        const SPACING = 28;       // grid cell size in px
+        const DOT_BASE_R = 0.9;   // resting radius
+        const DOT_MAX_R = 2.8;   // radius when mouse is very close
+        const DOT_BASE_A = 0.12;  // resting opacity
+        const DOT_MAX_A = 0.85;  // max opacity on hover
+        const RADIUS = 110;   // mouse influence radius in px
+        const LERP_SPD = 0.09;  // interpolation speed (smaller = smoother/slower)
+
+        let W, H, cols, rows, dots = [];
+        let mouse = { x: -9999, y: -9999 };
+
+        // Hermite lerp for buttery smoothness
+        function lerp(a, b, t) { return a + (b - a) * t; }
+
+        function build() {
+          const rect = canvas.getBoundingClientRect();
+          W = canvas.width = rect.width * window.devicePixelRatio;
+          H = canvas.height = rect.height * window.devicePixelRatio;
+          ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+          const cssW = rect.width;
+          const cssH = rect.height;
+          cols = Math.ceil(cssW / SPACING) + 1;
+          rows = Math.ceil(cssH / SPACING) + 1;
+          dots = [];
+          for (let r = 0; r < rows; r++) {
+            for (let c = 0; c < cols; c++) {
+              // Slight jitter so the grid feels organic but still ordered
+              const jx = (Math.random() - 0.5) * 4;
+              const jy = (Math.random() - 0.5) * 4;
+              dots.push({
+                x: c * SPACING + jx,
+                y: r * SPACING + jy,
+                cr: DOT_BASE_R,   // current radius
+                ca: DOT_BASE_A,   // current alpha
+              });
+            }
+          }
+        }
+
+        function draw() {
+          ctx.clearRect(0, 0, W / window.devicePixelRatio, H / window.devicePixelRatio);
+          for (let i = 0; i < dots.length; i++) {
+            const d = dots[i];
+            const dx = d.x - mouse.x;
+            const dy = d.y - mouse.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            const t = Math.max(0, 1 - dist / RADIUS);     // 0..1 influence
+            const smoothT = t * t * (3 - 2 * t);          // smoothstep
+
+            const targetR = lerp(DOT_BASE_R, DOT_MAX_R, smoothT);
+            const targetA = lerp(DOT_BASE_A, DOT_MAX_A, smoothT);
+
+            d.cr = lerp(d.cr, targetR, LERP_SPD);
+            d.ca = lerp(d.ca, targetA, LERP_SPD);
+
+            ctx.beginPath();
+            ctx.arc(d.x, d.y, Math.max(0.1, d.cr), 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255,255,255,${d.ca.toFixed(3)})`;
+            ctx.fill();
+          }
+          requestAnimationFrame(draw);
+        }
+
+        // Track mouse relative to hero section
+        const heroSection = canvas.parentElement;
+        heroSection.addEventListener('mousemove', (e) => {
+          const rect = heroSection.getBoundingClientRect();
+          mouse.x = e.clientX - rect.left;
+          mouse.y = e.clientY - rect.top;
+        });
+        heroSection.addEventListener('mouseleave', () => {
+          mouse.x = -9999;
+          mouse.y = -9999;
+        });
+
+        window.addEventListener('resize', () => {
+          ctx.setTransform(1, 0, 0, 1, 0, 0); // reset scale before rebuild
+          build();
+        });
+
+        build();
+        draw();
+      })();
+
+      // 1. Nav load
+      setTimeout(() => {
+        document.getElementById('main-nav').classList.add('loaded');
+      }, 100);
+
+      // 2. Hero title reveal
+      setTimeout(() => {
+        const ht = document.getElementById('hero-title');
+        if (ht) ht.classList.add('reveal-active');
+      }, 400);
+
+      // 3. Hero elements
+      setTimeout(() => {
+        document.querySelectorAll('.hero-el').forEach(el => el.classList.add('active'));
+      }, 400);
+
+      // 4. Intersection observer for .reveal
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            // Text reveal
+            if (entry.target.querySelector('.text-reveal-content')) {
+              entry.target.classList.add('reveal-active');
+            }
+            if (entry.target.tagName === 'H1' || entry.target.tagName === 'H2') {
+              entry.target.classList.add('reveal-active');
+            }
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+      document.querySelectorAll('h1, h2').forEach(el => {
+        if (el.querySelector('.text-reveal-content')) observer.observe(el);
+      });
+
+      // Also observe motion-reveal-title
+      const mrt = document.getElementById('motion-reveal-title');
+      if (mrt) observer.observe(mrt);
+
+      // 5. Modal
+      const modalOverlay = document.getElementById('modal-overlay');
+      const openBtn = document.getElementById('open-modal');
+      const closeIds = ['close-modal', 'close-modal-2', 'close-modal-3'];
+
+      if (openBtn) openBtn.addEventListener('click', () => modalOverlay.classList.add('open'));
+      closeIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('click', () => modalOverlay.classList.remove('open'));
+      });
+      if (modalOverlay) {
+        modalOverlay.addEventListener('click', (e) => {
+          if (e.target === modalOverlay) modalOverlay.classList.remove('open');
+        });
+      }
+
+      // 6. Flashlight cards
+      document.querySelectorAll('.flashlight-card').forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          card.style.setProperty('--mx', (e.clientX - rect.left) + 'px');
+          card.style.setProperty('--my', (e.clientY - rect.top) + 'px');
+        });
+      });
+
+      // 7. Parallax scroll
+      window.addEventListener('scroll', () => {
+        const scrolled = window.scrollY;
+        document.querySelectorAll('.parallax-element').forEach(el => {
+          const spd = parseFloat(el.dataset.speed) || 0.05;
+          el.style.transform = `translateY(${scrolled * spd}px)`;
+        });
+      });
+
+
+      // ── Tabs ──
+      window.setTab = function (btn, panelGroupId, panelId) {
+        const tabs = btn.closest('.ds-tab-list').querySelectorAll('.ds-tab');
+        tabs.forEach(t => t.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('#' + panelGroupId + ' .ds-tab-panel').forEach(p => p.classList.remove('active'));
+        const panel = document.getElementById(panelId);
+        if (panel) panel.classList.add('active');
+      };
+
+      // ── Accordion ──
+      window.toggleAccordion = function (item) {
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.ds-accordion-item.open').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      };
+
+      // ── Toast ──
+      window.showToast = function (type, msg) {
+        const container = document.getElementById('toast-container');
+        const icons = { success: 'solar:check-circle-linear', error: 'solar:close-circle-linear', info: 'solar:info-circle-linear' };
+        const colors = { success: '#16a34a', error: '#dc2626', info: '#1C1C1C' };
+        const toast = document.createElement('div');
+        toast.className = 'ds-toast';
+        toast.innerHTML = `<iconify-icon icon="${icons[type] || icons.info}" style="color:${colors[type]};flex-shrink:0;font-size:1.2rem;"></iconify-icon><span class="text-sm">${msg}</span><button class="toast-close" onclick="closeToast(this.parentElement)" style="margin-left:auto;background:none;border:none;color:#fff;opacity:.6;cursor:pointer;font-size:1rem;">×</button>`;
+        container.appendChild(toast);
+        requestAnimationFrame(() => toast.classList.add('show'));
+        setTimeout(() => closeToast(toast), 4000);
+      };
+      window.closeToast = function (toast) {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 500);
+      };
+
+      // ── Loading button ──
+      const loadBtn = document.getElementById('loading-btn');
+      if (loadBtn) {
+        loadBtn.addEventListener('click', function () {
+          const spinner = document.getElementById('loading-spinner');
+          const text = document.getElementById('loading-text');
+          if (spinner.style.display === 'none') {
+            spinner.style.display = 'inline-block';
+            text.textContent = 'Carregando...';
+            setTimeout(() => { spinner.style.display = 'none'; text.textContent = 'Clique para Loading'; }, 2500);
+          }
+        });
+      }
+
+    });
+  </script>
+</body>
+
+</html>

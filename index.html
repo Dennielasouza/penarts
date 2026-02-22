@@ -1,404 +1,624 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="scroll-smooth">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Artools Precision Series | A Caneta Mais Tecnológica</title>
+    <title>Artools Precision Pen</title>
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
-
-    <!-- Tailwind & Iconify (CDN) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
-
-    <!-- GSAP + ScrollTrigger (CDN) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-
-    <!-- Design System Configuration -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        mono: ['JetBrains Mono', 'monospace'],
-                        display: ['Space Grotesk', 'sans-serif'],
-                    },
-                    colors: {
-                        stone: {
-                            50: '#fafaf9',
-                            100: '#f5f5f4',
-                            200: '#e7e5e4',
-                            300: '#d6d3d1',
-                            400: '#a8a29e',
-                            500: '#78716c',
-                            600: '#57534e',
-                            700: '#44403c',
-                            800: '#292524',
-                            900: '#1c1917',
-                        },
-                        'surface-light': '#EAEAE5',
-                    },
-                    animation: {
-                        'spin-slow': 'spin 8s linear infinite',
-                    }
-                }
-            }
-        }
-    </script>
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet" />
 
     <style>
-        /* BASE STYLES & OVERRIDES */
+        /* ── TOKENS & BASE (Do Design System) ── */
+        :root {
+            --bg-main: #FFFFFF;
+            --bg-off: #F5F5F3;
+            --bg-dark: #1C1C1C;
+            --text-primary: #1C1C1C;
+            --text-muted: #6B6B6B;
+            --border: rgba(0, 0, 0, 0.12);
+            --accent: #1C1C1C;
+            --white: #FFFFFF;
+            --stone-700: #3D3D3D;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #EAEAE5;
-            color: #1C1917;
+            background: var(--bg-main);
+            color: var(--text-primary);
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* NOISE GRAIN TEXTURE */
-        .noise {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0.04;
-            pointer-events: none;
-            z-index: 9999;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        /* ── LENIS / SCROLL SMOOTHING ── */
+        html.lenis,
+        html.lenis body {
+            height: auto;
         }
 
-        /* TEXT OUTLINE EFFECT */
-        .text-outline {
-            -webkit-text-stroke: 1px currentColor;
-            color: transparent;
+        .lenis.lenis-smooth {
+            scroll-behavior: auto !important;
         }
 
-        /* BUTTON BEAM ANIMATION */
-        .btn-beam {
-            position: relative;
-            z-index: 10;
+        .lenis.lenis-smooth [data-lenis-prevent] {
+            overscroll-behavior: contain;
+        }
+
+        .lenis.lenis-stopped {
             overflow: hidden;
         }
 
-        .btn-beam::before {
-            content: "";
-            position: absolute;
-            inset: -2px;
-            z-index: -1;
-            background: conic-gradient(from 90deg at 50% 50%, #E2E8F0 0%, #000000 50%, #E2E8F0 100%);
-            animation: spin 4s linear infinite;
-            border-radius: inherit;
-            opacity: 0;
-            transition: opacity 0.3s;
+        .lenis.lenis-smooth iframe {
+            pointer-events: none;
         }
 
-        .btn-beam:hover::before {
-            opacity: 1;
-        }
-
-        .btn-beam-content {
-            background-color: #1c1917;
-            color: white;
+        /* ── HERO SECTION & LAYOUT ── */
+        .hero-section {
             position: relative;
-            z-index: 10;
+            width: 100vw;
+            /* Altura extra para permitir o efeito de scroll-scrub longo e fluido */
+            height: 400vh;
+        }
+
+        .hero-container {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            /* Mudamos de grid para flex, já que o flex sobrepõe colunas ao fundo visual */
+            align-items: center;
+            padding: 0 6%;
+            overflow: hidden;
+        }
+
+        /* Ruído de fundo premium (do Design System / Estética Apple) */
+        .noise-overlay {
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        /* ── VISUAL COLUMN & VIDEO CONTAINER FULLSCREEN ── */
+        .visual-column {
+            position: absolute;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            /* Por trás de tudo */
+        }
+
+        .video-container {
+            position: relative;
             width: 100%;
             height: 100%;
-            border-radius: inherit;
+            background: var(--bg-dark);
+            overflow: hidden;
+            opacity: 0;
+            will-change: opacity;
+        }
+
+        /* Overlay sutil para garantir leitura do texto (Gradient branco p/ transparente) usando as cores correntes */
+        .video-overlay {
+            position: absolute;
+            inset: 0;
+            /* Um degradê de var(--bg-main) a transparente, cobrindo o lado esquerdo */
+            background: linear-gradient(90deg, var(--bg-main) 0%, rgba(255, 255, 255, 0.7) 40%, transparent 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        @media (max-width: 900px) {
+            .hero-container {
+                align-items: flex-end;
+                padding-bottom: 12vh;
+            }
+
+            .video-overlay {
+                background: linear-gradient(0deg, var(--bg-main) 0%, rgba(255, 255, 255, 0.8) 55%, transparent 100%);
+            }
+        }
+
+        #hero-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* ── COPY & TYPOGRAPHY ── */
+        .copy-column {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            z-index: 10;
+            max-width: 600px;
+        }
+
+        @media (max-width: 900px) {
+            .copy-column {
+                align-items: center;
+                text-align: center;
+                width: 100%;
+            }
+        }
+
+        .headline {
+            font-size: clamp(3rem, 6vw, 6rem);
+            font-weight: 800;
+            line-height: 1.05;
+            letter-spacing: -0.04em;
+            margin-bottom: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            color: var(--stone-700);
+        }
+
+        .headline-line {
+            display: block;
+            overflow: hidden;
+            padding-bottom: 0.1em;
+            margin-bottom: -0.1em;
+        }
+
+        .headline-inner {
+            display: block;
+            transform: translateY(110%);
+            /* Preparado para animação de entrada */
+            opacity: 0;
+            will-change: transform, opacity;
+        }
+
+        /* Outline Text Effect - Text Shadow Fallback para evitar sobreposição interna das letras */
+        .text-transparent-stroke {
+            color: var(--bg-main);
+            /* Se camufla igual ao fundo sólido */
+            text-shadow:
+                -1.5px -1.5px 0 var(--stone-700),
+                1.5px -1.5px 0 var(--stone-700),
+                -1.5px 1.5px 0 var(--stone-700),
+                1.5px 1.5px 0 var(--stone-700),
+                0 -1.5px 0 var(--stone-700),
+                0 1.5px 0 var(--stone-700),
+                -1.5px 0 0 var(--stone-700),
+                1.5px 0 0 var(--stone-700);
+        }
+
+        .subtext {
+            font-size: clamp(1rem, 1.25vw, 1.25rem);
+            color: var(--text-muted);
+            max-width: 480px;
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+            transform: translateY(20px);
+            opacity: 0;
+            will-change: transform, opacity;
+        }
+
+        @media (max-width: 900px) {
+            .subtext {
+                margin: 0 auto 2rem auto;
+            }
+        }
+
+        /* ── BUTTONS ── */
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            transform: translateY(20px);
+            opacity: 0;
+            will-change: transform, opacity;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 900px) {
+            .btn-group {
+                justify-content: center;
+            }
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 2rem;
+            font-size: 0.85rem;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            border-radius: 9999px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Estilo Botão Primário */
+        .btn-primary {
+            background: var(--text-primary);
+            color: var(--white);
+            border: 1px solid var(--text-primary);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        @keyframes shimmer {
+            from {
+                transform: translateX(-100%) skewX(-15deg);
+            }
+
+            to {
+                transform: translateX(200%) skewX(-15deg);
+            }
+        }
+
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transform: translateX(-100%) skewX(-15deg);
+        }
+
+        .btn-primary:hover::after {
+            animation: shimmer 0.8s ease-out;
+        }
+
+        /* Estilo Botão Secundário */
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.5);
+            /* Leve fundo no secundário para separar do vídeo */
+            backdrop-filter: blur(8px);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+            gap: 0.5rem;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--text-primary);
+            background: var(--white);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary:active {
+            transform: scale(0.98);
+        }
+
+        .icon-arrow {
+            width: 1.2em;
+            height: 1.2em;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-secondary:hover .icon-arrow {
+            transform: translateX(4px);
+        }
+
+        /* ── FEEDBACK DE CARREGAMENTO ── */
+        .video-loader {
+            position: absolute;
+            inset: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--bg-main);
+            z-index: 5;
+            transition: opacity 0.6s ease;
         }
 
-        @keyframes spin {
-            from {
-                transform: rotate(0deg);
-            }
+        .video-loader.loaded {
+            opacity: 0;
+            pointer-events: none;
+        }
 
+        @keyframes spin-ring {
             to {
                 transform: rotate(360deg);
             }
         }
 
-        /* UTILS */
-        .text-balance {
-            text-wrap: balance;
+        .loader-spinner {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            border-top-color: var(--text-primary);
+            animation: spin-ring 0.8s linear infinite;
         }
 
-        /* CUSTOM SCROLLBAR */
-        ::-webkit-scrollbar {
-            width: 8px;
+        /* ── INDICADOR DE SCROLL ── */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-muted);
+            font-size: 0.65rem;
+            font-family: 'Space Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 10;
         }
 
-        ::-webkit-scrollbar-track {
-            background: #EAEAE5;
+        .scroll-line {
+            width: 1px;
+            height: 48px;
+            background: rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
         }
 
-        ::-webkit-scrollbar-thumb {
-            background: #d6d3d1;
-            border-radius: 4px;
+        .scroll-line::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: var(--text-primary);
+            animation: scrollLineAnim 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
         }
 
-        ::-webkit-scrollbar-thumb:hover {
-            background: #a8a29e;
+        @keyframes scrollLineAnim {
+            0% {
+                transform: translateY(-100%);
+            }
+
+            100% {
+                transform: translateY(200%);
+            }
+        }
+
+        /* ── ACESSIBILIDADE ── */
+        .btn:focus-visible {
+            outline: 2px solid var(--text-primary);
+            outline-offset: 4px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+
+            .headline-inner,
+            .subtext,
+            .btn-group,
+            .video-container {
+                opacity: 1 !important;
+                transform: none !important;
+            }
+
+            .scroll-indicator {
+                display: none;
+            }
+
+            .hero-section {
+                height: 100vh;
+            }
+
+            .hero-container {
+                position: relative;
+            }
         }
     </style>
 </head>
 
-<body class="antialiased selection:bg-stone-800 selection:text-white">
+<body>
 
-    <div class="noise"></div>
+    <div class="noise-overlay"></div>
 
-    <!-- NAVBAR -->
-    <header
-        class="fixed top-0 w-full z-50 px-6 py-6 transition-all duration-300 pointer-events-none mix-blend-difference text-stone-900 invert">
-        <div class="max-w-[1440px] mx-auto flex justify-between items-center pointer-events-auto">
-            <div class="flex items-center gap-2">
-                <div class="w-8 h-8 bg-stone-900 text-white flex items-center justify-center rounded-sm">
-                    <iconify-icon icon="solar:cube-bold-duotone" class="text-xl"></iconify-icon>
+    <section class="hero-section" id="hero" aria-label="Apresentação do Produto">
+        <div class="hero-container">
+
+            <!-- Coluna Visual: O vídeo agora assume todo o background de forma absoluta na frente da rolagem -->
+            <div class="visual-column">
+                <div class="video-container">
+                    <div class="video-overlay"></div>
+
+                    <div class="video-loader">
+                        <div class="loader-spinner"></div>
+                    </div>
+
+                    <video id="hero-video" preload="auto" playsinline muted>
+                        <source src="./assets/raw_files/video_novo_scrub.mp4" type="video/mp4">
+                        Seu navegador não suporta vídeos na web.
+                    </video>
                 </div>
-                <!-- Inverted by mix-blend above, so we keep text standard colors -->
-                <span class="font-display font-medium tracking-tight text-lg text-white">AR<span
-                        class="text-stone-400">TOOLS</span></span>
             </div>
 
-            <nav class="hidden md:flex items-center gap-8 text-xs font-mono uppercase tracking-widest text-stone-300">
-                <a href="#" class="hover:text-white transition-colors">Technology</a>
-                <a href="#" class="hover:text-white transition-colors">Design</a>
-                <a href="#" class="hover:text-white transition-colors">Specs</a>
-            </nav>
+            <!-- Coluna de Texto: Fica alocada na esquerda para contrastar sobre o overlay -->
+            <div class="copy-column">
+                <h1 class="headline">
+                    <span class="headline-line"><span class="headline-inner">A caneta</span></span>
+                    <span class="headline-line"><span class="headline-inner text-transparent-stroke">mais
+                            tecnológica</span></span>
+                    <span class="headline-line"><span class="headline-inner">do mundo.</span></span>
+                </h1>
 
-            <button class="hidden md:flex items-center gap-2">
-                <iconify-icon icon="solar:bag-linear" class="text-xl text-white"></iconify-icon>
-            </button>
+                <p class="subtext">
+                    Equilíbrio entre peso, fluxo e design. Feita sob medida para criadores que exigem perfeição em cada
+                    traço.
+                </p>
+
+                <div class="btn-group">
+                    <a href="#comprar" class="btn btn-primary" aria-label="Comprar a caneta agora">Comprar agora</a>
+                    <a href="#explorar" class="btn btn-secondary" aria-label="Explorar mais detalhes da caneta">
+                        Explorar
+                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="scroll-indicator">
+                <span>Rolar para explorar</span>
+                <div class="scroll-line"></div>
+            </div>
+
         </div>
-    </header>
+    </section>
 
-    <!-- MAIN SCROLL CONTAINER -->
-    <!-- h-[280vh] defines the scroll distance for the video scrub -->
-    <main class="relative bg-[#EAEAE5]">
-
-        <div id="hero-trigger" class="relative group h-[280vh]">
-
-            <!-- STICKY CONTENT WRAPPER -->
-            <div class="sticky top-0 h-screen w-full overflow-hidden flex flex-col md:flex-row">
-
-                <!-- LEFT COLUMN: TEXT -->
-                <div
-                    class="w-full md:w-5/12 h-screen flex flex-col justify-center px-8 md:px-24 relative z-20 order-2 md:order-1 bg-gradient-to-t md:bg-gradient-to-r from-[#EAEAE5] via-[#EAEAE5]/80 to-transparent">
-
-                    <div class="hero-text-anim opacity-0 translate-y-8">
-                        <span
-                            class="inline-block px-2 py-1 border border-stone-400 rounded-full text-[10px] uppercase font-mono tracking-widest text-stone-600 mb-6">
-                            Precision Series
-                        </span>
-                    </div>
-
-                    <h1
-                        class="font-display text-6xl md:text-8xl font-bold tracking-tighter leading-[0.9] mb-8 hero-text-anim opacity-0 translate-y-8">
-                        A caneta<br>
-                        <span class="text-outline">tecnológica</span><br>
-                        do mundo.
-                    </h1>
-
-                    <p
-                        class="text-lg text-stone-600 max-w-md leading-relaxed font-light mb-12 hero-text-anim opacity-0 translate-y-8">
-                        A Artools redefine o equilíbrio entre peso, fluxo e design.
-                        Feita para criadores que exigem perfeição em cada traço.
-                    </p>
-
-                    <div class="flex items-center gap-4 hero-text-anim opacity-0 translate-y-8">
-                        <button class="btn-beam px-1 py-1 rounded-sm group overflow-hidden">
-                            <div
-                                class="btn-beam-content px-8 py-4 bg-stone-900 hover:bg-stone-800 transition-colors uppercase font-mono text-xs tracking-widest gap-2">
-                                Comprar Agora
-                                <iconify-icon icon="solar:cart-large-minimalistic-linear"
-                                    class="text-lg"></iconify-icon>
-                            </div>
-                        </button>
-
-                        <button
-                            class="px-6 py-4 border border-stone-300 hover:bg-white hover:border-stone-400 transition-all rounded-sm uppercase font-mono text-xs tracking-widest text-stone-600 flex items-center gap-2 group">
-                            Explorar
-                            <iconify-icon icon="solar:arrow-down-linear"
-                                class="text-lg group-hover:translate-y-1 transition-transform"></iconify-icon>
-                        </button>
-                    </div>
-
-                    <!-- PROGRESS INDICATOR MOBILE -->
-                    <div class="md:hidden mt-12 flex items-center gap-4 text-xs font-mono text-stone-400">
-                        <span>SCROLL TO EXPLORE</span>
-                        <div class="w-12 h-[1px] bg-stone-300"></div>
-                    </div>
-                </div>
-
-                <!-- RIGHT COLUMN: VIDEO HERO -->
-                <div
-                    class="w-full md:w-7/12 h-[50vh] md:h-screen relative order-1 md:order-2 flex items-center justify-center bg-[#E6E6E1]">
-
-                    <!-- DECORATIVE ELEMENTS -->
-                    <div class="absolute inset-0 bg-grid opacity-30 pointer-events-none"></div>
-                    <div
-                        class="absolute top-[20%] right-[10%] w-[30vmax] h-[30vmax] bg-gradient-to-br from-white to-transparent rounded-full blur-3xl opacity-60">
-                    </div>
-
-                    <!-- VIDEO ELEMENT -->
-                    <!-- mix-blend-multiply helps video background blend if it's white -->
-                    <div class="relative w-full h-full md:w-[90%] md:h-[90%] flex items-center justify-center p-6">
-                        <video id="hero-video" src="assets/raw_files/video2.mp4" muted playsinline preload="auto"
-                            class="w-full h-full object-contain drop-shadow-2xl relative z-10 mix-blend-multiply"></video>
-                    </div>
-
-                    <!-- UI DETAILS (DESKTOP) -->
-                    <div class="hidden md:flex absolute bottom-12 right-12 items-end gap-8 z-20 mix-blend-multiply">
-                        <div class="flex flex-col gap-2 text-right">
-                            <div class="text-xs font-mono text-stone-400">STATUS</div>
-                            <div class="flex items-center gap-2 text-sm font-medium text-stone-600">
-                                <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
-                                READY
-                            </div>
-                        </div>
-
-                        <div class="h-16 w-[1px] bg-stone-300"></div>
-
-                        <div class="flex flex-col gap-4">
-                            <span class="text-4xl font-display font-medium text-stone-300">01</span>
-                            <div class="flex gap-2 text-stone-400">
-                                <button class="hover:text-stone-900 transition-colors"><iconify-icon
-                                        icon="solar:arrow-left-linear" class="text-xl"></iconify-icon></button>
-                                <button class="hover:text-stone-900 transition-colors"><iconify-icon
-                                        icon="solar:arrow-right-linear" class="text-xl"></iconify-icon></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SCROLL HINT OVERLAY -->
-            <div id="scroll-hint"
-                class="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 text-stone-400 text-xs font-mono uppercase tracking-widest animate-bounce hidden md:block">
-                Scroll to Explore
-            </div>
-        </div>
-
-        <!-- SPACER FOR NEXT CONTENT (Simulated) -->
-        <section class="h-[50vh] bg-stone-100 flex items-center justify-center border-t border-stone-200">
-            <p class="text-stone-400 font-mono text-sm uppercase tracking-widest">More content below...</p>
-        </section>
-
-    </main>
+    <!-- Lenis & GSAP CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
     <script>
-        document.addEventListener("DOMContentLoaded", (event) => {
+        document.addEventListener("DOMContentLoaded", () => {
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            const lenis = new Lenis({
+                duration: 1.2,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                direction: 'vertical',
+                gestureDirection: 'vertical',
+                smooth: !prefersReducedMotion,
+                mouseMultiplier: 1,
+                touchMultiplier: 2,
+                infinite: false,
+            });
+
+            function raf(time) {
+                lenis.raf(time);
+                requestAnimationFrame(raf);
+            }
+            requestAnimationFrame(raf);
+
             gsap.registerPlugin(ScrollTrigger);
 
-            const video = document.querySelector("#hero-video");
-            let isInitialized = false;
+            if (!prefersReducedMotion) {
+                lenis.on('scroll', ScrollTrigger.update);
+                gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+                gsap.ticker.lagSmoothing(0);
+            }
 
-            // 1. Initial Animations (Fade In)
-            const tlInit = gsap.timeline({ defaults: { ease: "power3.out", duration: 1.2 } });
+            // Animações Iniciais
+            if (!prefersReducedMotion) {
+                const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
 
-            tlInit.to(".hero-text-anim", {
-                y: 0,
-                opacity: 1,
-                stagger: 0.1,
-                delay: 0.2
-            })
-                .fromTo(video,
-                    { scale: 0.9, opacity: 0, y: 20 },
-                    { scale: 1, opacity: 1, y: 0, duration: 1.5, ease: "expo.out" },
-                    "-=1"
-                );
+                tl.to(".video-container", {
+                    opacity: 1,
+                    duration: 1.8,
+                    ease: "power2.inOut"
+                })
+                    .to(".headline-inner", {
+                        y: "0%",
+                        opacity: 1,
+                        duration: 1.2,
+                        stagger: 0.15,
+                    }, "-=1.0")
+                    .to(".subtext", { y: 0, opacity: 1, duration: 1 }, "-=0.9")
+                    .to(".btn-group", { y: 0, opacity: 1, duration: 1 }, "-=0.9")
+                    .to(".scroll-indicator", { opacity: 1, duration: 1 }, "-=0.5");
+            }
 
-            // 2. Video Scrub Logic
-            let videoDuration = 0;
+            // GSAP Scrub Scroll do Video Fullscreen
+            const video = document.getElementById('hero-video');
+            const loader = document.querySelector('.video-loader');
+            let isVideoReady = false;
 
             function initScrollScrub() {
-                if (isInitialized) return;
+                if (!isVideoReady || prefersReducedMotion) return;
 
-                // PREFERS-REDUCED-MOTION CHECK
-                const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-                if (prefersReducedMotion) {
-                    video.play();
-                    video.loop = true;
-                    isInitialized = true;
-                    return;
-                }
-
-                // CHECK DURATION VALIDITY
-                if (!video.duration) {
-                    if (video.readyState < 1) return;
-                    // Fallback for rare cases where duration is NaN
-                    if (isNaN(video.duration)) videoDuration = 5;
-                    else videoDuration = video.duration;
-                } else {
-                    videoDuration = video.duration;
-                }
-
-                isInitialized = true;
-                video.currentTime = 0;
-
-                // GSAP TIMELINE TIED TO SCROLL
-                gsap.timeline({
-                    scrollTrigger: {
-                        trigger: "#hero-trigger",
-                        start: "top top",
-                        end: "bottom bottom",
-                        scrub: 0.5, // 0.5s lag for smooth physics
-                        markers: false
+                ScrollTrigger.create({
+                    trigger: ".hero-section",
+                    start: "top top",
+                    end: "bottom bottom",
+                    scrub: 0.5, // 0.5s de suavidade e inércia pós-scroll
+                    onUpdate: (self) => {
+                        if (video.duration) {
+                            try {
+                                video.currentTime = self.progress * video.duration;
+                            } catch (e) { }
+                        }
                     }
-                })
-                    .fromTo(video,
-                        { currentTime: 0 },
-                        { currentTime: videoDuration, ease: "none" }
-                    );
+                });
 
-                // TEXT PARALLAX
-                gsap.to("h1", {
-                    y: -50,
+                // Parallax/Desaparecimento do bloco de texto conforme avança o Scroll
+                gsap.to(".copy-column", {
+                    y: -150,
+                    opacity: 0,
+                    scale: 0.95,
+                    ease: "none",
                     scrollTrigger: {
-                        trigger: "#hero-trigger",
+                        trigger: ".hero-section",
                         start: "top top",
-                        end: "bottom center",
+                        end: "40% top",
+                        scrub: true
+                    }
+                });
+
+                // Fade-out do overlay para o vídeo assumir o protagonismo com 100% de brilho/opacidade
+                gsap.to(".video-overlay", {
+                    opacity: 0,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: ".hero-section",
+                        start: "top top",
+                        end: "30% top",
+                        scrub: true
+                    }
+                });
+
+                gsap.to(".scroll-indicator", {
+                    opacity: 0,
+                    y: 50,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: ".hero-section",
+                        start: "top top",
+                        end: "20% top",
                         scrub: true
                     }
                 });
             }
 
-            // --- INITIALIZATION HANDLERS ---
+            video.addEventListener('loadedmetadata', () => {
+                loader.classList.add('loaded');
+                isVideoReady = true;
+                initScrollScrub();
+            });
+
             if (video.readyState >= 1) {
+                loader.classList.add('loaded');
+                isVideoReady = true;
                 initScrollScrub();
             }
-            video.addEventListener('loadedmetadata', initScrollScrub);
 
-            // Fallback timeout just in case metadata hangs
-            setTimeout(() => {
-                if (!isInitialized) {
-                    initScrollScrub();
-                }
-            }, 1000);
-
-            // BACKGROUND GRID PARALLAX
-            gsap.to(".bg-grid", {
-                backgroundPosition: "0px 100px",
-                ease: "none",
-                scrollTrigger: {
-                    trigger: "#hero-trigger",
-                    start: "top top",
-                    end: "bottom bottom",
-                    scrub: true
-                }
-            });
+            video.load();
         });
     </script>
 </body>
