@@ -5,6 +5,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const nav = document.getElementById("main-nav");
     const navDarkMask = document.getElementById("nav-dark-mask");
     const cmsBtnEl = document.getElementById("cms-toggle-btn");
+    const mobileBtnEl = document.getElementById("mobile-menu-btn");
+    const mobilePillNav = document.getElementById("mobile-pill-nav");
     const darkSections = document.querySelectorAll('.engineering-section, .fluid-section, .final-cta-section, .footer-premium');
 
     const watchScrollForNav = () => {
@@ -17,6 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let minDarkTop = navHeight;
         let maxDarkBottom = 0;
         let isCmsDark = false;
+        let isMobileMenuDark = false;
 
         darkSections.forEach(sec => {
             const rect = sec.getBoundingClientRect();
@@ -24,6 +27,14 @@ document.addEventListener("DOMContentLoaded", () => {
             // Verifica intersecção com o centro exato do Botão CMS
             if (rect.top <= cmsBtnRect.top + (cmsBtnRect.height / 2) && rect.bottom >= cmsBtnRect.top + (cmsBtnRect.height / 2)) {
                 isCmsDark = true;
+            }
+
+            // Verifica intersecção com o Botão Mobile
+            if (mobileBtnEl) {
+                const mobileBtnRect = mobileBtnEl.getBoundingClientRect();
+                if (rect.top <= mobileBtnRect.top + (mobileBtnRect.height / 2) && rect.bottom >= mobileBtnRect.top + (mobileBtnRect.height / 2)) {
+                    isMobileMenuDark = true;
+                }
             }
 
             // Se a seção preta cruza a Nav...
@@ -54,6 +65,15 @@ document.addEventListener("DOMContentLoaded", () => {
             cmsBtnEl.classList.add('dark-mode');
         } else {
             cmsBtnEl.classList.remove('dark-mode');
+        }
+
+        // Aplica classe ao Botão Mobile (e nav)
+        if (mobilePillNav) {
+            if (isMobileMenuDark) {
+                mobilePillNav.classList.add('dark-mode');
+            } else {
+                mobilePillNav.classList.remove('dark-mode');
+            }
         }
     };
 
@@ -106,6 +126,22 @@ document.addEventListener("DOMContentLoaded", () => {
         lenis.on('scroll', ScrollTrigger.update);
         gsap.ticker.add((time) => { lenis.raf(time * 1000); });
         gsap.ticker.lagSmoothing(0);
+    }
+
+    // ── LÓGICA DO MENU MOBILE PILL EXPANSÍVEL ──
+    if (mobileBtnEl && mobilePillNav) {
+        mobileBtnEl.addEventListener("click", () => {
+            mobileBtnEl.classList.toggle("active");
+            mobilePillNav.classList.toggle("active");
+        });
+
+        // Fechar ao clicar num link
+        document.querySelectorAll(".mobile-nav-link").forEach(link => {
+            link.addEventListener("click", () => {
+                mobileBtnEl.classList.remove("active");
+                mobilePillNav.classList.remove("active");
+            });
+        });
     }
 
     // Animações Iniciais
