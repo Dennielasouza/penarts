@@ -4,694 +4,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Artools Precision Pen</title>
+    <title>Artools Black Edition | A caneta definitiva</title>
 
+    <!-- SEO Essencial -->
+    <meta name="description"
+        content="Onde o design encontra a engenharia termodinâmica. Ferramenta de precisão desenvolvida estritamente para criativos.">
+    <meta name="keywords" content="caneta de precisão, design, artools, usinagem CNC, engenharia, premium">
+    <meta name="author" content="Artools Inc.">
+
+    <!-- Open Graph / Redes Sociais -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.artools.com/black-edition">
+    <meta property="og:title" content="Artools Black Edition | A caneta definitiva">
+    <meta property="og:description"
+        content="Onde o design encontra a engenharia termodinâmica. Ferramenta de precisão desenvolvida estritamente para criativos.">
+    <meta property="og:image" content="./assets/images/img_6395_grande.jpeg">
+
+    <!-- Ícones e Temas -->
+    <meta name="theme-color" content="#1C1C1C">
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🖋</text></svg>">
     <!-- Fonts -->
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Space+Mono:wght@400;700&display=swap"
         rel="stylesheet" />
 
-    <style>
-        /* ── TOKENS & BASE (Do Design System) ── */
-        :root {
-            --bg-main: #FFFFFF;
-            --bg-off: #F5F5F3;
-            --bg-dark: #1C1C1C;
-            --text-primary: #1C1C1C;
-            --text-muted: #6B6B6B;
-            --border: rgba(0, 0, 0, 0.12);
-            --accent: #1C1C1C;
-            --white: #FFFFFF;
-            --stone-700: #3D3D3D;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg-main);
-            color: var(--text-primary);
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        /* ── LENIS / SCROLL SMOOTHING ── */
-        html.lenis,
-        html.lenis body {
-            height: auto;
-        }
-
-        .lenis.lenis-smooth {
-            scroll-behavior: auto !important;
-        }
-
-        .lenis.lenis-smooth [data-lenis-prevent] {
-            overscroll-behavior: contain;
-        }
-
-        .lenis.lenis-stopped {
-            overflow: hidden;
-        }
-
-        .lenis.lenis-smooth iframe {
-            pointer-events: none;
-        }
-
-        /* ── HERO SECTION & LAYOUT ── */
-        .hero-section {
-            position: relative;
-            width: 100vw;
-            /* Altura extra para permitir o efeito de scroll-scrub longo e fluido */
-            height: 400vh;
-        }
-
-        .hero-container {
-            position: sticky;
-            top: 0;
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            /* Mudamos de grid para flex, já que o flex sobrepõe colunas ao fundo visual */
-            align-items: center;
-            padding: 0 6%;
-            overflow: hidden;
-        }
-
-        /* Ruído de fundo premium (do Design System / Estética Apple) */
-        .noise-overlay {
-            position: fixed;
-            inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
-            pointer-events: none;
-            z-index: 100;
-        }
-
-        /* ── VISUAL COLUMN & VIDEO CONTAINER FULLSCREEN ── */
-        .visual-column {
-            position: absolute;
-            inset: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: 0;
-            /* Por trás de tudo */
-        }
-
-        .video-container {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            background: var(--bg-dark);
-            overflow: hidden;
-            opacity: 0;
-            will-change: opacity;
-        }
-
-        /* Overlay sutil para garantir leitura do texto (Gradient branco p/ transparente) usando as cores correntes */
-        .video-overlay {
-            position: absolute;
-            inset: 0;
-            /* Um degradê de var(--bg-main) a transparente, cobrindo o lado esquerdo */
-            background: linear-gradient(90deg, var(--bg-main) 0%, rgba(255, 255, 255, 0.7) 40%, transparent 100%);
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        @media (max-width: 900px) {
-            .hero-container {
-                align-items: flex-end;
-                padding-bottom: 12vh;
-            }
-
-            .video-overlay {
-                background: linear-gradient(0deg, var(--bg-main) 0%, rgba(255, 255, 255, 0.8) 55%, transparent 100%);
-            }
-        }
-
-        #hero-video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        /* ── COPY & TYPOGRAPHY ── */
-        .copy-column {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            z-index: 10;
-            max-width: 600px;
-        }
-
-        @media (max-width: 900px) {
-            .copy-column {
-                align-items: center;
-                text-align: center;
-                width: 100%;
-            }
-        }
-
-        .headline {
-            font-size: clamp(3rem, 6vw, 6rem);
-            font-weight: 800;
-            line-height: 1.05;
-            letter-spacing: -0.04em;
-            margin-bottom: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            color: var(--stone-700);
-        }
-
-        .headline-line {
-            display: block;
-            overflow: hidden;
-            padding-bottom: 0.1em;
-            margin-bottom: -0.1em;
-        }
-
-        .headline-inner {
-            display: block;
-            transform: translateY(110%);
-            /* Preparado para animação de entrada */
-            opacity: 0;
-            will-change: transform, opacity;
-        }
-
-        /* Outline Text Effect - Text Shadow Fallback para evitar sobreposição interna das letras */
-        .text-transparent-stroke {
-            color: var(--bg-main);
-            /* Se camufla igual ao fundo sólido */
-            text-shadow:
-                -1.5px -1.5px 0 var(--stone-700),
-                1.5px -1.5px 0 var(--stone-700),
-                -1.5px 1.5px 0 var(--stone-700),
-                1.5px 1.5px 0 var(--stone-700),
-                0 -1.5px 0 var(--stone-700),
-                0 1.5px 0 var(--stone-700),
-                -1.5px 0 0 var(--stone-700),
-                1.5px 0 0 var(--stone-700);
-        }
-
-        .subtext {
-            font-size: clamp(1rem, 1.25vw, 1.25rem);
-            color: var(--text-muted);
-            max-width: 480px;
-            margin-bottom: 2.5rem;
-            line-height: 1.6;
-            transform: translateY(20px);
-            opacity: 0;
-            will-change: transform, opacity;
-        }
-
-        @media (max-width: 900px) {
-            .subtext {
-                margin: 0 auto 2rem auto;
-            }
-        }
-
-        /* ── BUTTONS ── */
-        .btn-group {
-            display: flex;
-            gap: 1rem;
-            transform: translateY(20px);
-            opacity: 0;
-            will-change: transform, opacity;
-            flex-wrap: wrap;
-        }
-
-        @media (max-width: 900px) {
-            .btn-group {
-                justify-content: center;
-            }
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem 2rem;
-            font-size: 0.85rem;
-            font-family: 'Space Mono', monospace;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            border-radius: 9999px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Estilo Botão Primário */
-        .btn-primary {
-            background: var(--text-primary);
-            color: var(--white);
-            border: 1px solid var(--text-primary);
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
-        }
-
-        .btn-primary:active {
-            transform: scale(0.98);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-        }
-
-        @keyframes shimmer {
-            from {
-                transform: translateX(-100%) skewX(-15deg);
-            }
-
-            to {
-                transform: translateX(200%) skewX(-15deg);
-            }
-        }
-
-        .btn-primary::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transform: translateX(-100%) skewX(-15deg);
-        }
-
-        .btn-primary:hover::after {
-            animation: shimmer 0.8s ease-out;
-        }
-
-        /* Estilo Botão Secundário */
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.5);
-            /* Leve fundo no secundário para separar do vídeo */
-            backdrop-filter: blur(8px);
-            color: var(--text-primary);
-            border: 1px solid var(--border);
-            gap: 0.5rem;
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--text-primary);
-            background: var(--white);
-            transform: translateY(-2px);
-        }
-
-        .btn-secondary:active {
-            transform: scale(0.98);
-        }
-
-        .icon-arrow {
-            width: 1.2em;
-            height: 1.2em;
-            transition: transform 0.3s ease;
-        }
-
-        .btn-secondary:hover .icon-arrow {
-            transform: translateX(4px);
-        }
-
-        /* ── FEEDBACK DE CARREGAMENTO ── */
-        .video-loader {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--bg-main);
-            z-index: 5;
-            transition: opacity 0.6s ease;
-        }
-
-        .video-loader.loaded {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        @keyframes spin-ring {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        .loader-spinner {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            border: 2px solid rgba(0, 0, 0, 0.1);
-            border-top-color: var(--text-primary);
-            animation: spin-ring 0.8s linear infinite;
-        }
-
-        /* ── INDICADOR DE SCROLL ── */
-        .scroll-indicator {
-            position: absolute;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.75rem;
-            color: var(--text-muted);
-            font-size: 0.65rem;
-            font-family: 'Space Mono', monospace;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            opacity: 0;
-            pointer-events: none;
-            z-index: 10;
-        }
-
-        .scroll-line {
-            width: 1px;
-            height: 48px;
-            background: rgba(0, 0, 0, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .scroll-line::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 50%;
-            background: var(--text-primary);
-            animation: scrollLineAnim 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
-        }
-
-        @keyframes scrollLineAnim {
-            0% {
-                transform: translateY(-100%);
-            }
-
-            100% {
-                transform: translateY(200%);
-            }
-        }
-
-        /* ── ENGENHARIA SECTION (DOBRA 2) ── */
-        .engineering-section {
-            position: relative;
-            display: flex;
-            background-color: var(--bg-dark);
-            color: var(--white);
-            z-index: 10;
-        }
-
-        .eng-sticky-side {
-            position: sticky;
-            top: 0;
-            width: 45vw;
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-right: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .eng-pen-img {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: grayscale(100%) brightness(0.7) contrast(1.2);
-            will-change: transform;
-        }
-
-        .eng-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(28, 28, 28, 0.7) 0%, rgba(28, 28, 28, 0.2) 100%);
-            box-shadow: inset -40px 0 100px var(--bg-dark);
-            pointer-events: none;
-        }
-
-        .tech-hud {
-            position: absolute;
-            inset: 60px;
-            border: 1px dashed rgba(255, 255, 255, 0.1);
-            pointer-events: none;
-        }
-
-        .tech-hud::before,
-        .tech-hud::after {
-            content: '';
-            position: absolute;
-            width: 24px;
-            height: 24px;
-        }
-
-        .tech-hud::before {
-            top: -1px;
-            left: -1px;
-            border-top: 2px solid var(--white);
-            border-left: 2px solid var(--white);
-        }
-
-        .tech-hud::after {
-            bottom: -1px;
-            right: -1px;
-            border-bottom: 2px solid var(--white);
-            border-right: 2px solid var(--white);
-        }
-
-        .eng-scroll-side {
-            width: 55vw;
-            padding: 15vh 10%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .eng-intro {
-            margin-bottom: 20vh;
-        }
-
-        .ds-eyebrow {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.75rem;
-            color: rgba(255, 255, 255, 0.6);
-            letter-spacing: 0.25em;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 32px;
-            text-transform: uppercase;
-        }
-
-        .ds-eyebrow::before {
-            content: "";
-            width: 32px;
-            height: 1px;
-            background-color: var(--white);
-        }
-
-        .ds-h2 {
-            font-size: clamp(2.5rem, 4vw, 3.5rem);
-            font-weight: 400;
-            line-height: 1.1;
-            letter-spacing: -0.02em;
-            margin-bottom: 32px;
-            color: var(--white);
-        }
-
-        .ds-p {
-            font-size: 1.125rem;
-            line-height: 1.6;
-            color: rgba(255, 255, 255, 0.6);
-            max-width: 480px;
-        }
-
-        .eng-feature-list {
-            display: flex;
-            flex-direction: column;
-            gap: 15vh;
-            padding-bottom: 15vh;
-        }
-
-        .eng-feature-item {
-            position: relative;
-            max-width: 500px;
-        }
-
-        .feat-line {
-            height: 1px;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.1);
-            margin-bottom: 24px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feat-line-fill {
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 0%;
-            background: var(--white);
-            transform-origin: left;
-        }
-
-        .feat-number {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.4);
-            margin-bottom: 16px;
-            display: block;
-        }
-
-        .feat-title {
-            font-size: 1.8rem;
-            font-weight: 500;
-            margin-bottom: 16px;
-            color: var(--white);
-            letter-spacing: -0.02em;
-        }
-
-        .feat-desc {
-            font-size: 1rem;
-            color: rgba(255, 255, 255, 0.5);
-            line-height: 1.6;
-            margin-bottom: 24px;
-        }
-
-        .feat-tag {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: #FF6A3D;
-            border: 1px solid rgba(255, 106, 61, 0.3);
-            background: rgba(255, 106, 61, 0.05);
-            padding: 4px 12px;
-            border-radius: 99px;
-            display: inline-block;
-        }
-
-        @media (max-width: 900px) {
-            .engineering-section {
-                flex-direction: column;
-            }
-
-            .eng-sticky-side {
-                width: 100vw;
-                height: 50vh;
-                position: relative;
-                border-right: none;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            }
-
-            .eng-overlay {
-                box-shadow: inset 0 -40px 100px var(--bg-dark);
-            }
-
-            .eng-scroll-side {
-                width: 100vw;
-                padding: 10vh 5%;
-            }
-        }
-
-        /* Classes de animação GSAP iniciais */
-        .eng-anim {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        /* ── ACESSIBILIDADE ── */
-        .btn:focus-visible {
-            outline: 2px solid var(--text-primary);
-            outline-offset: 4px;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation: none !important;
-                transition: none !important;
-            }
-
-            .headline-inner,
-            .subtext,
-            .btn-group,
-            .video-container {
-                opacity: 1 !important;
-                transform: none !important;
-            }
-
-            .scroll-indicator {
-                display: none;
-            }
-
-            .hero-section {
-                height: 100vh;
-            }
-
-            .hero-container {
-                position: relative;
-            }
-        }
-
-        /* ── CUSTOM CURSOR RASTRO ── */
-        @media (hover: hover) and (pointer: fine) {
-
-            html,
-            body,
-            a,
-            button {
-                cursor: none !important;
-            }
-
-            .custom-cursor {
-                position: fixed;
-                top: -4px;
-                left: -4px;
-                width: 8px;
-                height: 8px;
-                background-color: var(--white);
-                border-radius: 50%;
-                pointer-events: none;
-                z-index: 9999;
-                mix-blend-mode: difference;
-                will-change: transform;
-            }
-
-            .cursor-trail {
-                position: absolute;
-                background-color: var(--text-primary);
-                /* Preta */
-                border-radius: 50%;
-                will-change: transform, opacity;
-                animation: asteroidDust 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            }
-
-            @keyframes asteroidDust {
-                0% {
-                    opacity: 1;
-                    /* Retornando para 100% para ter cor sólida perceptível */
-                    transform: scale(1);
-                }
-
-                100% {
-                    opacity: 0;
-                    transform: scale(0);
-                }
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
     <div class="noise-overlay"></div>
+
+    <!-- ── PREMIUM VERTICAL SIDE NAV (Dual Render Magic) ── -->
+    <div class="premium-side-nav-container" id="main-nav">
+
+        <!-- Camada Base de Sombra (Sem cortes de border-radius do clip-path) -->
+        <div class="nav-shadow-base"
+            style="position: absolute; inset: 0; border-radius: 999px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1); z-index: -1;">
+        </div>
+
+        <!-- Versão BASE (CLARA) -->
+        <nav class="nav-light" aria-label="Navegação Principal Claro">
+            <a href="#hero" class="nav-logo">ARTOOLS</a>
+            <div class="nav-links">
+                <a href="#hero" class="nav-item">
+                    <span class="nav-label">Visão</span>
+                    <span class="nav-dot"></span>
+                </a>
+                <a href="#engineering" class="nav-item">
+                    <span class="nav-label">Engenharia</span>
+                    <span class="nav-dot"></span>
+                </a>
+                <a href="#experience" class="nav-item">
+                    <span class="nav-label">Experiência</span>
+                    <span class="nav-dot"></span>
+                </a>
+            </div>
+            <a href="#buy" class="nav-btn" aria-label="Comprar">Buy</a>
+        </nav>
+
+        <!-- Versão MÁSCARA (ESCURA) colocada exatamente por cima -->
+        <nav class="nav-dark" id="nav-dark-mask" aria-hidden="true">
+            <a href="#hero" class="nav-logo">ARTOOLS</a>
+            <div class="nav-links">
+                <a href="#hero" class="nav-item">
+                    <span class="nav-label">Visão</span>
+                    <span class="nav-dot"></span>
+                </a>
+                <a href="#engineering" class="nav-item">
+                    <span class="nav-label">Engenharia</span>
+                    <span class="nav-dot"></span>
+                </a>
+                <a href="#experience" class="nav-item">
+                    <span class="nav-label">Experiência</span>
+                    <span class="nav-dot"></span>
+                </a>
+            </div>
+            <a href="#buy" class="nav-btn">Buy</a>
+        </nav>
+
+    </div>
 
     <section class="hero-section" id="hero" aria-label="Apresentação do Produto">
         <div class="hero-container">
@@ -706,7 +99,7 @@
                     </div>
 
                     <video id="hero-video" preload="auto" playsinline muted>
-                        <source src="./assets/raw_files/video_novo_scrub.mp4" type="video/mp4">
+                        <source src="./assets/videos/video_novo_scrub.mp4" type="video/mp4">
                         Seu navegador não suporta vídeos na web.
                     </video>
                 </div>
@@ -714,19 +107,19 @@
 
             <!-- Coluna de Texto: Fica alocada na esquerda para contrastar sobre o overlay -->
             <div class="copy-column">
-                <h1 class="headline">
-                    <span class="headline-line"><span class="headline-inner">A caneta</span></span>
-                    <span class="headline-line"><span class="headline-inner text-transparent-stroke">mais
-                            tecnológica</span></span>
-                    <span class="headline-line"><span class="headline-inner">do mundo.</span></span>
+                <span class="hero-el ds-eyebrow" style="animation-delay: 0.2s;">Artools Black Edition</span>
+                <h1 class="headline" aria-label="A caneta definitiva.">
+                    <span class="headline-line"><span class="headline-inner text-transparent-stroke hero-el"
+                            style="animation-delay: 0.4s;">A caneta</span></span>
+                    <span class="headline-line"><span class="headline-inner hero-el"
+                            style="animation-delay: 0.6s;">definitiva.</span></span>
                 </h1>
-
-                <p class="subtext">
-                    Equilíbrio entre peso, fluxo e design. Feita sob medida para criadores que exigem perfeição em cada
-                    traço.
+                <p class="subtext hero-el" style="animation-delay: 0.8s;">
+                    Onde o design encontra a engenharia termodinâmica. Uma ferramenta projetada para o seu talento fluir
+                    e desenhar de forma contínua o seu principal traço.
                 </p>
 
-                <div class="btn-group">
+                <div class="btn-group hero-el" style="animation-delay: 1.0s;">
                     <a href="#comprar" class="btn btn-primary" aria-label="Comprar a caneta agora">Comprar agora</a>
                     <a href="#explorar" class="btn btn-secondary" aria-label="Explorar mais detalhes da caneta">
                         Explorar
@@ -742,326 +135,273 @@
             <div class="scroll-indicator">
                 <span>Rolar para explorar</span>
                 <div class="scroll-line"></div>
-                <div class="eng-scroll-side">
+            </div>
 
-                    <div class="eng-intro">
-                        <span class="ds-eyebrow eng-anim">A forma segue a função</span>
-                        <h2 class="ds-h2 eng-anim">Usinagem CNC de alta precisão.</h2>
-                        <p class="ds-p eng-anim">A fusão exata entre a física e o design. Desenvolvida estritamente para
-                            criativos que não negociam performance.</p>
+        </div>
+    </section>
+
+    <section class="engineering-section" id="engineering" aria-label="Engenharia de Precisão">
+        <!-- Grid Guide Vindo do Design System -->
+        <div class="grid-guide">
+            <div class="grid-guide-col"></div>
+            <div class="grid-guide-col"></div>
+            <div class="grid-guide-col"></div>
+            <div class="grid-guide-col"></div>
+            <div class="grid-guide-col"></div>
+            <div class="grid-guide-col"></div>
+            <div class="grid-guide-col"></div>
+            <div class="grid-guide-col"></div>
+            <div class="grid-guide-col"></div>
+            <div class="grid-guide-col"></div>
+            <div class="grid-guide-col"></div>
+            <div class="grid-guide-col" style="border-right: none;"></div>
+        </div>
+
+
+
+        <!-- Canvas para efeito magnético (Dots) -->
+        <canvas class="magnetic-canvas"
+            style="position: absolute; inset: 0; z-index: 0; pointer-events: none; width: 100%; height: 100%;"></canvas>
+
+        <div class="eng-sticky-side">
+            <!-- Orbs from Design System -->
+            <div class="orb"
+                style="width: 500px; height: 500px; background: rgba(255,255,255,0.06); top: -15%; left: -20%;"></div>
+            <div class="orb"
+                style="width: 400px; height: 400px; background: rgba(255,255,255,0.04); bottom: -15%; right: -25%; animation-delay: -5s;">
+            </div>
+
+            <img src="./assets/images/img_6395_grande.jpeg" alt="Visão técnica da caneta Artools" class="eng-pen-img">
+            <div class="eng-overlay"></div>
+
+            <div class="tech-hud">
+                <div class="scanline"></div>
+                <!-- Mini Tech Texts HUD -->
+                <span
+                    style="position: absolute; top: 10px; left: 10px; font-family: 'Space Mono', monospace; font-size: 0.55rem; opacity: 0.5; letter-spacing: 0.1em; color: white;">SYS.ON
+                    // REPL.01</span>
+                <span
+                    style="position: absolute; bottom: 10px; right: 10px; font-family: 'Space Mono', monospace; font-size: 0.55rem; opacity: 0.5; letter-spacing: 0.1em; color: white;">AXIS-Z
+                    CALIBRATED</span>
+            </div>
+        </div>
+
+        <div class="eng-scroll-side relative z-10">
+
+            <div class="eng-intro">
+                <span class="ds-eyebrow eng-anim text-reveal-trigger">A forma segue a função</span>
+                <h2 class="ds-h2 eng-anim text-reveal-trigger"
+                    style="font-weight: 600; font-size: clamp(3rem, 5vw, 4.5rem); line-height: 1.05; letter-spacing: -0.04em; margin-bottom: 40px;">
+                    <span class="text-reveal-wrapper block"><span class="text-reveal-content delay-100">Usinagem
+                            CNC</span></span>
+                    <span class="text-reveal-wrapper block"><span
+                            class="text-reveal-content delay-200 text-transparent-stroke-white">de alta
+                            precisão.</span></span>
+                </h2>
+                <p class="ds-p eng-anim" style="font-weight: 300; font-size: 1.25rem;">
+                    A fusão exata entre a física e o design. Desenvolvida estritamente para criativos que não negociam
+                    performance.
+                </p>
+            </div>
+
+            <div class="eng-feature-list">
+
+                <div class="eng-feature-item tech-card eng-anim" onmousemove="updateFlashlight(event, this)">
+                    <div
+                        style="margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between;">
+                        <span class="feat-number" style="margin-bottom: 0;">01</span>
+                        <span class="ds-badge">
+                            <div class="pulse-dot"></div>Estrutura 12g
+                        </span>
+                    </div>
+                    <h3 class="feat-title">Alumínio Aeroespacial</h3>
+                    <p class="feat-desc">Estrutura forjada em liga ultraleve e anodização premium. O resultado é a
+                        ergonomia de precisão máxima, eliminando completamente a fadiga muscular após longas horas de
+                        rascunhos ininterruptos.</p>
+                </div>
+
+                <div class="eng-feature-item tech-card eng-anim" onmousemove="updateFlashlight(event, this)">
+                    <div
+                        style="margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between;">
+                        <span class="feat-number" style="margin-bottom: 0;">02</span>
+                        <span class="ds-badge">
+                            <div class="pulse-dot"></div>Latência Zero
+                        </span>
+                    </div>
+                    <h3 class="feat-title">Fluxo de Alta Performance</h3>
+                    <p class="feat-desc">Dinâmica dos fluidos aplicada na prática. Traço consistente e ininterrupto da
+                        primeira à última gota, aliado a um sistema de secagem rápida que acompanha sempre a velocidade
+                        do seu pensamento.</p>
+                </div>
+
+                <div class="eng-feature-item tech-card eng-anim" onmousemove="updateFlashlight(event, this)">
+                    <div
+                        style="margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between;">
+                        <span class="feat-number" style="margin-bottom: 0;">03</span>
+                        <span class="ds-badge">
+                            <div class="pulse-dot"></div>Uso Vitalício
+                        </span>
+                    </div>
+                    <h3 class="feat-title">Engenharia Suíça</h3>
+                    <p class="feat-desc">Equipada com ponta de precisão milimétrica e reservatório com vedação
+                        hermética. Onde quer que você esteja desenhando, a usinagem vitalícia garante extrema
+                        durabilidade contra qualquer queda.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="fluid-section bg-dots-white" id="experience" aria-label="A Experiência Artools">
+        <!-- Canvas para efeito magnético (Dots) -->
+        <canvas class="magnetic-canvas"
+            style="position: absolute; inset: 0; z-index: 0; pointer-events: none; width: 100%; height: 100%;"></canvas>
+
+        <div class="fluid-sticky-container">
+
+            <!-- Falsa tela em branco que será expandida no meio da escuridão  -->
+            <div class="fluid-intro-text">
+                <div class="pulsing-dot-center"></div>
+                <span>Continue rolando</span>
+            </div>
+
+            <div class="fluid-video-wrapper">
+                <video src="./assets/videos/video2.mp4" autoplay loop muted playsinline aria-hidden="true"></video>
+                <div class="fluid-video-overlay"></div>
+            </div>
+
+            <div class="fluid-content">
+                <h2 class="fluid-title">
+                    <span class="fluid-line-wrapper"><span class="fluid-line">Extensão natural</span></span>
+                    <span class="fluid-line-wrapper"><span class="fluid-line fluid-stroke-text">da sua
+                            mente.</span></span>
+                </h2>
+
+                <div class="fluid-cards-container">
+                    <div class="fluid-card f-card-1">
+                        <div class="f-card-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                            </svg>
+                        </div>
+                        <h3>Gravidade Zero</h3>
+                        <p>O centro de massa foi recalculado para anular o tremor do pulso e proporcionar máxima
+                            estabilidade em traços contínuos.</p>
                     </div>
 
-                    <div class="eng-feature-list">
-
-                        <div class="eng-feature-item">
-                            <div class="feat-line">
-                                <div class="feat-line-fill"></div>
-                            </div>
-                            <span class="feat-number eng-anim">01</span>
-                            <h3 class="feat-title eng-anim">Alumínio Aeroespacial</h3>
-                            <p class="feat-desc eng-anim">Estrutura forjada em liga ultraleve e anodização premium. O
-                                resultado é a ergonomia de precisão máxima, eliminando completamente a fadiga muscular
-                                após longas horas de rascunhos ininterruptos.</p>
-                            <div class="eng-anim"><span class="feat-tag">Estrutura 12g</span></div>
+                    <div class="fluid-card f-card-2" style="margin-top: 8vh;">
+                        <div class="f-card-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.5">
+                                <circle cx="12" cy="12" r="10" />
+                                <path d="M12 8v8M8 12h8" />
+                            </svg>
                         </div>
-
-                        <div class="eng-feature-item">
-                            <div class="feat-line">
-                                <div class="feat-line-fill"></div>
-                            </div>
-                            <span class="feat-number eng-anim">02</span>
-                            <h3 class="feat-title eng-anim">Fluxo de Alta Performance</h3>
-                            <p class="feat-desc eng-anim">Dinâmica dos fluidos aplicada na prática. Traço consistente e
-                                ininterrupto da primeira à última gota, aliado a um sistema de secagem rápida que
-                                acompanha sempre a velocidade do seu pensamento.</p>
-                            <div class="eng-anim"><span class="feat-tag">Latência Zero</span></div>
-                        </div>
-
-                        <div class="eng-feature-item">
-                            <div class="feat-line">
-                                <div class="feat-line-fill"></div>
-                            </div>
-                            <span class="feat-number eng-anim">03</span>
-                            <h3 class="feat-title eng-anim">Engenharia Suíça</h3>
-                            <p class="feat-desc eng-anim">Equipada com ponta de precisão milimétrica e reservatório com
-                                vedação hermética. Onde quer que você esteja desenhando, a usinagem vitalícia garante
-                                extrema durabilidade contra qualquer queda.</p>
-                            <div class="eng-anim"><span class="feat-tag">Uso Vitalício</span></div>
-                        </div>
-
+                        <h3>Tato Dinâmico</h3>
+                        <p>O acabamento adere de forma inteligente, barrando o suor e os deslizes em sessões de
+                            altíssima tensão criativa.</p>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        </div>
+        </div>
     </section>
+
+    <!-- DOBRA 4 / FINAL CTA & FOOTER -->
+    <section class="final-cta-section bg-dots" id="buy" aria-label="Próximo Passo">
+        <!-- Canvas para efeito magnético (Dots) -->
+        <canvas class="magnetic-canvas"
+            style="position: absolute; inset: 0; z-index: 0; pointer-events: none; width: 100%; height: 100%;"></canvas>
+
+        <span class="cta-label reveal-up">Pronto para a evolução?</span>
+        <h2 class="cta-headline reveal-up delay-100">
+            <span>Redefina seu</span>
+            <span class="cta-italic">padrão.</span>
+        </h2>
+
+        <div class="cta-btn-wrapper reveal-up delay-200">
+            <a href="#" class="cta-ghost-link" aria-label="Adquirir Artools">
+                Adquirir
+            </a>
+        </div>
+    </section>
+
+    <footer class="footer-premium bg-dots">
+        <!-- Canvas para efeito magnético (Dots) -->
+        <canvas class="magnetic-canvas"
+            style="position: absolute; inset: 0; z-index: 0; pointer-events: none; width: 100%; height: 100%;"></canvas>
+
+        <div class="footer-grid">
+            <div class="footer-col branding reveal-up">
+                <div
+                    style="font-size: 1.5rem; font-weight: 700; margin-bottom: 24px; color: var(--white); letter-spacing: -0.02em;">
+                    ARTOOLS</div>
+                <p style="color: rgba(255,255,255,0.4); max-width: 300px; line-height: 1.6; font-size: 0.95rem;">
+                    Forjando as ferramentas essenciais para as mentes criativas da nossa geração. Nascida no estúdio,
+                    feita para o mundo.
+                </p>
+            </div>
+
+            <div class="footer-col reveal-up delay-100">
+                <h4 class="footer-title">Produto</h4>
+                <a href="#hero" class="footer-link">Design</a>
+                <a href="#engineering" class="footer-link">Engenharia</a>
+                <a href="#experience" class="footer-link">A Experiência</a>
+                <a href="#" class="footer-link">Edições Limitadas</a>
+            </div>
+
+            <div class="footer-col reveal-up delay-200">
+                <h4 class="footer-title">Legal</h4>
+                <a href="#" class="footer-link">Termos de Serviço</a>
+                <a href="#" class="footer-link">Privacidade</a>
+                <a href="#" class="footer-link">Garantia Vitalícia</a>
+            </div>
+        </div>
+
+        <div class="huge-footer-text">
+            ARTOOLS
+        </div>
+
+        <div class="footer-bottom">
+            <span>&copy; 2026 Artools Inc. Todos os direitos reservados.</span>
+            <span>Sistema Elevado por Engenharia</span>
+        </div>
+    </footer>
 
     <!-- Lenis & GSAP CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    <script src="js/main.js"></script>
+    <!-- ── CMS (GERENCIADOR DE CONTEÚDO) ── -->
+    <button class="cms-btn" id="cms-toggle-btn" aria-label="Gerenciador de Conteúdo">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path
+                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+            </path>
+        </svg>
+    </button>
 
-            const lenis = new Lenis({
-                duration: 1.2,
-                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-                direction: 'vertical',
-                gestureDirection: 'vertical',
-                smooth: !prefersReducedMotion,
-                mouseMultiplier: 1,
-                touchMultiplier: 2,
-                infinite: false,
-            });
+    <div class="cms-panel" id="cms-panel">
+        <div class="cms-header">
+            <h2>Gerenciador de Conteúdo</h2>
+            <button class="cms-close" id="cms-close-btn">&times;</button>
+        </div>
+        <div class="cms-body" id="cms-fields-container">
+            <!-- Os campos de formulário serão injetados dinamicamente via JS -->
+        </div>
+        <div class="cms-footer">
+            <button class="cms-save-btn" id="cms-save-btn">Salvar Alterações</button>
+        </div>
+    </div>
 
-            function raf(time) {
-                lenis.raf(time);
-                requestAnimationFrame(raf);
-            }
-            requestAnimationFrame(raf);
-
-            gsap.registerPlugin(ScrollTrigger);
-
-            if (!prefersReducedMotion) {
-                lenis.on('scroll', ScrollTrigger.update);
-                gsap.ticker.add((time) => { lenis.raf(time * 1000); });
-                gsap.ticker.lagSmoothing(0);
-            }
-
-            // Animações Iniciais
-            if (!prefersReducedMotion) {
-                const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
-
-                tl.to(".video-container", {
-                    opacity: 1,
-                    duration: 1.8,
-                    ease: "power2.inOut"
-                })
-                    .to(".headline-inner", {
-                        y: "0%",
-                        opacity: 1,
-                        duration: 1.2,
-                        stagger: 0.15,
-                    }, "-=1.0")
-                    .to(".subtext", { y: 0, opacity: 1, duration: 1 }, "-=0.9")
-                    .to(".btn-group", { y: 0, opacity: 1, duration: 1 }, "-=0.9")
-                    .to(".scroll-indicator", { opacity: 1, duration: 1 }, "-=0.5");
-            }
-
-            // GSAP Scrub Scroll do Video Fullscreen
-            const video = document.getElementById('hero-video');
-            const loader = document.querySelector('.video-loader');
-            let isVideoReady = false;
-
-            function initScrollScrub() {
-                if (!isVideoReady || prefersReducedMotion) return;
-
-                ScrollTrigger.create({
-                    trigger: ".hero-section",
-                    start: "top top",
-                    end: "bottom bottom",
-                    scrub: 0.5, // 0.5s de suavidade e inércia pós-scroll
-                    onUpdate: (self) => {
-                        if (video.duration) {
-                            try {
-                                video.currentTime = self.progress * video.duration;
-                            } catch (e) { }
-                        }
-                    }
-                });
-
-                // Parallax/Desaparecimento do bloco de texto conforme avança o Scroll
-                gsap.to(".copy-column", {
-                    y: -150,
-                    opacity: 0,
-                    scale: 0.95,
-                    ease: "none",
-                    scrollTrigger: {
-                        trigger: ".hero-section",
-                        start: "top top",
-                        end: "40% top",
-                        scrub: true
-                    }
-                });
-
-                // Fade-out do overlay para o vídeo assumir o protagonismo com 100% de brilho/opacidade
-                gsap.to(".video-overlay", {
-                    opacity: 0,
-                    ease: "none",
-                    scrollTrigger: {
-                        trigger: ".hero-section",
-                        start: "top top",
-                        end: "30% top",
-                        scrub: true
-                    }
-                });
-
-                gsap.to(".scroll-indicator", {
-                    opacity: 0,
-                    y: 50,
-                    ease: "none",
-                    scrollTrigger: {
-                        trigger: ".hero-section",
-                        start: "top top",
-                        end: "20% top",
-                        scrub: true
-                    }
-                });
-            }
-
-            video.addEventListener('loadedmetadata', () => {
-                loader.classList.add('loaded');
-                isVideoReady = true;
-                initScrollScrub();
-            });
-
-            if (video.readyState >= 1) {
-                loader.classList.add('loaded');
-                isVideoReady = true;
-                initScrollScrub();
-            }
-
-            video.load();
-
-            // ── LÓGICA DO CURSOR DE BOLINHAS (RASTRO) ──
-            if (!prefersReducedMotion && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-                const cursor = document.createElement('div');
-                cursor.className = 'custom-cursor';
-                document.body.appendChild(cursor);
-
-                let mouseX = window.innerWidth / 2;
-                let mouseY = window.innerHeight / 2;
-                let cursorX = mouseX;
-                let cursorY = mouseY;
-
-                window.addEventListener('mousemove', (e) => {
-                    mouseX = e.clientX;
-                    mouseY = e.clientY;
-                });
-
-                let lastEmittedX = mouseX;
-                let lastEmittedY = mouseY;
-
-                function renderCursor() {
-                    // Suavização do movimento principal (LERP)
-                    cursorX += (mouseX - cursorX) * 0.3;
-                    cursorY += (mouseY - cursorY) * 0.3;
-
-                    cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
-
-                    // Cálculo da distância para soltar as partículas no caminho exato onde o mouse passou
-                    const dx = cursorX - lastEmittedX;
-                    const dy = cursorY - lastEmittedY;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-
-                    // Gera poeira constante com base na distância (denso = asteroide)
-                    if (dist > 1) {
-                        // Calcula quantidades proporcionais a velocidade da "viagem"
-                        const numParticles = Math.max(1, Math.floor(dist / 3));
-
-                        for (let i = 0; i < numParticles; i++) {
-                            const t = i / numParticles;
-
-                            // Adiciona um "jitter" (espalhamento) da poeira em torno do núcleo central
-                            // para que o rastro tenha volume orgânico e não pareça um traço de lápis
-                            const spread = 8; // Raio de espalhamento
-                            const jitterX = (Math.random() - 0.5) * spread;
-                            const jitterY = (Math.random() - 0.5) * spread;
-
-                            const spawnX = (lastEmittedX + dx * t) + jitterX;
-                            const spawnY = (lastEmittedY + dy * t) + jitterY;
-
-                            createTrail(spawnX, spawnY);
-                        }
-                        lastEmittedX = cursorX;
-                        lastEmittedY = cursorY;
-                    }
-
-                    requestAnimationFrame(renderCursor);
-                }
-
-                function createTrail(x, y) {
-                    const trailWrapper = document.createElement('div');
-                    trailWrapper.style.position = 'fixed';
-                    trailWrapper.style.pointerEvents = 'none';
-                    trailWrapper.style.zIndex = '9998'; // Logo abaixo do cursor principal
-                    trailWrapper.style.left = '0';
-                    trailWrapper.style.top = '0';
-                    trailWrapper.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-
-                    const trail = document.createElement('div');
-                    trail.className = 'cursor-trail';
-
-                    // Partícula constante de 1px preta (sem variação de escala)
-                    const size = 1;
-                    trail.style.width = `${size}px`;
-                    trail.style.height = `${size}px`;
-
-                    // Centraliza a micro-partícula exatamente no offset matemático do Wrapper
-                    trail.style.marginTop = `-${size / 2}px`;
-                    trail.style.marginLeft = `-${size / 2}px`;
-
-                    trailWrapper.appendChild(trail);
-                    document.body.appendChild(trailWrapper);
-
-                    setTimeout(() => trailWrapper.remove(), 750);
-                }
-
-                requestAnimationFrame(renderCursor);
-            }
-
-            // ── GSAP DOBRA 2: ENGENHARIA PROGRESSIVA ──
-            if (!prefersReducedMotion) {
-                // Efeito Parallax/Zoom ultra-suave na imagem estática ao rolar a página
-                gsap.to(".eng-pen-img", {
-                    scale: 1.15,
-                    ease: "none",
-                    scrollTrigger: {
-                        trigger: ".engineering-section",
-                        start: "top bottom",
-                        end: "bottom top",
-                        scrub: true
-                    }
-                });
-
-                // Entrada da Intro
-                gsap.to(".eng-intro .eng-anim", {
-                    y: 0, opacity: 1, duration: 1, stagger: 0.15, ease: "power3.out",
-                    scrollTrigger: {
-                        trigger: ".eng-intro",
-                        start: "top 75%"
-                    }
-                });
-
-                // Animação individual de cada feature item ao chegar no centro da tela
-                const features = document.querySelectorAll('.eng-feature-item');
-                features.forEach((feat) => {
-                    const lineFill = feat.querySelector('.feat-line-fill');
-
-                    // A barra cresce conectada ao progresso do scroll no item
-                    gsap.to(lineFill, {
-                        width: "100%",
-                        ease: "none",
-                        scrollTrigger: {
-                            trigger: feat,
-                            start: "top 80%",
-                            end: "top 30%",
-                            scrub: true
-                        }
-                    });
-
-                    // O texto da feature surge suavemente
-                    gsap.to(feat.querySelectorAll('.eng-anim'), {
-                        y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: "power3.out",
-                        scrollTrigger: {
-                            trigger: feat,
-                            start: "top 85%"
-                        }
-                    });
-                });
-            }
-
-        });
-    </script>
+    <script src="js/cms.js"></script>
 </body>
 
 </html>
