@@ -354,12 +354,12 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
 
-        // Entrada da Intro (demais textos)
-        gsap.to(".eng-intro .eng-anim:not(.text-reveal-trigger)", {
+        // Entrada da Intro (todos os elementos, incluindo eyebrow e h2)
+        gsap.to(".eng-intro .eng-anim", {
             y: 0, opacity: 1, duration: 1, stagger: 0.15, ease: "power3.out",
             scrollTrigger: {
                 trigger: ".eng-intro",
-                start: "top 75%"
+                start: "top 90%"
             }
         });
 
@@ -437,6 +437,146 @@ document.addEventListener("DOMContentLoaded", () => {
         const y = e.clientY - rect.top;
         card.style.setProperty("--mx", `${x}px`);
         card.style.setProperty("--my", `${y}px`);
+    }
+
+    // ── EFEITO DE RABISCO NO CURSOR (SCRIBBLE CANVAS) ──
+    if (!prefersReducedMotion && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        const scribbleCanvas = document.createElement('canvas');
+        scribbleCanvas.id = 'scribble-canvas';
+        scribbleCanvas.style.cssText = `
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9997;
+        `;
+        document.body.appendChild(scribbleCanvas);
+
+        const sCtx = scribbleCanvas.getContext('2d');
+        const STROKE_LIFETIME = 2000; // ms
+
+        // Each segment: { x1, y1, x2, y2, cpx, cpy, width, born }
+        let segments = [];
+        let isDrawing = false;
+        let lastX = 0;
+        let lastY = 0;
+        let lastMidX = 0;
+        let lastMidY = 0;
+        let velocity = 0;
+
+        function resizeScribble() {
+            const dpr = window.devicePixelRatio || 1;
+            scribbleCanvas.width = window.innerWidth * dpr;
+            scribbleCanvas.height = window.innerHeight * dpr;
+            sCtx.scale(dpr, dpr);
+        }
+        resizeScribble();
+        window.addEventListener('resize', resizeScribble);
+
+        // Detecta se o mouse está sobre uma seção escura pelo rect da seção
+        function isOnDarkSection(y) {
+            for (const sec of darkSections) {
+                const r = sec.getBoundingClientRect();
+                if (y >= r.top && y <= r.bottom) return true;
+            }
+            return false;
+        }
+
+        window.addEventListener('mousedown', (e) => {
+            isDrawing = true;
+            lastX = e.clientX;
+            lastY = e.clientY;
+            lastMidX = e.clientX;
+            lastMidY = e.clientY;
+            velocity = 0;
+            // Impede seleção de texto ao arrastar
+            document.body.style.userSelect = 'none';
+            document.body.style.webkitUserSelect = 'none';
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (!isDrawing) return;
+
+            const x = e.clientX;
+            const y = e.clientY;
+
+            const dx = x - lastX;
+            const dy = y - lastY;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            // Skip micro-movements
+            if (dist < 2) return;
+
+            // Velocity-based stroke width (faster = thinner, like real ink)
+            velocity = velocity * 0.7 + dist * 0.3;
+            const rawWidth = Math.max(0.4, Math.min(1.75, 2 - velocity * 0.07));
+
+            // Control point for smooth quadratic bezier (midpoint between last and current)
+            const midX = (lastX + x) / 2;
+            const midY = (lastY + y) / 2;
+
+            // Cor baseada na seção: branco em seções escuras, preto em seções claras
+            const dark = isOnDarkSection(y);
+
+            segments.push({
+                x1: lastMidX,
+                y1: lastMidY,
+                cpx: lastX,
+                cpy: lastY,
+                x2: midX,
+                y2: midY,
+                width: rawWidth,
+                dark,
+                born: performance.now()
+            });
+
+            lastX = x;
+            lastY = y;
+            lastMidX = midX;
+            lastMidY = midY;
+        });
+
+        function stopDrawing() {
+            isDrawing = false;
+            // Restaura seleção de texto
+            document.body.style.userSelect = '';
+            document.body.style.webkitUserSelect = '';
+        }
+        window.addEventListener('mouseup', stopDrawing);
+        window.addEventListener('mouseleave', stopDrawing);
+
+        function renderScribble() {
+            const now = performance.now();
+            // Remove expired segments
+            segments = segments.filter(s => (now - s.born) < STROKE_LIFETIME);
+
+            // Clear canvas
+            sCtx.clearRect(0, 0, scribbleCanvas.width, scribbleCanvas.height);
+
+            // Draw each segment with its age-based opacity
+            for (const seg of segments) {
+                const age = now - seg.born;
+                // Ease-out opacity: full for first 1s, then smooth fade
+                let t = age / STROKE_LIFETIME;
+                // Cubic ease-out fade: stays opaque longer, then drops fast
+                const alpha = Math.max(0, 1 - Math.pow(t, 2.5));
+
+                sCtx.beginPath();
+                sCtx.moveTo(seg.x1, seg.y1);
+                sCtx.quadraticCurveTo(seg.cpx, seg.cpy, seg.x2, seg.y2);
+                sCtx.strokeStyle = seg.dark
+                    ? `rgba(255, 255, 255, ${alpha.toFixed(3)})`
+                    : `rgba(0, 0, 0, ${alpha.toFixed(3)})`;
+                sCtx.lineWidth = seg.width * alpha + 0.15; // thin as it fades
+                sCtx.lineCap = 'round';
+                sCtx.lineJoin = 'round';
+                sCtx.stroke();
+            }
+
+            requestAnimationFrame(renderScribble);
+        }
+        requestAnimationFrame(renderScribble);
     }
 
     // ── LÓGICA DO CANVAS MAGNÉTICO MULTIPLOS (PONTOS) ──

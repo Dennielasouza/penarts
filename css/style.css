@@ -63,9 +63,8 @@ html.lenis body {
     width: 100%;
     height: 100vh;
     display: flex;
-    /* Mudamos de grid para flex, já que o flex sobrepõe colunas ao fundo visual */
     align-items: center;
-    padding: 0 6%;
+    padding: 0 10%;
     overflow: hidden;
 }
 
@@ -696,17 +695,14 @@ html.lenis body {
 .eng-scroll-side {
     width: 55vw;
     padding: 8vh 10%;
-    /* Respiro base idêntico no topo e base */
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /* Centraliza 100% perfeito no eixo vertical */
     min-height: 100vh;
 }
 
 .eng-intro {
-    margin-bottom: 8vh;
-    /* Reduzindo de 10vh para 8vh para manter proporção com as medidas dos cards */
+    margin-bottom: 10vh;
 }
 
 .ds-eyebrow {
@@ -717,7 +713,7 @@ html.lenis body {
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 32px;
+    margin-bottom: 24px;
     text-transform: uppercase;
 }
 
@@ -733,7 +729,7 @@ html.lenis body {
     font-weight: 400;
     line-height: 1.1;
     letter-spacing: -0.02em;
-    margin-bottom: 32px;
+    margin-bottom: 20px;
     color: var(--white);
 }
 
@@ -747,8 +743,7 @@ html.lenis body {
 .eng-feature-list {
     display: flex;
     flex-direction: column;
-    gap: 5vh;
-    /* Gap reduzido ligeiramente para 5vh, costurando melhor os cards sem deixá-los flutuando soltos */
+    gap: 3rem;
 }
 
 .eng-feature-item {
@@ -816,7 +811,7 @@ html.lenis body {
 
     .eng-scroll-side {
         width: 100vw;
-        padding: 4vh 5%;
+        padding: 6vh 6%;
     }
 }
 
@@ -939,7 +934,7 @@ html.lenis body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 0 10%;
+    padding: 8vh 10%;
     color: var(--white);
     z-index: 10;
 }
@@ -949,7 +944,7 @@ html.lenis body {
     font-weight: 500;
     line-height: 0.95;
     letter-spacing: -0.04em;
-    margin-bottom: 10vh;
+    margin-bottom: 4vh;
 }
 
 .fluid-line-wrapper {
@@ -1054,16 +1049,16 @@ html.lenis body {
 .final-cta-section {
     background-color: var(--black, #0a0a0a);
     color: var(--white);
-    padding: 15vh 5% 5vh;
+    padding: 8vh 10%;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     position: relative;
     z-index: 20;
     overflow: hidden;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
-    /* Restore divider branco suave */
 }
 
 .cta-label {
@@ -1072,7 +1067,7 @@ html.lenis body {
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: rgba(255, 255, 255, 0.5);
-    margin-bottom: 24px;
+    margin-bottom: 32px;
 }
 
 .cta-headline {
@@ -1081,7 +1076,7 @@ html.lenis body {
     line-height: 1;
     letter-spacing: -0.05em;
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 32px;
     color: var(--white);
 }
 
@@ -1098,7 +1093,7 @@ html.lenis body {
 
 /* Botão Ghost Link (Design System) */
 .cta-btn-wrapper {
-    margin-top: 24px;
+    margin-top: 0;
 }
 
 .cta-ghost-link {
@@ -1123,7 +1118,7 @@ html.lenis body {
 .footer-premium {
     background-color: var(--black, #0a0a0a);
     color: var(--white);
-    padding: 0 5% 0px;
+    padding: 8vh 10% 0;
     position: relative;
     z-index: 20;
     overflow: hidden;
@@ -1241,10 +1236,10 @@ html.lenis body {
 
     .custom-cursor {
         position: fixed;
-        top: -4px;
-        left: -4px;
-        width: 8px;
-        height: 8px;
+        top: -2px;
+        left: -2px;
+        width: 4px;
+        height: 4px;
         background-color: var(--white);
         border-radius: 50%;
         pointer-events: none;
@@ -1255,8 +1250,8 @@ html.lenis body {
 
     .cursor-trail {
         position: absolute;
-        background-color: var(--text-primary);
-        /* Preta */
+        background-color: #000000;
+        /* Preto puro */
         border-radius: 50%;
         will-change: transform, opacity;
         animation: asteroidDust 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
