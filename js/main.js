@@ -516,7 +516,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const midX = (lastX + x) / 2;
             const midY = (lastY + y) / 2;
 
-            // Cor baseada na seção: branco em seções escuras, preto em seções claras
+            // Cor baseada na seção: branco nas escuras, preto nas claras
             const dark = isOnDarkSection(y);
 
             segments.push({
