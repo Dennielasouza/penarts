@@ -53,8 +53,8 @@ html.lenis body {
 .hero-section {
     position: relative;
     width: 100vw;
-    /* Altura extra para permitir o efeito de scroll-scrub longo e fluido */
-    height: 400vh;
+    /* Altura extra para permitir o efeito de scroll-scrub longo e fluido (estilo Apple) */
+    height: 500vh;
 }
 
 .hero-container {

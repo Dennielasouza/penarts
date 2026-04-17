@@ -164,24 +164,51 @@ document.addEventListener("DOMContentLoaded", () => {
             .to(".scroll-indicator", { opacity: 1, duration: 1 }, "-=0.5");
     }
 
-    // GSAP Scrub Scroll do Video Fullscreen
+    // ── APPLE-STYLE VIDEO SCROLL SCRUB (Fluido com LERP) ──
     const video = document.getElementById('hero-video');
     const loader = document.querySelector('.video-loader');
     let isVideoReady = false;
 
+    // Estado do scrub suave
+    let targetTime = 0;       // Posição que o scroll pede
+    let currentTime = 0;      // Posição atual interpolada (lerp)
+    let scrubRafId = null;
+    const LERP_FACTOR = 0.06; // Quanto mais baixo, mais inércia (estilo Apple = 0.05–0.08)
+
+    function scrubLoop() {
+        if (!video.duration) {
+            scrubRafId = requestAnimationFrame(scrubLoop);
+            return;
+        }
+
+        // Lerp suave: aproxima currentTime de targetTime quadro a quadro
+        const diff = targetTime - currentTime;
+
+        // Só atualiza currentTime se a diferença for perceptível
+        if (Math.abs(diff) > 0.0005) {
+            currentTime += diff * LERP_FACTOR;
+            try {
+                video.currentTime = Math.max(0, Math.min(video.duration, currentTime));
+            } catch (e) {}
+        }
+
+        scrubRafId = requestAnimationFrame(scrubLoop);
+    }
+
     function initScrollScrub() {
         if (!isVideoReady || prefersReducedMotion) return;
 
+        // Inicia o loop de interpolação
+        scrubLoop();
+
+        // ScrollTrigger mapeia o progresso de scroll → targetTime do vídeo
         ScrollTrigger.create({
             trigger: ".hero-section",
             start: "top top",
             end: "bottom bottom",
-            scrub: 0.5, // 0.5s de suavidade e inércia pós-scroll
             onUpdate: (self) => {
                 if (video.duration) {
-                    try {
-                        video.currentTime = self.progress * video.duration;
-                    } catch (e) { }
+                    targetTime = self.progress * video.duration;
                 }
             }
         });
@@ -195,20 +222,20 @@ document.addEventListener("DOMContentLoaded", () => {
             scrollTrigger: {
                 trigger: ".hero-section",
                 start: "top top",
-                end: "40% top",
-                scrub: true
+                end: "35% top",
+                scrub: 1.5
             }
         });
 
-        // Fade-out do overlay para o vídeo assumir o protagonismo com 100% de brilho/opacidade
+        // Fade-out do overlay para o vídeo assumir protagonismo
         gsap.to(".video-overlay", {
             opacity: 0,
             ease: "none",
             scrollTrigger: {
                 trigger: ".hero-section",
                 start: "top top",
-                end: "30% top",
-                scrub: true
+                end: "25% top",
+                scrub: 1.5
             }
         });
 
@@ -219,8 +246,8 @@ document.addEventListener("DOMContentLoaded", () => {
             scrollTrigger: {
                 trigger: ".hero-section",
                 start: "top top",
-                end: "20% top",
-                scrub: true
+                end: "15% top",
+                scrub: 1.5
             }
         });
     }
